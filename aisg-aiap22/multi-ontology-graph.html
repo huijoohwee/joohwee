@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIAP Interview Knowledge Graph - Multi-Ontology Visualization</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0e27;
+            color: #e0e6ed;
+            overflow: hidden;
+        }
+        #container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            grid-template-rows: 60px 1fr;
+            height: 100vh;
+            gap: 0;
+        }
+        #header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 25px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        #header .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+        }
+        #header .stat {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        #sidebar {
+            background: #12172e;
+            border-right: 1px solid #1e2540;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        #sidebar h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .control-group {
+            margin-bottom: 30px;
+        }
+        .toggle-btn {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: #1a2038;
+            border: 1px solid #2a3250;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+        }
+        .toggle-btn:hover {
+            background: #2a3250;
+            border-color: #667eea;
+        }
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+        }
+        .toggle-btn input {
+            margin-right: 10px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            margin-right: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        #main-view {
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, #0f1629, #0a0e27);
+            overflow: hidden;
+        }
+        #graph-svg {
+            width: 100%;
+            height: 100%;
+        }
+        .node {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .node:hover {
+            filter: brightness(1.3);
+        }
+        .link {
+            stroke: #3a4563;
+            stroke-opacity: 0.6;
+            stroke-width: 1.5px;
+            fill: none;
+        }
+        .link.prov {
+            stroke: #667eea;
+            stroke-dasharray: 5,5;
+        }
+        .link.mex {
+            stroke: #f093fb;
+        }
+        .link.pplan {
+            stroke: #4facfe;
+        }
+        .link.geo {
+            stroke: #43e97b;
+        }
+        .node-label {
+            font-size: 10px;
+            fill: #e0e6ed;
+            text-anchor: middle;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(18, 23, 46, 0.95);
+            border: 1px solid #667eea;
+            border-radius: 8px;
+            padding: 12px 16px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 12px;
+            max-width: 300px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+        .tooltip.visible {
+            opacity: 1;
+        }
+        .tooltip h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .tooltip .property {
+            margin: 4px 0;
+            line-height: 1.6;
+        }
+        .tooltip .label {
+            color: #8892b0;
+            font-weight: 600;
+        }
+        #view-tabs {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        .view-tab {
+            padding: 10px 18px;
+            background: rgba(18, 23, 46, 0.9);
+            border: 1px solid #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
+        .view-tab:hover, .view-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+        }
+        .polygon-layer {
+            fill: none;
+            stroke-width: 2px;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        .polygon-fill {
+            opacity: 0.15;
+            transition: opacity 0.3s;
+        }
+        .polygon-layer:hover, .polygon-fill:hover {
+            opacity: 1;
+        }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(18, 23, 46, 0.9);
+            border: 1px solid #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
+        .control-btn:hover {
+            background: #667eea;
+            transform: scale(1.1);
+        }
+        .timeline-view {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: rgba(18, 23, 46, 0.95);
+            border-top: 1px solid #667eea;
+            padding: 15px;
+            display: none;
+        }
+        .timeline-view.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>🧠 AIAP Knowledge Graph Explorer</h1>
+            <div class="stats">
+                <div class="stat"><strong id="node-count">0</strong> Entities</div>
+                <div class="stat"><strong id="edge-count">0</strong> Relations</div>
+                <div class="stat"><strong id="cluster-count">0</strong> Clusters</div>
+            </div>
+        </div>
+        
+        <div id="sidebar">
+            <div class="control-group">
+                <h3>Ontology Layers</h3>
+                <label class="toggle-btn active">
+                    <input type="checkbox" id="toggle-prov" checked>
+                    <span>PROV-O (Provenance)</span>
+                </label>
+                <label class="toggle-btn active">
+                    <input type="checkbox" id="toggle-mex" checked>
+                    <span>MEX (Experiments)</span>
+                </label>
+                <label class="toggle-btn active">
+                    <input type="checkbox" id="toggle-pplan" checked>
+                    <span>P-Plan (Workflow)</span>
+                </label>
+                <label class="toggle-btn active">
+                    <input type="checkbox" id="toggle-geo" checked>
+                    <span>GeoSPARQL (Clusters)</span>
+                </label>
+            </div>
+            
+            <div class="control-group">
+                <h3>Entity Types</h3>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #667eea;"></div>
+                    <span>Agent (Candidate)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f093fb;"></div>
+                    <span>Activity</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4facfe;"></div>
+                    <span>Entity (Data/Model)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #43e97b;"></div>
+                    <span>Plan/Step</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fa709a;"></div>
+                    <span>Cluster/Polygon</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #feca57;"></div>
+                    <span>Decision/Insight</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>Clusters</h3>
+                <div id="cluster-list"></div>
+            </div>
+        </div>
+        
+        <div id="main-view">
+            <div id="view-tabs">
+                <div class="view-tab active" data-view="graph">Network Graph</div>
+                <div class="view-tab" data-view="timeline">Timeline</div>
+                <div class="view-tab" data-view="spatial">Spatial Clusters</div>
+            </div>
+            
+            <svg id="graph-svg"></svg>
+            
+            <div id="controls">
+                <div class="control-btn" id="zoom-in" title="Zoom In">+</div>
+                <div class="control-btn" id="zoom-out" title="Zoom Out">−</div>
+                <div class="control-btn" id="reset" title="Reset View">⟲</div>
+            </div>
+            
+            <div class="timeline-view" id="timeline-view"></div>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // Knowledge Graph Data (embedded from interviewer.jsonld)
+        const graphData = {
+            "@context": {
+                "aiap": "https://aisingapore.org/aiap/ontology#",
+                "prov": "http://www.w3.org/ns/prov#",
+                "mex": "http://mex.aksw.org/mex-core#",
+                "pplan": "http://purl.org/net/p-plan#",
+                "geo": "http://www.opengis.net/ont/geosparql#"
+            },
+            "nodes": [
+                {id: "candidate", type: "Agent", label: "HUI Joo Hwee", category: "prov", score: 92, color: "#667eea"},
+                {id: "submission", type: "Entity", label: "Submission", category: "prov", color: "#4facfe"},
+                {id: "eda", type: "Activity", label: "EDA", category: "prov", color: "#f093fb"},
+                {id: "preprocessing", type: "Activity", label: "Preprocessing", category: "pplan", color: "#f093fb"},
+                {id: "training", type: "Activity", label: "Training", category: "mex", color: "#f093fb"},
+                {id: "dataset", type: "Entity", label: "phishing.db", category: "prov", color: "#4facfe"},
+                {id: "model-lr", type: "Model", label: "Logistic", category: "mex", auc: 0.825, color: "#4facfe"},
+                {id: "model-xgb", type: "Model", label: "XGBoost", category: "mex", auc: 0.888, color: "#4facfe"},
+                {id: "model-knn", type: "Model", label: "KNN", category: "mex", auc: 0.809, color: "#4facfe"},
+                {id: "insight-imbalance", type: "Insight", label: "Class Imbalance", category: "prov", color: "#feca57"},
+                {id: "insight-negatives", type: "Insight", label: "Negative Values", category: "prov", color: "#feca57"},
+                {id: "transform-log", type: "Step", label: "Log Transform", category: "pplan", color: "#43e97b"},
+                {id: "transform-clip", type: "Step", label: "Clip Outliers", category: "pplan", color: "#43e97b"},
+                {id: "decision-split", type: "Decision", label: "Stratified Split", category: "prov", color: "#feca57"},
+                {id: "cluster-business", type: "Cluster", label: "Business Comm.", category: "geo", color: "#fa709a"},
+                {id: "cluster-evidence", type: "Cluster", label: "Evidence-Based", category: "geo", color: "#fa709a"},
+                {id: "cluster-preproc", type: "Cluster", label: "Preprocessing", category: "geo", color: "#fa709a"},
+                {id: "cluster-ensemble", type: "Cluster", label: "Ensemble Models", category: "geo", color: "#fa709a"},
+                {id: "gap-kpi", type: "Gap", label: "KPI Failure", category: "prov", color: "#ee5a6f"},
+                {id: "gap-optimization", type: "Gap", label: "Optimization", category: "prov", color: "#ee5a6f"},
+                {id: "probe-kpi", type: "Question", label: "KPI Discussion", category: "prov", color: "#feca57"},
+                {id: "feature-domain", type: "Feature", label: "DomainAge", category: "mex", corr: 0.333, color: "#4facfe"},
+                {id: "rubric", type: "Plan", label: "Interview Rubric", category: "pplan", color: "#43e97b"},
+                {id: "assessment", type: "Activity", label: "Panel Review", category: "prov", color: "#f093fb"}
+            ],
+            "links": [
+                {source: "candidate", target: "submission", type: "prov:wasAttributedTo", category: "prov"},
+                {source: "eda", target: "dataset", type: "prov:used", category: "prov"},
+                {source: "eda", target: "candidate", type: "prov:wasAssociatedWith", category: "prov"},
+                {source: "insight-imbalance", target: "eda", type: "prov:wasGeneratedBy", category: "prov"},
+                {source: "insight-negatives", target: "eda", type: "prov:wasGeneratedBy", category: "prov"},
+                {source: "decision-split", target: "insight-imbalance", type: "prov:wasInformedBy", category: "prov"},
+                {source: "transform-clip", target: "insight-negatives", type: "aiap:remediates", category: "pplan"},
+                {source: "preprocessing", target: "transform-log", type: "aiap:implements", category: "pplan"},
+                {source: "preprocessing", target: "transform-clip", type: "aiap:implements", category: "pplan"},
+                {source: "preprocessing", target: "eda", type: "pplan:isPrecededBy", category: "pplan"},
+                {source: "training", target: "preprocessing", type: "pplan:isPrecededBy", category: "pplan"},
+                {source: "model-lr", target: "training", type: "prov:wasGeneratedBy", category: "mex"},
+                {source: "model-xgb", target: "training", type: "prov:wasGeneratedBy", category: "mex"},
+                {source: "model-knn", target: "training", type: "prov:wasGeneratedBy", category: "mex"},
+                {source: "candidate", target: "cluster-business", type: "aiap:memberOf", category: "geo"},
+                {source: "candidate", target: "cluster-evidence", type: "aiap:memberOf", category: "geo"},
+                {source: "preprocessing", target: "cluster-preproc", type: "geo:within", category: "geo"},
+                {source: "model-xgb", target: "cluster-ensemble", type: "geo:within", category: "geo"},
+                {source: "gap-kpi", target: "model-xgb", type: "prov:wasDerivedFrom", category: "prov"},
+                {source: "probe-kpi", target: "gap-kpi", type: "prov:wasInformedBy", category: "prov"},
+                {source: "feature-domain", target: "dataset", type: "ml:hasFeature", category: "mex"},
+                {source: "assessment", target: "rubric", type: "prov:used", category: "prov"},
+                {source: "assessment", target: "submission", type: "prov:used", category: "prov"}
+            ]
+        };
+
+        // D3 Setup
+        const width = window.innerWidth - 280;
+        const height = window.innerHeight - 60;
+        
+        const svg = d3.select("#graph-svg")
+            .attr("viewBox", [0, 0, width, height]);
+        
+        const g = svg.append("g");
+        
+        // Zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.3, 3])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+        
+        svg.call(zoom);
+        
+        // Force simulation
+        const simulation = d3.forceSimulation(graphData.nodes)
+            .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(120))
+            .force("charge", d3.forceManyBody().strength(-400))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collision", d3.forceCollide().radius(30));
+        
+        // Create links
+        const link = g.append("g")
+            .selectAll("path")
+            .data(graphData.links)
+            .join("path")
+            .attr("class", d => `link ${d.category}`)
+            .attr("marker-end", "url(#arrow)");
+        
+        // Arrow marker
+        svg.append("defs").selectAll("marker")
+            .data(["prov", "mex", "pplan", "geo"])
+            .join("marker")
+            .attr("id", d => `arrow-${d}`)
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 25)
+            .attr("refY", 0)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", "M0,-5L10,0L0,5")
+            .attr("fill", d => {
+                const colors = {prov: "#667eea", mex: "#f093fb", pplan: "#4facfe", geo: "#43e97b"};
+                return colors[d];
+            });
+        
+        // Create nodes
+        const node = g.append("g")
+            .selectAll("circle")
+            .data(graphData.nodes)
+            .join("circle")
+            .attr("class", "node")
+            .attr("r", d => {
+                if (d.type === "Agent") return 16;
+                if (d.type === "Model") return 14;
+                if (d.type === "Cluster") return 18;
+                return 10;
+            })
+            .attr("fill", d => d.color)
+            .attr("stroke", "#0a0e27")
+            .attr("stroke-width", 2)
+            .call(drag(simulation))
+            .on("mouseover", showTooltip)
+            .on("mouseout", hideTooltip);
+        
+        // Labels
+        const label = g.append("g")
+            .selectAll("text")
+            .data(graphData.nodes)
+            .join("text")
+            .attr("class", "node-label")
+            .attr("dy", 25)
+            .text(d => d.label);
+        
+        // Simulation tick
+        simulation.on("tick", () => {
+            link.attr("d", d => {
+                const dx = d.target.x - d.source.x;
+                const dy = d.target.y - d.source.y;
+                const dr = Math.sqrt(dx * dx + dy * dy) * 2;
+                return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+            });
+            
+            node.attr("cx", d => d.x).attr("cy", d => d.y);
+            label.attr("x", d => d.x).attr("y", d => d.y);
+        });
+        
+        // Drag behavior
+        function drag(simulation) {
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+            
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+            
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+            
+            return d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended);
+        }
+        
+        // Tooltip
+        const tooltip = d3.select("#tooltip");
+        
+        function showTooltip(event, d) {
+            let content = `<h4>${d.label}</h4>`;
+            content += `<div class="property"><span class="label">Type:</span> ${d.type}</div>`;
+            if (d.score) content += `<div class="property"><span class="label">Score:</span> ${d.score}%</div>`;
+            if (d.auc) content += `<div class="property"><span class="label">AUC:</span> ${d.auc}</div>`;
+            if (d.corr) content += `<div class="property"><span class="label">Correlation:</span> ${d.corr}</div>`;
+            content += `<div class="property"><span class="label">Category:</span> ${d.category.toUpperCase()}</div>`;
+            
+            tooltip.html(content)
+                .style("left", (event.pageX + 15) + "px")
+                .style("top", (event.pageY - 15) + "px")
+                .classed("visible", true);
+        }
+        
+        function hideTooltip() {
+            tooltip.classed("visible", false);
+        }
+        
+        // Controls
+        d3.select("#zoom-in").on("click", () => {
+            svg.transition().call(zoom.scaleBy, 1.3);
+        });
+        
+        d3.select("#zoom-out").on("click", () => {
+            svg.transition().call(zoom.scaleBy, 0.7);
+        });
+        
+        d3.select("#reset").on("click", () => {
+            svg.transition().call(zoom.transform, d3.zoomIdentity);
+            simulation.alpha(1).restart();
+        });
+        
+        // Layer toggles
+        const toggles = {
+            prov: true,
+            mex: true,
+            pplan: true,
+            geo: true
+        };
+        
+        ["prov", "mex", "pplan", "geo"].forEach(layer => {
+            d3.select(`#toggle-${layer}`).on("change", function() {
+                toggles[layer] = this.checked;
+                d3.select(`#toggle-${layer}`).node().parentElement.classList.toggle("active", this.checked);
+                updateVisibility();
+            });
+        });
+        
+        function updateVisibility() {
+            link.style("opacity", d => toggles[d.category] ? 0.6 : 0.1);
+            node.style("opacity", d => toggles[d.category] ? 1 : 0.2);
+            label.style("opacity", d => toggles[d.category] ? 1 : 0.2);
+        }
+        
+        // View tabs
+        d3.selectAll(".view-tab").on("click", function() {
+            d3.selectAll(".view-tab").classed("active", false);
+            d3.select(this).classed("active", true);
+            
+            const view = this.dataset.view;
+            if (view === "timeline") {
+                d3.select("#timeline-view").classed("active", true);
+                renderTimeline();
+            } else {
+                d3.select("#timeline-view").classed("active", false);
+            }
+            
+            if (view === "spatial") {
+                renderSpatialClusters();
+            }
+        });
+        
+        function renderTimeline() {
+            const timelineData = [
+                {date: "2025-11-15", event: "EDA Started", type: "prov"},
+                {date: "2025-11-17", event: "EDA Completed", type: "prov"},
+                {date: "2025-11-25", event: "Model Training", type: "mex"},
+                {date: "2025-12-01", event: "Submission", type: "prov"},
+                {date: "2025-12-02", event: "Panel Review", type: "prov"}
+            ];
+            
+            const timeline = d3.select("#timeline-view");
+            timeline.html("<h3 style='color: #667eea; margin-bottom: 10px;'>Project Timeline</h3>");
+            
+            const svg = timeline.append("svg")
+                .attr("width", "100%")
+                .attr("height", 80);
+            
+            const x = d3.scaleTime()
+                .domain([new Date("2025-11-15"), new Date("2025-12-02")])
+                .range([50, width - 50]);
+            
+            svg.append("line")
+                .attr("x1", 50)
+                .attr("x2", width - 50)
+                .attr("y1", 40)
+                .attr("y2", 40)
+                .attr("stroke", "#667eea")
+                .attr("stroke-width", 2);
+            
+            svg.selectAll("circle")
+                .data(timelineData)
+                .join("circle")
+                .attr("cx", d => x(new Date(d.date)))
+                .attr("cy", 40)
+                .attr("r", 8)
+                .attr("fill", "#667eea");
+            
+            svg.selectAll("text")
+                .data(timelineData)
+                .join("text")
+                .attr("x", d => x(new Date(d.date)))
+                .attr("y", 65)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "11px")
+                .attr("fill", "#e0e6ed")
+                .text(d => d.event);
+        }
+        
+        function renderSpatialClusters() {
+            g.selectAll(".spatial-cluster").remove();
+            
+            const clusters = [
+                {id: "business", cx: width * 0.3, cy: height * 0.3, r: 120, label: "Business Communicator"},
+                {id: "evidence", cx: width * 0.7, cy: height * 0.3, r: 100, label: "Evidence-Based"},
+                {id: "preproc", cx: width * 0.3, cy: height * 0.7, r: 110, label: "Preprocessing"},
+                {id: "ensemble", cx: width * 0.7, cy: height * 0.7, r: 90, label: "Ensemble Models"}
+            ];
+            
+            g.selectAll(".spatial-cluster")
+                .data(clusters)
+                .join("g")
+                .attr("class", "spatial-cluster")
+                .each(function(d) {
+                    const cluster = d3.select(this);
+                    
+                    cluster.append("circle")
+                        .attr("cx", d.cx)
+                        .attr("cy", d.cy)
+                        .attr("r", d.r)
+                        .attr("fill", "#fa709a")
+                        .attr("opacity", 0.2)
+                        .attr("stroke", "#fa709a")
+                        .attr("stroke-width", 2);
+                    
+                    cluster.append("text")
+                        .attr("x", d.cx)
+                        .attr("y", d.cy)
+                        .attr("text-anchor", "middle")
+                        .attr("font-size", "14px")
+                        .attr("font-weight", "600")
+                        .attr("fill", "#fa709a")
+                        .text(d.label);
+                });
+        }
+        
+        // Cluster list
+        const clusters = graphData.nodes.filter(n => n.type === "Cluster");
+        const clusterList = d3.select("#cluster-list");
+        clusterList.selectAll(".legend-item")
+            .data(clusters)
+            .join("div")
+            .attr("class", "legend-item")
+            .html(d => `<div class="legend-color" style="background: ${d.color};"></div><span>${d.label}</span>`);
+        
+        // Update stats
+        d3.select("#node-count").text(graphData.nodes.length);
+        d3.select("#edge-count").text(graphData.links.length);
+        d3.select("#cluster-count").text(clusters.length);
+        
+        // Window resize
+        window.addEventListener("resize", () => {
+            const newWidth = window.innerWidth - 280;
+            const newHeight = window.innerHeight - 60;
+            svg.attr("viewBox", [0, 0, newWidth, newHeight]);
+            simulation.force("center", d3.forceCenter(newWidth / 2, newHeight / 2));
+            simulation.alpha(0.3).restart();
+        });
+    </script>
+</body>
+</html>
