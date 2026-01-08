@@ -1,0 +1,1152 @@
+{
+  "meta": {
+    "title": "AIAP Interview Session Knowledge Graph: EDA → MLP → Deployment",
+    "version": "1.0",
+    "description": "Multi-layer knowledge graph supporting interview Q&A traversal from business context to mathematical foundations. Enables D3.js visualization and Agentic GraphRAG for both interviewer assessment and candidate preparation.",
+    "use_cases": [
+      "Interview panel: Assess candidate depth across business/technical/mathematical layers",
+      "Candidate prep: Understand required depth for excellent vs qualified responses",
+      "Agentic RAG: Generate stakeholder-appropriate explanations via graph traversal",
+      "Gap analysis: Identify missing edges in candidate's mental model"
+    ],
+    "traversal_modes": {
+      "top_down": "Business → Technical → Mathematical (executive to implementer)",
+      "bottom_up": "Mathematical → Technical → Business (engineer to stakeholder)",
+      "peer_level": "Horizontal traversal within same abstraction layer",
+      "gap_detection": "Compare candidate response graph to reference graph"
+    },
+    "layers": {
+      "L0_business": "Fraud exposure, customer trust, regulatory compliance, ROI",
+      "L1_stakeholder": "Product/Legal/Engineering constraints and success metrics",
+      "L2_metrics": "KPIs (recall, FPR, AUC), business-technical bridge",
+      "L3_statistical": "Hypothesis testing, MNAR, chi-square, VIF, distributions",
+      "L4_model": "Algorithms, architectures, training procedures",
+      "L5_implementation": "Code patterns, pipeline design, deployment",
+      "L6_mathematical": "Loss functions, gradients, optimization theory"
+    }
+  },
+  
+  "nodes": [
+    {
+      "id": "business_fraud_exposure",
+      "layer": "L0_business",
+      "type": "business_outcome",
+      "label": "Fraud Exposure Risk",
+      "description": "Financial loss from successful phishing attacks that bypass detection",
+      "quantification": {
+        "formula": "Exposure = Attacks_per_month × (1 - Recall) × Avg_fraud_loss",
+        "example": "10,000 attacks × 30% missed × $500 = $1.5M monthly exposure"
+      },
+      "stakeholder_explanation": "Every phishing attack we miss costs the company money in fraud losses, customer compensation, and reputation damage. Higher recall means fewer missed attacks means lower exposure.",
+      "technical_bridge": "Recall metric directly maps to fraud prevention rate",
+      "importance": "critical",
+      "interview_signal": "Excellent candidates quantify this without prompting"
+    },
+    {
+      "id": "business_customer_trust",
+      "layer": "L0_business",
+      "type": "business_outcome",
+      "label": "Customer Trust & Churn",
+      "description": "User retention impact from false positive rate (blocking legitimate sites)",
+      "quantification": {
+        "formula": "Churn_rate = f(FPR, Block_frequency, Support_quality)",
+        "example": "18% FPR → 49.5M daily false alarms → 15% monthly churn → $100M LTV loss"
+      },
+      "stakeholder_explanation": "If we block legitimate sites too often, users get frustrated and disable the extension. Each false alarm erodes trust. We need to balance security with usability.",
+      "technical_bridge": "FPR metric directly maps to false alarm rate",
+      "importance": "critical",
+      "interview_signal": "Qualified candidates mention trust; excellent candidates quantify churn"
+    },
+    {
+      "id": "business_regulatory_compliance",
+      "layer": "L0_business",
+      "type": "business_constraint",
+      "label": "Regulatory Compliance (GDPR, etc.)",
+      "description": "Legal requirements for automated decision-making transparency",
+      "requirements": [
+        "GDPR Article 22: Right to explanation for automated decisions",
+        "Model decisions must be auditable with clear reasoning",
+        "No discriminatory bias against protected groups (startups, industries)"
+      ],
+      "stakeholder_explanation": "Regulators require that we can explain why we blocked a site. 'Because the black-box model said so' is not acceptable. We need interpretable models or post-hoc explanations.",
+      "technical_bridge": "Model explainability (coefficients, SHAP values, decision trees)",
+      "importance": "critical",
+      "interview_signal": "Excellent candidates mention explainability proactively"
+    },
+    {
+      "id": "business_operational_cost",
+      "layer": "L0_business",
+      "type": "business_outcome",
+      "label": "Support & Operational Costs",
+      "description": "Direct costs from handling false positive appeals and infrastructure",
+      "quantification": {
+        "formula": "Cost = (FP_count × Appeal_rate × Cost_per_ticket) + Infrastructure_cost",
+        "example": "49.5M FP × 1% appeal × $5 = $2.5M daily support cost"
+      },
+      "stakeholder_explanation": "Every wrongly blocked site that gets reported generates a support ticket. High false positive rates overwhelm our support team and rack up costs.",
+      "technical_bridge": "FPR threshold tuning to minimize false positives",
+      "importance": "high",
+      "interview_signal": "Qualified candidates mention support costs"
+    },
+    {
+      "id": "stakeholder_product_manager",
+      "layer": "L1_stakeholder",
+      "type": "stakeholder",
+      "label": "Product Manager Constraints",
+      "description": "Product owner balancing user experience with security effectiveness",
+      "constraints": {
+        "max_fpr": "≤5% (ideally ≤3%) to prevent alert fatigue",
+        "min_recall": "≥70% to justify security value proposition",
+        "latency": "<100ms for seamless browser experience",
+        "explainability": "Users must understand why sites are blocked"
+      },
+      "success_metrics": [
+        "User retention rate (monthly churn <5%)",
+        "Feature adoption (% users with extension enabled)",
+        "User satisfaction scores (NPS >40)"
+      ],
+      "communication_style": "Non-technical: Uses analogies (security guard), focuses on user experience, wants business impact quantification",
+      "typical_questions": [
+        "How do we explain blocked sites to users?",
+        "What's the trade-off between security and convenience?",
+        "Can we A/B test different threshold settings?"
+      ],
+      "interview_signal": "Excellent candidates proactively address PM constraints"
+    },
+    {
+      "id": "stakeholder_legal_compliance",
+      "layer": "L1_stakeholder",
+      "type": "stakeholder",
+      "label": "Legal/Compliance Officer Constraints",
+      "description": "Legal counsel ensuring regulatory compliance and audit readiness",
+      "constraints": {
+        "explainability": "Must provide per-prediction reasoning (GDPR Article 22)",
+        "audit_trail": "All decisions logged with timestamp, model version, features",
+        "bias_testing": "No discriminatory impact on protected groups",
+        "data_retention": "Comply with privacy laws (90-day logs, then archive/delete)"
+      },
+      "success_metrics": [
+        "Zero regulatory violations",
+        "Successful external audits",
+        "No discrimination lawsuits"
+      ],
+      "communication_style": "Documentation-heavy: Requires written justifications, risk matrices, impact assessments, signed approvals",
+      "typical_questions": [
+        "How do we audit model decisions retrospectively?",
+        "Can you prove the model doesn't discriminate against new businesses?",
+        "What's our rollback procedure if a model causes legal issues?"
+      ],
+      "interview_signal": "Excellent candidates discuss audit trails and bias testing"
+    },
+    {
+      "id": "stakeholder_engineering_manager",
+      "layer": "L1_stakeholder",
+      "type": "stakeholder",
+      "label": "Engineering Manager Constraints",
+      "description": "Engineering lead ensuring production reliability and maintainability",
+      "constraints": {
+        "latency": "p99 <100ms (p95 <50ms) for user experience",
+        "throughput": "100K+ predictions/day with horizontal scalability",
+        "reliability": "99.9% uptime with graceful degradation",
+        "maintainability": "Modular code, clear interfaces, comprehensive tests"
+      },
+      "success_metrics": [
+        "System uptime (99.9%)",
+        "Latency SLAs met (p50/p95/p99)",
+        "Error rates <0.1%",
+        "On-call incidents <2 per month"
+      ],
+      "communication_style": "Technical: Wants architecture diagrams, API specs, runbooks, performance benchmarks",
+      "typical_questions": [
+        "How does this scale to 1M predictions/day?",
+        "What's the deployment pipeline and rollback strategy?",
+        "How do we monitor feature drift and model degradation?"
+      ],
+      "interview_signal": "Excellent candidates proactively discuss deployment architecture"
+    },
+    {
+      "id": "kpi_recall",
+      "layer": "L2_metrics",
+      "type": "kpi",
+      "label": "Recall (Sensitivity, True Positive Rate)",
+      "description": "Proportion of actual phishing sites correctly identified",
+      "formula": {
+        "mathematical": "Recall = TP / (TP + FN)",
+        "business": "Recall = Attacks_caught / Total_attacks",
+        "interpretation": "Recall of 70% means we catch 7 out of 10 phishing attacks"
+      },
+      "business_impact": {
+        "high_recall": "Fewer missed attacks → lower fraud exposure → protected customers",
+        "low_recall": "More attacks slip through → higher fraud losses → customer complaints"
+      },
+      "trade_offs": {
+        "increasing_recall": "Often increases FPR (more false alarms) unless features improved",
+        "threshold_tuning": "Lower threshold → higher recall but higher FPR"
+      },
+      "target_value": "≥70% (hard constraint per business requirements)",
+      "stakeholder_explanation": "Recall tells us: of all the actual phishing sites, what percentage did we catch? Higher is better for security, but there's a trade-off with false alarms.",
+      "interview_depth": {
+        "poor": "Can state formula but not business meaning",
+        "qualified": "Explains trade-off with precision/FPR",
+        "excellent": "Quantifies business impact: 70% recall means $1.5M monthly exposure from 30% missed attacks"
+      }
+    },
+    {
+      "id": "kpi_fpr",
+      "layer": "L2_metrics",
+      "type": "kpi",
+      "label": "False Positive Rate (FPR)",
+      "description": "Proportion of legitimate sites incorrectly blocked",
+      "formula": {
+        "mathematical": "FPR = FP / (FP + TN)",
+        "business": "FPR = Legitimate_blocked / Total_legitimate",
+        "interpretation": "FPR of 5% means we wrongly block 5 out of 100 safe sites"
+      },
+      "business_impact": {
+        "high_fpr": "Many false alarms → user frustration → extension disabled → churn",
+        "low_fpr": "Fewer false alarms → better UX → higher retention"
+      },
+      "trade_offs": {
+        "decreasing_fpr": "Often decreases recall (miss more attacks) unless features improved",
+        "threshold_tuning": "Higher threshold → lower FPR but lower recall"
+      },
+      "target_value": "≤5% (ideally ≤3%) per product requirements",
+      "stakeholder_explanation": "FPR tells us: of all the legitimate sites, what percentage did we incorrectly block? This directly translates to support tickets and user frustration. Must keep under 5%.",
+      "interview_depth": {
+        "poor": "Confuses with precision or doesn't mention",
+        "qualified": "States constraint and trade-off",
+        "excellent": "Quantifies cost: 18% FPR = 49.5M daily false alarms = $2.5M support costs"
+      }
+    },
+    {
+      "id": "kpi_precision",
+      "layer": "L2_metrics",
+      "type": "kpi",
+      "label": "Precision (Positive Predictive Value)",
+      "description": "Proportion of predicted phishing sites that are actually phishing",
+      "formula": {
+        "mathematical": "Precision = TP / (TP + FP)",
+        "business": "Precision = Correct_blocks / Total_blocks",
+        "interpretation": "Precision of 80% means 8 out of 10 blocked sites are truly phishing"
+      },
+      "business_impact": {
+        "high_precision": "When we block, we're usually right → user trusts warnings",
+        "low_precision": "Many false alarms → 'boy who cried wolf' → warnings ignored"
+      },
+      "relationship_to_fpr": "Not the same! Precision is about predictions; FPR is about all negatives",
+      "stakeholder_explanation": "Precision answers: when we say 'this is phishing', how often are we right? High precision means users trust our warnings.",
+      "interview_depth": {
+        "poor": "Confuses with recall or FPR",
+        "qualified": "Correctly defines and distinguishes from recall",
+        "excellent": "Explains precision-recall trade-off with business context"
+      }
+    },
+    {
+      "id": "kpi_auc_roc",
+      "layer": "L2_metrics",
+      "type": "kpi",
+      "label": "ROC AUC (Area Under Curve)",
+      "description": "Overall discrimination ability: probability model ranks random phishing higher than random legitimate",
+      "formula": {
+        "mathematical": "AUC = ∫ TPR(FPR) dFPR from 0 to 1",
+        "interpretation": "AUC of 0.888 means 88.8% chance model scores random phishing > random legitimate"
+      },
+      "business_impact": {
+        "high_auc": "Strong fundamental discrimination → easier to tune threshold for business needs",
+        "low_auc": "Weak discrimination → cannot simultaneously achieve recall and FPR targets"
+      },
+      "target_value": "≥0.80 (good), ≥0.90 (excellent)",
+      "stakeholder_explanation": "AUC summarizes overall model quality across all possible threshold settings. Think of it as a single score for model discrimination power. Higher means the model has better raw material to work with.",
+      "relationship_to_threshold": "AUC is threshold-independent; shows model potential before tuning",
+      "interview_depth": {
+        "poor": "Just reports number without interpretation",
+        "qualified": "Explains as ranking metric, mentions threshold independence",
+        "excellent": "Connects to business: Low AUC = Pareto frontier doesn't reach target KPI region → need better features"
+      }
+    },
+    {
+      "id": "kpi_f1_score",
+      "layer": "L2_metrics",
+      "type": "kpi",
+      "label": "F1 Score (Harmonic Mean)",
+      "description": "Balanced metric combining precision and recall",
+      "formula": {
+        "mathematical": "F1 = 2 × (Precision × Recall) / (Precision + Recall)",
+        "interpretation": "Harmonic mean gives lower weight to extremes (both must be good)"
+      },
+      "business_impact": {
+        "use_case": "When precision and recall are equally important (balanced cost)",
+        "limitation": "Doesn't apply when one metric is prioritized (fraud detection prioritizes recall)"
+      },
+      "stakeholder_explanation": "F1 is useful when we care equally about catching attacks and avoiding false alarms. In our case, we prioritize recall (security) over precision, so F1 is secondary.",
+      "interview_depth": {
+        "poor": "Just cites formula",
+        "qualified": "Explains it's balanced metric",
+        "excellent": "Explains when F1 is NOT appropriate: 'Phishing detection prioritizes recall over precision due to asymmetric costs, so we optimize recall subject to FPR constraint rather than maximizing F1'"
+      }
+    },
+    {
+      "id": "statistical_mnar",
+      "layer": "L3_statistical",
+      "type": "statistical_concept",
+      "label": "MNAR (Missing Not At Random)",
+      "description": "Missingness mechanism where probability of missing depends on unobserved value itself or target variable",
+      "types_of_missingness": {
+        "MCAR": "Missing Completely At Random - missingness unrelated to any variables",
+        "MAR": "Missing At Random - missingness related to observed variables but not the missing value",
+        "MNAR": "Missing Not At Random - missingness related to the missing value or target"
+      },
+      "phishing_example": {
+        "hypothesis": "Phishing sites deliberately omit DomainAge to evade detection",
+        "evidence": "35% missing in phishing vs 8% in legitimate sites",
+        "implication": "Missingness itself is a fraud signal, not just noise"
+      },
+      "test_procedure": {
+        "method": "Chi-square test of independence",
+        "null_hypothesis": "Missingness independent of target variable",
+        "test_statistic": "χ² = Σ(Observed - Expected)² / Expected",
+        "decision_rule": "If p < 0.05, reject H0 → MNAR detected"
+      },
+      "pipeline_decision": {
+        "if_mcar_or_mar": "Simple imputation (median/mode) sufficient",
+        "if_mnar": "Create binary missing-value flag BEFORE imputation to preserve signal"
+      },
+      "stakeholder_explanation": "Some missing data is informative. For example, phishing sites might hide their domain age on purpose. We need to detect this pattern and use it as a feature, not just fill in missing values blindly.",
+      "interview_depth": {
+        "poor": "Doesn't test for MNAR, just imputes",
+        "qualified": "Mentions MNAR concept, suggests testing",
+        "excellent": "Shows chi-square test in notebook: χ²=42.3, p=0.003 → created DomainAge_missing binary flag → improved recall by 2.8pp"
+      }
+    },
+    {
+      "id": "statistical_chi_square_test",
+      "layer": "L3_statistical",
+      "type": "statistical_test",
+      "label": "Chi-Square (χ²) Test",
+      "description": "Non-parametric test for independence between categorical variables or goodness-of-fit",
+      "test_types": {
+        "independence": "Test if two categorical variables are independent (e.g., missingness vs target)",
+        "goodness_of_fit": "Test if observed distribution matches expected (e.g., is class split 50:50?)"
+      },
+      "formula": {
+        "test_statistic": "χ² = Σ [(O_i - E_i)² / E_i] for all cells",
+        "degrees_of_freedom": "df = (rows - 1) × (columns - 1)",
+        "p_value": "P(χ²_df > observed_χ²) from chi-square distribution"
+      },
+      "phishing_applications": {
+        "class_imbalance": "Test if 55:45 split is significant vs 50:50 → χ²=115.2, p<0.001 → Yes",
+        "mnar_detection": "Test if DomainAge missingness independent of target → χ²=42.3, p=0.003 → No (MNAR)",
+        "stratified_split_validation": "Test if train/val/test class distributions equal → χ²=0.82, p=0.89 → Yes (valid)"
+      },
+      "interpretation_guide": {
+        "p_less_than_0_05": "Reject null hypothesis (variables are related / distributions differ)",
+        "p_greater_than_0_05": "Fail to reject null (no evidence of relationship / distributions similar)"
+      },
+      "stakeholder_explanation": "Chi-square test tells us if patterns we see are real or just random chance. For example, testing if the 55%-45% class split is meaningful or if missing values are related to fraud.",
+      "interview_depth": {
+        "poor": "Doesn't mention or confuses with t-test",
+        "qualified": "Mentions chi-square for categorical testing",
+        "excellent": "Shows specific applications: 'Tested class imbalance significance: χ²=115.2, df=1, p<0.001. Also validated stratified splits: χ²=0.82, p=0.89 across train/val/test.'"
+      }
+    },
+    {
+      "id": "statistical_vif",
+      "layer": "L3_statistical",
+      "type": "statistical_concept",
+      "label": "VIF (Variance Inflation Factor)",
+      "description": "Quantifies severity of multicollinearity by measuring how much variance of coefficient is inflated due to correlation with other features",
+      "formula": {
+        "definition": "VIF_j = 1 / (1 - R²_j)",
+        "r_squared": "R²_j from regressing feature j on all other features",
+        "interpretation": "VIF=1 (no correlation), VIF=5 (moderate), VIF>10 (problematic)"
+      },
+      "why_better_than_correlation": {
+        "correlation_matrix": "Only shows pairwise relationships",
+        "vif": "Detects multicollinearity involving multiple features (A and B individually low correlation with C, but together highly predict C)"
+      },
+      "business_impact": {
+        "high_vif": "Coefficient instability → model hard to interpret → fails regulatory explainability",
+        "low_vif": "Stable coefficients → reliable feature importance → clear explanations"
+      },
+      "threshold_decision": {
+        "vif_less_than_5": "No action needed",
+        "vif_5_to_10": "Consider feature engineering (combine or remove)",
+        "vif_greater_than_10": "Remove or combine features (severe collinearity)"
+      },
+      "stakeholder_explanation": "VIF helps us detect when features are too similar to each other, which makes the model unstable and hard to explain. It's like having three witnesses who always agree—you don't get three independent opinions.",
+      "interview_depth": {
+        "poor": "Only checks correlation matrix, doesn't mention VIF",
+        "qualified": "Mentions VIF exists for multicollinearity detection",
+        "excellent": "Shows VIF analysis: 'Calculated VIF for all features. Highest: NoOfSelfRef (VIF=3.2) with NoOfExternalRef—expected for link counts. All VIF<5, no severe multicollinearity. Decided not to drop features.'"
+      }
+    },
+    {
+      "id": "statistical_skewness",
+      "layer": "L3_statistical",
+      "type": "statistical_concept",
+      "label": "Skewness (Distribution Asymmetry)",
+      "description": "Measure of distribution asymmetry; heavy-tailed distributions indicate adversarial patterns or outliers",
+      "formula": {
+        "mathematical": "Skewness = E[(X - μ)³] / σ³",
+        "interpretation": "Skew=0 (symmetric), Skew>0 (right tail), Skew<0 (left tail)"
+      },
+      "threshold_rules": {
+        "abs_skew_less_than_0_5": "Approximately symmetric, no transform needed",
+        "abs_skew_0_5_to_1": "Moderately skewed, transform optional",
+        "abs_skew_greater_than_1": "Highly skewed, log-transform recommended"
+      },
+      "phishing_context": {
+        "why_skewed": "Adversarial behavior: phishing sites use extreme values (many popups, many iframes) to obfuscate",
+        "features_affected": "NoOfPopup (skew=8.1), NoOfImage (5.2), NoOfiFrame (4.3), NoOfSelfRef (3.8)",
+        "business_meaning": "Extreme skewness indicates adversarial content patterns"
+      },
+      "transformation_validation": {
+        "method": "Convergence experiment: train with/without log-transform",
+        "expected_result": "Transform should reduce training time 2-5× and improve final loss"
+      },
+      "stakeholder_explanation": "Skewness tells us if data is lopsided. High skewness often means phishing sites are using extreme tactics (tons of popups) that legitimate sites don't. We transform these to help the model learn better.",
+      "interview_depth": {
+        "poor": "Applies transform mechanically without understanding why",
+        "qualified": "Explains |skew|>1 threshold and need for transformation",
+        "excellent": "Validates empirically: 'Log-transform for 10 features with |skew|>1. Validated via convergence: without transform 512 epochs, with transform 120 epochs (4.3× speedup). Q-Q plots show improved normality.'"
+      }
+    },
+    {
+      "id": "statistical_qq_plot",
+      "layer": "L3_statistical",
+      "type": "statistical_visualization",
+      "label": "Q-Q Plot (Quantile-Quantile)",
+      "description": "Visual test comparing empirical distribution to theoretical distribution (typically normal)",
+      "interpretation": {
+        "points_on_line": "Distribution matches theoretical (e.g., normal)",
+        "curve_above_line": "Heavy right tail (positive skew)",
+        "curve_below_line": "Heavy left tail (negative skew)",
+        "s_shape": "Both tails heavier than normal (high kurtosis)"
+      },
+      "advantage_over_histogram": {
+        "histogram": "Visual, but subjective and bin-dependent",
+        "qq_plot": "Directly shows deviations from normality at specific quantiles"
+      },
+      "phishing_application": "Validate that log-transformed features are closer to normal for improved convergence",
+      "stakeholder_explanation": "Q-Q plots show us if data follows the bell curve pattern models expect. If not, we need to transform it.",
+      "interview_depth": {
+        "poor": "Doesn't use Q-Q plots",
+        "qualified": "Mentions Q-Q plots as validation tool",
+        "excellent": "Shows Q-Q plots: 'Pre-transform: severe right-tail deviation for NoOfPopup. Post-log-transform: points follow diagonal line closely → validates transformation.'"
+      }
+    },
+    {
+      "id": "statistical_stratified_sampling",
+      "layer": "L3_statistical",
+      "type": "statistical_technique",
+      "label": "Stratified Sampling",
+      "description": "Sampling strategy that preserves class distribution in train/val/test splits",
+      "why_critical": {
+        "naive_random_split": "Risk of distribution shift (e.g., train 60:40, test 50:50)",
+        "stratified_split": "Ensures proportions maintained (all splits 55:45)",
+        "impact": "Prevents biased evaluation and maintains model generalizability"
+      },
+      "validation": {
+        "method": "Chi-square test comparing split distributions to original",
+        "null_hypothesis": "Split distributions = original distribution",
+        "success_criterion": "p > 0.05 (distributions not significantly different)"
+      },
+      "implementation": "sklearn.model_selection.train_test_split(stratify=y)",
+      "stakeholder_explanation": "Stratified sampling is like ensuring we have the same ratio of phishing to legitimate sites in our training, validation, and test sets. This prevents the model from being unfairly tested on different data than it trained on.",
+      "interview_depth": {
+        "poor": "Mentions stratified but doesn't validate",
+        "qualified": "Uses stratify=y parameter, logs distributions",
+        "excellent": "Validates with chi-square: 'Post-split chi-square test: train [55.1%, 44.9%], val [54.8%, 45.2%], test [55.0%, 45.0%], χ²=0.82, p=0.89 → No significant difference, stratification successful.'"
+      }
+    },
+    {
+      "id": "model_logistic_regression",
+      "layer": "L4_model",
+      "type": "algorithm",
+      "label": "Logistic Regression",
+      "description": "Linear model for binary classification using sigmoid function; baseline for interpretability",
+      "advantages": [
+        "Coefficient-based explainability (regulatory compliance)",
+        "Fast inference (~1ms per prediction)",
+        "Stable and well-understood",
+        "Low memory footprint (<1MB model size)"
+      ],
+      "disadvantages": [
+        "Assumes linear decision boundary",
+        "Cannot capture complex feature interactions",
+        "Sensitive to feature scaling"
+      ],
+      "business_justification": "Required for regulatory explainability. Legal team needs to explain: 'Site blocked because domain age < 6 months (coefficient=-0.42) and no robots.txt (coefficient=-0.31).'",
+      "deployment_constraints": "Ideal for browser extension: tiny model size, ultra-fast inference",
+      "expected_performance": "ROC AUC: 0.75-0.82 (good but not best)",
+      "stakeholder_explanation": "Logistic Regression is our 'explainable baseline.' It's not the most powerful model, but we can clearly explain every decision, which legal requires. Think of it as the simple, transparent option.",
+      "interview_depth": {
+        "poor": "Just mentions 'used logistic regression'",
+        "qualified": "Explains interpretability benefit and expected performance",
+        "excellent": "Custom implementation with validation: 'Implemented gradient descent from scratch (demonstrates understanding). Validated against sklearn: AUC difference 0.0016 (0.2%). Production would use sklearn for speed, but custom implementation signals depth.'"
+      }
+    },
+    {
+      "id": "model_knn",
+      "layer": "L4_model",
+      "type": "algorithm",
+      "label": "K-Nearest Neighbors (KNN)",
+      "description": "Non-parametric instance-based learning; tests if local similarity patterns matter",
+      "advantages": [
+        "No training needed (lazy learner)",
+        "Non-parametric (no distributional assumptions)",
+        "Can capture local patterns and clusters"
+      ],
+      "disadvantages": [
+        "Slow inference O(n) distance calculations",
+        "Memory-intensive (stores all training data)",
+        "Sensitive to irrelevant features and scaling"
+      ],
+      "business_justification": "Hypothesis testing: If KNN performs well, suggests phishing sites cluster in feature space (localized patterns). If poorly, validates that global linear/tree boundaries suffice.",
+      "experimental_result": "KNN AUC=0.809 << XGBoost 0.888 → Rejects local pattern hypothesis → No need to pursue deep learning or clustering methods",
+      "deployment_verdict": "NOT production-ready (inference too slow for 100K+ predictions/day), but serves diagnostic purpose",
+      "stakeholder_explanation": "KNN is our 'pattern detector.' We used it to test if phishing sites form clusters we need to detect with complex models. They don't—simpler models work fine. KNN served its purpose but won't be deployed.",
+      "interview_depth": {
+        "poor": "Included KNN just to meet '3 models' requirement",
+        "qualified": "Explains non-parametric benefit as comparison baseline",
+        "excellent": "Hypothesis-driven inclusion: 'KNN tests if local patterns matter. Result: AUC 0.809 vs XGBoost 0.888 → Linear/tree boundaries sufficient. Informed decision NOT to pursue deep learning. KNN computational cost (O(n) inference) makes it impractical for production, but it validated our feature engineering approach.'"
+      }
+    },
+    {
+      "id": "model_xgboost",
+      "layer": "L4_model",
+      "type": "algorithm",
+      "label": "XGBoost (Extreme Gradient Boosting)",
+      "description": "Ensemble of decision trees using gradient boosting; industry standard for fraud detection",
+      "advantages": [
+        "Handles non-linear relationships and interactions natively",
+        "Built-in regularization prevents overfitting",
+        "Scale_pos_weight handles class imbalance",
+        "Feature importance via gain/split metrics",
+        "Fast training and inference for tree ensembles"
+      ],
+      "disadvantages": [
+        "Less interpretable than logistic (requires SHAP for explanations)",
+        "More hyperparameters to tune",
+        "Larger model size (~15MB vs 1MB logistic)"
+      ],
+      "business_justification": "Best recall-FPR trade-off for production deployment. Handles complex fraud patterns logistic can't capture. SHAP values provide explainability for legal compliance.",
+      "hyperparameter_strategy": {
+        "max_depth": "6 (controls tree complexity, prevents overfitting)",
+        "learning_rate": "0.2 (step size for updates)",
+        "n_estimators": "80 (number of trees, limited by early stopping)",
+        "scale_pos_weight": "1.22 (55/45 ratio to handle imbalance)"
+      },
+      "early_stopping": "Validation set monitors overfitting. Training stops when validation AUC plateaus for 20 rounds. Restores best iteration.",
+      "expected_performance": "ROC AUC: 0.85-0.90 (best among three models)",
+      "stakeholder_explanation": "XGBoost is our 'production powerhouse.' It's the most accurate model, catches the most phishing attacks, and handles complex patterns. We use SHAP to explain its decisions to meet legal requirements.",
+      "interview_depth": {
+        "poor": "Uses XGBoost with default parameters, doesn't explain why",
+        "qualified": "Mentions gradient boosting benefits, basic hyperparameter tuning",
+        "excellent": "Comprehensive justification: 'XGBoost chosen for production: (1) Best AUC 0.888 vs Logistic 0.825, (2) Handles imbalance via scale_pos_weight=1.22, (3) Early stopping with validation set prevents overfitting (trained 80 rounds, best at 68). Hyperparameter grid search: 54 configs × 5-fold CV = 270 fits, 18 minutes. Selected depth=6 over 8 despite 0.003 AUC loss—faster inference, better test generalization (0.888 vs 0.882).'"
+      }
+    },
+    {
+      "id": "model_threshold_tuning",
+      "layer": "L4_model",
+      "type": "technique",
+      "label": "Decision Threshold Tuning",
+      "description": "Optimizing classification cutoff to meet business KPI constraints",
+      "default_problem": "Default threshold=0.5 optimizes accuracy, not business metrics",
+      "procedure": {
+        "step_1": "Train model on training set, generate probabilities on validation set",
+        "step_2": "Sweep thresholds from 0.0 to 1.0 (e.g., 1000 values)",
+        "step_3": "For each threshold, compute recall, FPR, precision",
+        "step_4": "Select threshold maximizing recall subject to FPR ≤ constraint",
+        "step_5": "Apply tuned threshold to test set for unbiased evaluation"
+      },
+      "business_constraint_optimization": {
+        "objective": "max Recall",
+        "constraint": "FPR ≤ 0.03 (or 0.05 depending on product requirement)",
+        "rationale": "Fraud detection prioritizes catching attacks (recall) over precision"
+      },
+      "pareto_frontier_concept": "Threshold sweep generates recall-FPR curve showing all feasible trade-offs. If curve doesn't enter target KPI region, need better features (not just threshold tuning).",
+      "stakeholder_explanation": "Threshold tuning is like adjusting the security guard's strictness. Lower threshold (strict guard) catches more threats but inconveniences more innocents. We tune to find the sweet spot that meets our security goals without overwhelming support with false alarms.",
+      "visualization": "Dual-axis plot: X=threshold, Y-left=recall, Y-right=FPR, with horizontal constraint line at FPR=5%, vertical line at selected threshold",
+      "interview_depth": {
+        "poor": "Uses default threshold 0.5, doesn't tune",
+        "qualified": "Mentions threshold tuning, states chosen threshold",
+        "excellent": "Comprehensive process: 'Swept 1000 thresholds on validation set. Default 0.5: recall=86.5%, FPR=18.2% (unacceptable). Tuned to 0.65: recall=75.2%, FPR=4.8% (meets constraint). Test set with tuned threshold: recall=73.8%, FPR=5.1%. Pareto curve visualization shows current features hit ceiling—cannot achieve recall≥85% AND FPR≤3% simultaneously. Next iteration: engineer SSL, WHOIS features to shift Pareto frontier.'"
+      }
+    },
+    {
+      "id": "implementation_pipeline_architecture",
+      "layer": "L5_implementation",
+      "type": "architecture",
+      "label": "Modular Pipeline Design",
+      "description": "Software engineering best practices for ML pipelines: separation of concerns, configurability, testability",
+      "design_principles": [
+        "Single Responsibility: Each module handles one aspect (loading, preprocessing, training, evaluation)",
+        "Open-Closed: Easy to extend (add models) without modifying existing code",
+        "Dependency Inversion: Depend on abstractions (BaseModel interface), not concrete implementations",
+        "Don't Repeat Yourself: Reusable components, no code duplication"
+      ],
+      "modules": {
+        "data_loader": "SQLite → pandas DataFrame with schema validation",
+        "preprocessing": "Cleaning, imputation, scaling, encoding; fitted on train, applied to val/test",
+        "feature_engineering": "Domain-specific transforms (domain age bins, missing flags, ratios)",
+        "data_splitter": "Stratified train/val/test split with validation",
+        "model_trainer": "Train multiple models via configuration, save artifacts",
+        "evaluator": "Compute metrics, threshold tuning, visualization generation",
+        "model_selector": "Choose best model based on business criteria"
+      },
+      "configurability": "YAML config for models, hyperparameters, preprocessing options → Experimentation without code changes",
+      "validation_mechanisms": "pipeline_validator.py checks data quality, split stratification, feature consistency",
+      "stakeholder_explanation": "Our pipeline is like an assembly line where each station does one job well. You can swap out models or tune settings via a config file without touching code. This makes experimentation fast and reduces bugs.",
+      "interview_depth": {
+        "poor": "Monolithic script, hardcoded values, difficult to modify",
+        "qualified": "Modular functions, basic config file, separate train/eval",
+        "excellent": "Factory pattern for models, BaseModel interface, comprehensive validation: 'ModelFactory.create(model_name, config) instantiates models. Adding new model: (1) Inherit from BaseModel, (2) Implement train/predict/save, (3) Add to config.yaml. Pipeline validator runs chi-square on splits (p=0.89, validated), checks feature consistency, logs to pipeline_validation.json. All experiments timestamped in experiments/run_YYYYMMDD_HHMMSS/ with config snapshot for reproducibility.'"
+      }
+    },
+    {
+      "id": "implementation_error_handling",
+      "layer": "L5_implementation",
+      "type": "code_quality",
+      "label": "Production Error Handling",
+      "description": "Graceful failure, informative errors, logging for debugging",
+      "error_categories": {
+        "data_errors": "Missing database, schema mismatch, insufficient rows → FileNotFoundError, ValueError",
+        "quality_errors": "Failed stratification, extreme outliers → DataQualityError with diagnostic info",
+        "model_errors": "Training failure, convergence issues → ModelTrainingError with hyperparameters logged",
+        "deployment_errors": "Latency SLA violation, feature drift → Alert with context (which feature, magnitude)"
+      },
+      "logging_strategy": {
+        "level_info": "Pipeline progress (dataset loaded, model trained, metrics computed)",
+        "level_warning": "Data quality issues (clipped outliers, imputed missing), performance degradation",
+        "level_error": "Fatal issues (database unreachable, model training failure)",
+        "output": "pipeline.log with timestamps, log levels, contextual messages"
+      },
+      "retry_logic": "Database connections: 3 retries with exponential backoff (1s, 2s, 4s)",
+      "stakeholder_explanation": "Production systems must handle failures gracefully. If the database goes down, we retry automatically. If data quality is bad, we log detailed warnings for debugging. Robust error handling prevents 3 AM pages to engineers.",
+      "interview_depth": {
+        "poor": "No error handling, crashes on edge cases",
+        "qualified": "Basic try-except blocks, some logging",
+        "excellent": "Comprehensive error handling: 'Three-tier approach: (1) Connection failures → sqlite3.Error with 3 retries, exponential backoff. (2) Schema validation → checks for required columns, raises ValueError with missing column names. (3) Data quality gates → asserts row count >1000, outlier percentage <20%, logs warnings to pipeline.log. All errors include context for debugging (timestamp, query, stack trace).'"
+      }
+    },
+    {
+      "id": "implementation_monitoring",
+      "layer": "L5_implementation",
+      "type": "deployment",
+      "label": "Production Monitoring & Observability",
+      "description": "Real-time tracking of model performance, feature drift, system health",
+      "monitoring_layers": {
+        "L1_system_health": "Request rate, p50/p95/p99 latency, error rate, memory usage → Prometheus metrics",
+        "L2_feature_drift": "KL divergence for top 10 features vs training distribution → Daily checks",
+        "L3_performance_decay": "Recall, FPR on recent labeled samples (n=200 weekly) → Alert if recall <70%",
+        "L4_business_metrics": "Blocks per day, user appeal rate (FPR proxy), override rate"
+      },
+      "alerting_rules": {
+        "critical": "Recall <65% or p99 latency >150ms → PagerDuty immediate alert",
+        "warning": "Feature drift D_KL >0.1 or FPR >6% → Investigation within 24 hours",
+        "info": "Weekly performance report to stakeholders"
+      },
+      "visualization": "Grafana dashboards: feature drift time-series, performance metrics with KPI bounds, latency distributions, business metrics bar charts",
+      "stakeholder_explanation": "We monitor the model like a doctor monitors vital signs. If recall drops or false alarms spike, we get automatic alerts. Dashboards show real-time health so product, legal, and engineering stay informed.",
+      "interview_depth": {
+        "poor": "No monitoring strategy mentioned",
+        "qualified": "Mentions need for monitoring, suggests tracking recall/FPR",
+        "excellent": "Comprehensive monitoring architecture: 'Prometheus + Grafana stack. Metrics exposed at /metrics endpoint (Prometheus format). Four monitoring layers: (1) System health (real-time latency/errors), (2) Feature drift (daily KL divergence, alert if D_KL>0.1), (3) Performance decay (weekly recall on n=200 sample, alert if <70%), (4) Business metrics (hourly blocks/appeals). Grafana dashboards with alert thresholds. PagerDuty integration for critical alerts (recall <65%, p99 >150ms). Historical data: 30-day retention in Prometheus, 1-year in BigQuery for trend analysis.'"
+      }
+    },
+    {
+      "id": "implementation_deployment_strategy",
+      "layer": "L5_implementation",
+      "type": "deployment",
+      "label": "Blue-Green Deployment with Rollback",
+      "description": "Zero-downtime deployment with instant rollback capability",
+      "deployment_phases": {
+        "phase_1_shadow": "Week 1: Deploy new model, log predictions without affecting users, compare to production model",
+        "phase_2_ab_test": "Week 2: Route 10% traffic to new model (green), 90% to old (blue), monitor metrics",
+        "phase_3_gradual_rollout": "Week 3-4: Increase to 50% → 100% if metrics stable, with monitoring at each stage",
+        "rollback_trigger": "If FPR >6% or recall <65% for 2 consecutive days → instant rollback to blue"
+      },
+      "rollback_mechanism": {
+        "kubernetes": "Two replica sets (blue=v1, green=v2), load balancer routes traffic",
+        "rollback_time": "<1 minute (update load balancer config, no model redeployment needed)",
+        "version_control": "Git tags (v1.0.0, v2.0.0), Docker images (ml-model:v1.0.0)"
+      },
+      "audit_trail": "Every prediction logged: {timestamp, url_hash, model_version, prediction, confidence, features_hash} → 90-day retention → BigQuery archive",
+      "stakeholder_explanation": "Blue-green deployment is like having a backup plan ready. We run the new model alongside the old one, gradually shift traffic, and can instantly switch back if anything goes wrong. Zero downtime, zero risk.",
+      "interview_depth": {
+        "poor": "No deployment strategy mentioned",
+        "qualified": "Mentions A/B testing or gradual rollout",
+        "excellent": "Detailed deployment plan: 'Blue-green with three phases: (1) Shadow mode (week 1): v2 logs predictions, no user impact, compare disagreement rate with v1. (2) A/B test (week 2): 10% traffic to v2, monitor FPR/recall daily, rollback if FPR >6%. (3) Gradual rollout (weeks 3-4): 50% → 100% with monitoring. Kubernetes load balancer enables <1 min rollback. Audit trail logs all predictions with model version for debugging. Daily status reports to product/legal/engineering with go/no-go decisions.'"
+      }
+    },
+    {
+      "id": "mathematical_loss_function",
+      "layer": "L6_mathematical",
+      "type": "mathematical_foundation",
+      "label": "Binary Cross-Entropy Loss",
+      "description": "Loss function for binary classification; measures divergence between predicted probabilities and true labels",
+      "formula": {
+        "per_sample": "L(y, ŷ) = -[y log(ŷ) + (1-y) log(1-ŷ)]",
+        "dataset": "L(θ) = -(1/m) Σ[y_i log(ŷ_i) + (1-y_i) log(1-ŷ_i)]",
+        "with_regularization": "L(θ) = -(1/m) Σ[...] + (λ/2m) Σθ²"
+      },
+      "interpretation": {
+        "why_log": "Log heavily penalizes confident wrong predictions (high ŷ when y=0)",
+        "convexity": "Convex function for logistic regression → guaranteed global minimum",
+        "gradient": "Leads to clean gradient: ∂L/∂θ = (1/m) X^T (ŷ - y)"
+      },
+      "business_connection": "Minimizing this loss = maximizing likelihood of correct classifications = better fraud detection",
+      "interview_depth": {
+        "poor": "Doesn't mention loss function or just says 'cross-entropy'",
+        "qualified": "Can write formula, explains it measures prediction error",
+        "excellent": "Derives gradient: 'Binary cross-entropy L(θ) = -(1/m)Σ[y log(σ(Xθ)) + (1-y)log(1-σ(Xθ))]. Taking derivative: ∂L/∂θ = (1/m)X^T(σ(Xθ) - y) where σ is sigmoid. Added L2 regularization (λ/2m)Σθ² to prevent overfitting. Numerical stability: added ε=1e-15 to log terms to prevent log(0).'"
+      }
+    },
+    {
+      "id": "mathematical_gradient_descent",
+      "layer": "L6_mathematical",
+      "type": "mathematical_foundation",
+      "label": "Gradient Descent Optimization",
+      "description": "Iterative algorithm for finding parameter values that minimize loss function",
+      "update_rule": {
+        "formula": "θ_new = θ_old - α × ∇L(θ)",
+        "learning_rate": "α controls step size (too large: oscillation, too small: slow convergence)",
+        "gradient": "∇L(θ) = (1/m) X^T (ŷ - y) for logistic regression"
+      },
+      "convergence_criterion": {
+        "loss_plateau": "|L(θ_t) - L(θ_{t-1})| < ε (e.g., ε=1e-4)",
+        "gradient_norm": "||∇L(θ)|| < ε (gradient magnitude near zero)",
+        "max_iterations": "Stop after fixed epochs (e.g., 120) even if not converged"
+      },
+      "variants": {
+        "batch_gd": "Use full dataset per update (stable but slow)",
+        "sgd": "Use single sample per update (fast but noisy)",
+        "mini_batch": "Use batch of samples (balance speed and stability)"
+      },
+      "business_connection": "Efficient optimization = faster model training = quicker iteration cycles = faster time to production",
+      "interview_depth": {
+        "poor": "Doesn't explain optimization, just uses sklearn",
+        "qualified": "Mentions gradient descent, can state update rule",
+        "excellent": "Implements from scratch with validation: 'Implemented batch gradient descent: θ_new = θ_old - α(1/m)X^T(σ(Xθ) - y). Learning rate α=0.1 (tuned via grid search 0.01-0.5). Convergence: |loss_t - loss_{t-1}| <1e-4. Compared to sklearn (L-BFGS optimizer): my implementation AUC=0.8252, sklearn AUC=0.8268 (0.0016 difference, validates correctness). My GD: 120 epochs, 1.9min. Sklearn: 15 iterations, 0.3min (5× faster due to optimized C implementation).'"
+      }
+    },
+    {
+      "id": "mathematical_sigmoid_function",
+      "layer": "L6_mathematical",
+      "type": "mathematical_foundation",
+      "label": "Sigmoid (Logistic) Function",
+      "description": "Maps real-valued scores to probabilities in (0,1) for binary classification",
+      "formula": {
+        "definition": "σ(z) = 1 / (1 + e^(-z))",
+        "properties": "σ(0) = 0.5, σ(∞) = 1, σ(-∞) = 0",
+        "derivative": "σ'(z) = σ(z) × (1 - σ(z))"
+      },
+      "interpretation": {
+        "input": "z = θ^T x (linear combination of features)",
+        "output": "Probability P(y=1|x) that sample is positive class",
+        "threshold": "If σ(z) ≥ threshold (e.g., 0.5), predict y=1"
+      },
+      "business_connection": "Sigmoid converts model score to probability → enables threshold tuning for business KPIs",
+      "interview_depth": {
+        "poor": "Doesn't explain sigmoid or why it's used",
+        "qualified": "States sigmoid formula and that it outputs probabilities",
+        "excellent": "Derives properties: 'Sigmoid σ(z) = 1/(1+e^(-z)) maps linear scores z=θ^Tx to probabilities. Derivative: σ'(z) = σ(z)(1-σ(z)) simplifies backprop. S-shaped curve: center at z=0 (σ=0.5), asymptotes at 0 and 1. Logistic regression models log-odds: log(p/(1-p)) = θ^Tx → linear in log-odds space. Threshold tuning: default 0.5 optimizes accuracy; we tune to optimize recall subject to FPR constraint.'"
+      }
+    },
+    {
+      "id": "mathematical_roc_auc_derivation",
+      "layer": "L6_mathematical",
+      "type": "mathematical_foundation",
+      "label": "ROC AUC Calculation (Rank-Based)",
+      "description": "Area under ROC curve via trapezoidal integration or Mann-Whitney U statistic",
+      "methods": {
+        "trapezoidal_integration": "AUC = ∫_0^1 TPR(FPR) dFPR ≈ Σ (FPR_i+1 - FPR_i) × (TPR_i + TPR_i+1) / 2",
+        "mann_whitney_u": "AUC = P(score_positive > score_negative) = (1/n_pos × n_neg) Σ I(s_i > s_j)",
+        "rank_based": "AUC = (Sum_of_positive_ranks - n_pos(n_pos+1)/2) / (n_pos × n_neg)"
+      },
+      "interpretation": "AUC = 0.888 means 88.8% chance a random phishing site scores higher than a random legitimate site",
+      "computational_complexity": {
+        "naive": "O(n_pos × n_neg) pairwise comparisons",
+        "sorting": "O(n log n) sort by scores, then O(n) rank calculation"
+      },
+      "business_connection": "AUC summarizes model discrimination → single metric for comparing models before threshold tuning",
+      "interview_depth": {
+        "poor": "Just reports sklearn AUC without understanding",
+        "qualified": "Explains AUC as ranking metric, mentions threshold independence",
+        "excellent": "Implements rank-based calculation: 'Custom AUC via rank method: (1) Sort samples by predicted probability descending, (2) For each unique threshold, compute TPR and FPR, (3) Integrate via trapezoidal rule: AUC = Σ (FPR_i+1 - FPR_i)(TPR_i + TPR_i+1)/2. Complexity: O(n log n) sort + O(n) integration. Validated against sklearn: custom AUC=0.8880, sklearn=0.8880 (exact match to 4 decimals). Demonstrates understanding beyond API usage.'"
+      }
+    }
+  ],
+  
+  "edges": [
+    {
+      "source": "business_fraud_exposure",
+      "target": "kpi_recall",
+      "type": "drives_metric",
+      "label": "Minimizing fraud exposure requires maximizing recall",
+      "reasoning": "Higher recall = more attacks caught = lower fraud losses",
+      "stakeholder_explanation": "Think of recall as our 'catch rate.' If we catch 70% of attacks (recall=0.70), we prevent $3.5M of the $5M potential fraud. Every percentage point of recall improvement directly reduces customer losses.",
+      "quantification": "10,000 attacks/month × $500/attack × (1 - recall) = monthly exposure",
+      "interview_question": "How does recall impact business outcomes?",
+      "excellent_answer": "Quantifies: 'At 70% recall, we miss 30% of attacks = 3,000 of 10,000 monthly = $1.5M exposure. Improving to 80% reduces exposure to $1M (33% reduction). Trade-off: higher recall often increases FPR unless we improve features.'"
+    },
+    {
+      "source": "business_customer_trust",
+      "target": "kpi_fpr",
+      "type": "drives_metric",
+      "label": "Maintaining customer trust requires minimizing FPR",
+      "reasoning": "Lower FPR = fewer false alarms = less user frustration = higher retention",
+      "stakeholder_explanation": "FPR directly translates to how often we block safe sites. At 18% FPR, we wrongly block 18 of every 100 legitimate sites users visit. That's intolerable—users will disable the extension.",
+      "quantification": "FPR × Legitimate_sites_per_day × Users × Escalation_rate × Cost_per_ticket",
+      "interview_question": "Why is FPR ≤5% a hard constraint?",
+      "excellent_answer": "Cost-benefit: '18% FPR on 275M daily legitimate predictions = 49.5M false alarms. At 1% escalation, 495K support tickets × $5 = $2.5M daily cost. Customer churn analysis: FPR >10% triggers 15% monthly churn = $100M LTV loss. FPR ≤5% keeps costs manageable and trust high.'"
+    },
+    {
+      "source": "business_regulatory_compliance",
+      "target": "model_logistic_regression",
+      "type": "requires_model",
+      "label": "Regulatory explainability requires interpretable models",
+      "reasoning": "GDPR Article 22 demands explanation for automated decisions; logistic coefficients provide this",
+      "stakeholder_explanation": "Legal requires we explain every blocked site. Logistic Regression lets us say: 'Blocked because domain is 2 months old (coefficient=-0.42, high risk) and has no robots.txt (coefficient=-0.31).' Black-box models can't do this directly.",
+      "technical_bridge": "Logistic coefficients = feature importance weights that are directly interpretable",
+      "interview_question": "Why is logistic regression mandatory despite lower performance?",
+      "excellent_answer": "Regulatory requirement: 'GDPR Article 22 requires explanations. Logistic provides coefficient-based interpretability: θ_DomainAge=-0.42 means 'younger domains increase phishing probability.' For XGBoost (better performance but black-box), we use SHAP values for post-hoc explainability. Trade-off: Logistic AUC=0.825 vs XGBoost 0.888, but logistic is regulatory-compliant baseline.'"
+    },
+    {
+      "source": "stakeholder_product_manager",
+      "target": "kpi_recall",
+      "type": "sets_constraint",
+      "label": "PM sets minimum recall target (≥70%)",
+      "reasoning": "Product owner balances security value proposition with achievability",
+      "interview_question": "Where does the 70% recall target come from?",
+      "excellent_answer": "Three sources: (1) Assessment requirement, (2) Industry benchmark (Google Safe Browsing 75-85%), (3) Business analysis: 70% catches 7 of 10 attacks → $1.5M monthly exposure vs $2M at 60% → cost-benefit inflection point. Below 70%, fraud insurance premiums spike.'"
+    },
+    {
+      "source": "stakeholder_product_manager",
+      "target": "kpi_fpr",
+      "type": "sets_constraint",
+      "label": "PM sets maximum FPR target (≤5%)",
+      "reasoning": "Product owner limits false alarms to prevent user churn and support overload",
+      "interview_question": "Why is 5% FPR the threshold, not 10% or 1%?",
+      "excellent_answer": "Support capacity: 'At 5% FPR, 1% escalation = 137K daily tickets (manageable with current team). At 10%, 275K tickets (need to double support staff). At 1% FPR, recall drops to ~50% (misses 5,000 attacks = $2.5M exposure). 5% is optimal balance per cost modeling.'"
+    },
+    {
+      "source": "stakeholder_legal_compliance",
+      "target": "implementation_monitoring",
+      "type": "requires_mechanism",
+      "label": "Legal requires audit trail and bias monitoring",
+      "reasoning": "Compliance demands logged decisions and fairness testing for protected groups",
+      "stakeholder_explanation": "Legal needs proof that: (1) Every decision can be explained retrospectively, (2) Model doesn't discriminate against startups (young domains), (3) Audit trail exists for regulatory inspection.",
+      "interview_question": "How do you ensure regulatory compliance in production?",
+      "excellent_answer": "Three mechanisms: (1) Prediction logging: {timestamp, url_hash, model_version, features, decision, confidence} → 90-day retention → BigQuery archive. (2) Bias testing: Weekly FPR comparison: startups (domain <6mo) vs established (>24mo). Current: 5.2% vs 3.8% (within 2pp tolerance). (3) Audit dashboard: Legal/compliance team can query any historical prediction with full context.'"
+    },
+    {
+      "source": "stakeholder_engineering_manager",
+      "target": "implementation_deployment_strategy",
+      "type": "requires_mechanism",
+      "label": "Engineering requires safe deployment with rollback",
+      "reasoning": "Reliability and uptime targets demand zero-downtime deployments and instant rollback",
+      "stakeholder_explanation": "Engineering won't deploy a new model that risks taking down production. Need: (1) Gradual rollout to catch issues early, (2) Instant rollback if metrics degrade, (3) No user-facing downtime.",
+      "interview_question": "How do you deploy models safely without risking downtime?",
+      "excellent_answer": "Blue-green deployment: 'Kubernetes runs two replica sets (blue=v1, green=v2). Week 1: Shadow mode (v2 logs, no user impact). Week 2: A/B test (10% traffic to v2, monitor daily). Weeks 3-4: Gradual rollout (50% → 100%). Rollback trigger: FPR >6% or recall <65% for 2 days → Load balancer switches to blue in <1 minute. Zero downtime, zero risk.'"
+    },
+    {
+      "source": "kpi_recall",
+      "target": "kpi_fpr",
+      "type": "trades_off_with",
+      "label": "Recall-FPR trade-off: improving one often worsens the other",
+      "reasoning": "Lower threshold increases both recall (catch more attacks) and FPR (more false alarms)",
+      "stakeholder_explanation": "Recall and FPR are like a see-saw: stricter security (higher recall) means more false alarms (higher FPR). We tune the balance point to meet business goals.",
+      "mathematical_foundation": "ROC curve shows all possible recall-FPR combinations; threshold tuning selects operating point",
+      "interview_question": "Explain the recall-FPR trade-off with your model's numbers.",
+      "excellent_answer": "Threshold sweep results: 'Default threshold 0.5: recall=86.5%, FPR=18.2%. Tuning to 0.97: recall=12%, FPR=2.82%. This Pareto curve shows our performance ceiling—cannot achieve recall≥70% AND FPR≤3% with current features. Visualization: dual-axis plot shows recall decreases as threshold increases (fewer positives predicted) while FPR also decreases (more conservative). Need better features to shift entire curve upward.'"
+    },
+    {
+      "source": "kpi_auc_roc",
+      "target": "model_threshold_tuning",
+      "type": "precedes",
+      "label": "AUC measures raw discrimination before threshold tuning",
+      "reasoning": "AUC is threshold-independent; tuning selects operating point on ROC curve",
+      "stakeholder_explanation": "AUC tells us the model's potential. High AUC means we have good raw material; then threshold tuning lets us pick the specific recall-FPR balance we want.",
+      "interview_question": "What's the relationship between AUC and threshold tuning?",
+      "excellent_answer": "Sequential relationship: 'AUC=0.888 means model has strong discrimination (88.8% chance ranks phishing > legitimate). This is threshold-agnostic—the ROC curve itself. Threshold tuning then selects a specific point on that curve. If AUC were 0.60, no threshold would achieve our KPIs (recall≥70%, FPR≤5%). AUC≥0.80 is prerequisite; tuning optimizes within that constraint.'"
+    },
+    {
+      "source": "statistical_mnar",
+      "target": "statistical_chi_square_test",
+      "type": "detected_by",
+      "label": "MNAR patterns detected via chi-square test of independence",
+      "reasoning": "Chi-square tests if missingness is independent of target; p<0.05 indicates MNAR",
+      "stakeholder_explanation": "We test statistically whether missing values happen randomly or are related to phishing. If related (MNAR), missingness itself is a clue we must preserve.",
+      "implementation": "Compare missingness rates between classes: Phishing vs Legitimate",
+      "interview_question": "How do you test for MNAR?",
+      "excellent_answer": "Chi-square independence test: 'H0: DomainAge missingness independent of target (phishing vs legitimate). Observed: 35% missing in phishing (label=0), 8% in legitimate (label=1). Contingency table: [[missing, not_missing] × [phishing, legit]]. Chi-square statistic: χ²=42.3, df=1, p=0.003 < 0.05 → Reject H0 → MNAR confirmed. Action: Created DomainAge_missing binary flag before imputation to preserve this signal. Improved recall by 2.8pp in validation.'"
+    },
+    {
+      "source": "statistical_mnar",
+      "target": "implementation_pipeline_architecture",
+      "type": "informs_design",
+      "label": "MNAR detection drives feature engineering decisions",
+      "reasoning": "If MNAR, must create missing-value flags before imputation to preserve signal",
+      "pipeline_decision": "Create binary flag → Then impute → Prevents information loss",
+      "interview_question": "How did your EDA findings change your pipeline design?",
+      "excellent_answer": "EDA → Pipeline linkage: 'MNAR test showed DomainAge missingness related to fraud (p=0.003). Pipeline response: In feature_engineering.py, created DomainAge_missing binary flag. Then preprocessing.py imputes with median. This two-step preserves fraud signal (flag) while enabling model to use imputed values. Alternative (impute only) would lose the 'deliberately hidden' signal. Feature importance showed _missing flag ranked #7 predictor.'"
+    },
+    {
+      "source": "statistical_chi_square_test",
+      "target": "statistical_stratified_sampling",
+      "type": "validates",
+      "label": "Chi-square validates that stratified splits preserved distribution",
+      "reasoning": "Post-split chi-square tests if train/val/test distributions significantly differ from original",
+      "validation_criterion": "p > 0.05 means distributions not significantly different (stratification succeeded)",
+      "interview_question": "How do you validate stratified splits actually worked?",
+      "excellent_answer": "Chi-square validation: 'After stratified split, computed class proportions: train [55.1%, 44.9%], val [54.8%, 45.2%], test [55.0%, 45.0%], original [55.04%, 44.96%]. Chi-square goodness-of-fit: H0 = split distributions equal to original. Result: χ²=0.82, df=2, p=0.89 > 0.05 → Fail to reject H0 → Distributions not significantly different → Stratification successful. Logged to data/processed/pipeline_validation.json for audit trail.'"
+    },
+    {
+      "source": "statistical_vif",
+      "target": "statistical_skewness",
+      "type": "complements",
+      "label": "VIF and skewness assess different data quality dimensions",
+      "reasoning": "VIF detects multicollinearity (feature redundancy); skewness detects distributional issues",
+      "combined_analysis": "Both inform preprocessing: drop/combine for high VIF, transform for high skewness",
+      "interview_question": "What's the difference between VIF and correlation analysis?",
+      "excellent_answer": "VIF vs correlation: 'Correlation matrix shows pairwise relationships (2D). VIF detects multicollinearity involving 3+ features (multidimensional). Example: A and B each correlate 0.3 with C (low pairwise), but together R²=0.92 predicting C → C has VIF=12.5 (problematic). My analysis: All VIF<5, no severe multicollinearity. Decided not to drop features. Separately, skewness analysis identified 10 features |skew|>1 requiring log-transform.'"
+    },
+    {
+      "source": "statistical_skewness",
+      "target": "model_logistic_regression",
+      "type": "improves_convergence",
+      "label": "Log-transform of skewed features accelerates gradient descent convergence",
+      "reasoning": "Heavy-tailed distributions create uneven gradients; log-transform normalizes → faster convergence",
+      "validation": "Convergence experiment: compare training epochs with/without transform",
+      "interview_question": "How did you validate that log-transform improved your model?",
+      "excellent_answer": "Empirical validation: 'Trained logistic regression on same data: (1) Without transform: 512 epochs to converge (|Δloss|<1e-4), final loss=0.421, time=8.2min. (2) With log-transform (10 features |skew|>1): 120 epochs, loss=0.418, time=1.9min. Result: 4.3× training speedup, slightly better final loss. Q-Q plots confirmed post-transform distributions closer to normal (fewer tail deviations). Transform validated empirically, not just assumed.'"
+    },
+    {
+      "source": "statistical_stratified_sampling",
+      "target": "model_xgboost",
+      "type": "enables_valid_evaluation",
+      "label": "Stratified splits ensure unbiased evaluation of XGBoost",
+      "reasoning": "Naive splits risk distribution shift; stratified maintains class balance for fair evaluation",
+      "interview_question": "Why is stratified sampling critical for your evaluation?",
+      "excellent_answer": "Distribution shift prevention: 'With 55:45 imbalance, naive random split could yield train 60:40, test 50:50 → model optimized for different distribution than evaluation. Stratified ensures all splits match 55:45. Validated: train 55.1:44.9, val 54.8:45.2, test 55.0:45.0 (chi-square p=0.89). This prevents optimistic bias—model evaluated on same distribution it trained on.'"
+    },
+    {
+      "source": "model_logistic_regression",
+      "target": "mathematical_loss_function",
+      "type": "minimizes",
+      "label": "Logistic regression minimizes binary cross-entropy loss via gradient descent",
+      "reasoning": "Loss function quantifies prediction error; gradient descent iteratively reduces it",
+      "mathematical_detail": "L(θ) = -(1/m)Σ[y log(σ(Xθ)) + (1-y)log(1-σ(Xθ))] + (λ/2m)Σθ²",
+      "interview_question": "Derive the gradient for logistic regression.",
+      "excellent_answer": "Derivation: 'Loss L(θ) = -(1/m)Σ[y log(σ(z)) + (1-y)log(1-σ(z))] where z=Xθ, σ=sigmoid. Taking ∂L/∂θ: Chain rule through σ. σ'(z) = σ(1-σ). Result: ∂L/∂θ = (1/m)X^T(σ(Xθ) - y). With L2: add (λ/m)θ. This clean gradient enables efficient gradient descent: θ_new = θ - α[(1/m)X^T(σ(Xθ) - y) + (λ/m)θ].'"
+    },
+    {
+      "source": "model_xgboost",
+      "target": "model_threshold_tuning",
+      "type": "produces_probabilities_for",
+      "label": "XGBoost outputs probabilities that are tuned via threshold sweep",
+      "reasoning": "Model predicts P(phishing|features); threshold determines classification decision",
+      "procedure": "Train XGBoost → Generate validation probabilities → Sweep thresholds → Select optimal",
+      "interview_question": "Walk through your threshold tuning process for XGBoost.",
+      "excellent_answer": "Threshold optimization: 'XGBoost trained on 70% train set outputs probabilities P(phishing|x). Default threshold 0.5: classify phishing if P≥0.5. Validation set (15%): swept 1000 thresholds [0.0, 1.0], computed recall and FPR for each. Objective: max recall subject to FPR≤0.05. Result: optimal threshold=0.65 achieves recall=75.2%, FPR=4.8% (meets constraint). Test set (15%) with threshold=0.65: recall=73.8%, FPR=5.1% (slight degradation but within tolerance). Pareto curve shows this is near-optimal for current features.'"
+    },
+    {
+      "source": "model_threshold_tuning",
+      "target": "kpi_recall",
+      "type": "optimizes",
+      "label": "Threshold tuning maximizes recall subject to FPR constraint",
+      "reasoning": "Business prioritizes catching attacks (recall) while keeping false alarms manageable (FPR≤5%)",
+      "interview_question": "Why not just maximize F1 score?",
+      "excellent_answer": "Asymmetric costs: 'F1 weighs precision and recall equally (F1 = 2PR/(P+R)). Fraud detection has asymmetric costs: false negative (missed attack) = $500 fraud loss. False positive (blocked legitimate) = $5 support ticket. Cost ratio 100:1. Therefore, prioritize recall over precision. Optimization: max recall subject to FPR≤5% (business constraint), NOT max F1. F1-optimal threshold might sacrifice recall for balanced metric, missing business objective.'"
+    },
+    {
+      "source": "implementation_pipeline_architecture",
+      "target": "implementation_error_handling",
+      "type": "incorporates",
+      "label": "Production pipeline includes comprehensive error handling",
+      "reasoning": "Modular architecture enables granular error handling at each stage",
+      "error_categories": "Data errors, quality errors, model errors, deployment errors",
+      "interview_question": "How does your pipeline handle failures gracefully?",
+      "excellent_answer": "Three-tier error strategy: (1) Retryable errors: Database connection failures → 3 retries with exponential backoff (1s, 2s, 4s). (2) Data quality errors: Schema mismatch, insufficient rows → Raise descriptive ValueError with missing columns/expected row count. (3) Model errors: Training convergence failure → Log hyperparameters, learning curve, raise ModelTrainingError. All errors logged to pipeline.log with context (timestamp, component, stack trace). Production: errors trigger PagerDuty alerts with severity based on error type.'"
+    },
+    {
+      "source": "implementation_monitoring",
+      "target": "implementation_deployment_strategy",
+      "type": "informs",
+      "label": "Monitoring metrics trigger deployment rollback decisions",
+      "reasoning": "Real-time monitoring detects performance degradation → automated rollback to previous version",
+      "rollback_triggers": "Recall <65% or FPR >6% for 2 consecutive days",
+      "interview_question": "How do monitoring and deployment integrate?",
+      "excellent_answer": "Closed-loop system: 'Prometheus monitors production metrics every 15s: recall, FPR, latency. Grafana dashboard displays with alert thresholds (red zone: recall <65%, FPR >6%). Alert rules: If threshold violated for 2 consecutive days → PagerDuty critical alert → On-call engineer investigates → If confirmed degradation, triggers blue-green rollback via kubectl command: load balancer switches to previous model version (blue) in <1 min. Post-rollback: root cause analysis on why v2 degraded, fix, redeploy via standard phases (shadow → A/B → gradual).'"
+    },
+    {
+      "source": "mathematical_loss_function",
+      "target": "mathematical_gradient_descent",
+      "type": "optimized_by",
+      "label": "Gradient descent minimizes loss by iteratively updating parameters",
+      "reasoning": "Gradient ∇L points to direction of steepest ascent; negative gradient descends toward minimum",
+      "update_equation": "θ_new = θ_old - α × ∇L(θ_old)",
+      "interview_question": "Explain how gradient descent optimizes your logistic regression.",
+      "excellent_answer": "Optimization mechanics: 'Loss L(θ) = -(1/m)Σ[...] + (λ/2m)Σθ² (cross-entropy + L2 regularization). Gradient: ∇L(θ) = (1/m)X^T(σ(Xθ) - y) + (λ/m)θ. Gradient descent update: θ_new = θ_old - α∇L(θ). Learning rate α=0.1 (tuned via grid search). Convergence: stops when |L(θ_t) - L(θ_{t-1})| < 1e-4. My implementation: converged in 120 epochs, final loss=0.418. Validated against sklearn (L-BFGS optimizer): AUC difference 0.0016 (validates correctness).'"
+    },
+    {
+      "source": "mathematical_sigmoid_function",
+      "target": "mathematical_loss_function",
+      "type": "component_of",
+      "label": "Sigmoid maps linear scores to probabilities in loss function",
+      "reasoning": "Loss requires probabilities in (0,1); sigmoid transforms z=Xθ → P(y=1|x)",
+      "mathematical_chain": "z = Xθ (linear) → σ(z) = 1/(1+e^(-z)) (probability) → L = -[y log(σ) + (1-y)log(1-σ)] (loss)",
+      "interview_question": "Why do we need sigmoid in logistic regression?",
+      "excellent_answer": "Probability mapping: 'Linear combination z=Xθ outputs values in (-∞, ∞). Need probabilities in (0,1) for loss function. Sigmoid σ(z)=1/(1+e^(-z)) transforms: σ(-∞)=0, σ(0)=0.5, σ(∞)=1. Loss function requires log(P(y|x)): if y=1, need log(σ(z)); if y=0, need log(1-σ(z)). Without sigmoid, log would be undefined for z<0. Sigmoid's derivative σ'(z)=σ(1-σ) also simplifies gradient computation.'"
+    },
+    {
+      "source": "mathematical_gradient_descent",
+      "target": "mathematical_sigmoid_function",
+      "type": "uses_derivative_of",
+      "label": "Gradient computation uses sigmoid derivative for efficient backpropagation",
+      "reasoning": "Chain rule requires ∂σ/∂z; sigmoid's special property σ'(z)=σ(1-σ) simplifies",
+      "derivative_simplification": "σ'(z) = σ(z) × [1 - σ(z)] → can reuse forward pass computation",
+      "interview_question": "Derive the gradient using sigmoid's derivative.",
+      "excellent_answer": "Chain rule derivation: 'Loss L = -(1/m)Σ[y log(σ(z)) + (1-y)log(1-σ(z))] where z=Xθ. Need ∂L/∂θ. Chain rule: ∂L/∂θ = (∂L/∂σ)(∂σ/∂z)(∂z/∂θ). ∂L/∂σ = -y/σ + (1-y)/(1-σ). ∂σ/∂z = σ(1-σ) (sigmoid derivative). ∂z/∂θ = X. Combining: ∂L/∂θ = (1/m)X^T(σ - y). Clean result due to sigmoid's special derivative property.'"
+    },
+    {
+      "source": "kpi_auc_roc",
+      "target": "mathematical_roc_auc_derivation",
+      "type": "computed_via",
+      "label": "ROC AUC calculated via rank-based method or trapezoidal integration",
+      "reasoning": "AUC = area under TPR vs FPR curve; computed efficiently via ranking or integration",
+      "interview_question": "How do you calculate AUC without sklearn?",
+      "excellent_answer": "Rank-based method: 'Sort samples by predicted probability (descending). For each unique threshold (predicted value), compute TPR=TP/(TP+FN) and FPR=FP/(FP+TN). Trapezoidal rule: AUC ≈ Σ_i (FPR_{i+1} - FPR_i) × (TPR_i + TPR_{i+1}) / 2. Complexity: O(n log n) sorting + O(n) integration. Implemented: custom AUC=0.8880, sklearn AUC=0.8880 (exact match to 4 decimals). Alternative interpretation: AUC = P(score_pos > score_neg) = Mann-Whitney U statistic, validates as ranking metric.'"
+    }
+  ],
+  
+  "traversal_examples": [
+    {
+      "query": "Why does recall matter to the business?",
+      "traversal_path": [
+        "kpi_recall",
+        "business_fraud_exposure",
+        "stakeholder_product_manager"
+      ],
+      "explanation_layers": {
+        "L2_metric": "Recall = TP/(TP+FN) measures proportion of attacks caught",
+        "L0_business": "Higher recall → fewer missed attacks → lower fraud exposure ($1.5M monthly at 70%)",
+        "L1_stakeholder": "Product manager sets recall≥70% target based on cost-benefit analysis"
+      },
+      "interview_usage": "Candidate should traverse all three layers without prompting (excellent)"
+    },
+    {
+      "query": "How do you validate that missingness is MNAR?",
+      "traversal_path": [
+        "statistical_mnar",
+        "statistical_chi_square_test",
+        "implementation_pipeline_architecture"
+      ],
+      "explanation_layers": {
+        "L3_statistical": "MNAR = missingness related to unobserved value or target",
+        "L3_statistical": "Chi-square test of independence: compare missingness rates between classes (χ²=42.3, p=0.003)",
+        "L5_implementation": "Create binary missing-value flag in feature_engineering.py before imputation"
+      },
+      "interview_usage": "Assess if candidate can explain test procedure AND pipeline implementation"
+    },
+    {
+      "query": "Explain threshold tuning to a product manager (non-technical)",
+      "traversal_path": [
+        "model_threshold_tuning",
+        "kpi_recall",
+        "kpi_fpr",
+        "business_fraud_exposure",
+        "business_customer_trust"
+      ],
+      "stakeholder_explanation": "Imagine a security guard at a club. A strict guard (low threshold) stops many suspicious people—catches 9 of 10 troublemakers (90% recall) but also turns away 1 of 5 innocent patrons (20% FPR) → long lines, bad reviews. A lenient guard (high threshold) only blocks obviously suspicious—catches 6 of 10 troublemakers (60% recall), almost no innocent rejections (2% FPR) → smooth entry, but some trouble inside. We tune the threshold to your business needs: How many false alarms can support handle (FPR budget)? How much fraud exposure is acceptable (recall requirement)? Our analysis shows 70% recall at 5% FPR is optimal balance.",
+      "interview_usage": "Excellent candidates translate technical to business language naturally"
+    },
+    {
+      "query": "Derive the gradient for logistic regression",
+      "traversal_path": [
+        "model_logistic_regression",
+        "mathematical_loss_function",
+        "mathematical_sigmoid_function",
+        "mathematical_gradient_descent"
+      ],
+      "mathematical_derivation": "L(θ) = -(1/m)Σ[y log(σ(Xθ)) + (1-y)log(1-σ(Xθ))] + (λ/2m)Σθ². Using chain rule: ∂L/∂θ = (∂L/∂σ)(∂σ/∂z)(∂z/∂θ) where z=Xθ. ∂L/∂σ = -y/σ + (1-y)/(1-σ). ∂σ/∂z = σ(1-σ). ∂z/∂θ = X. Combining: ∂L/∂θ = (1/m)X^T(σ(Xθ) - y) + (λ/m)θ.",
+      "interview_usage": "Tests mathematical depth—excellent candidates can derive on whiteboard"
+    },
+    {
+      "query": "How does your EDA inform your pipeline design?",
+      "traversal_path": [
+        "statistical_mnar",
+        "statistical_chi_square_test",
+        "implementation_pipeline_architecture",
+        "statistical_skewness",
+        "model_logistic_regression"
+      ],
+      "linkage_explanation": "EDA findings directly drive pipeline decisions: (1) MNAR test (χ²=42.3, p=0.003) → feature_engineering.py creates missing-value flags. (2) Skewness analysis (10 features |skew|>1) → preprocessing.py applies log-transform. (3) Convergence validation (4.3× speedup) → justifies transformation empirically. (4) Class imbalance (55:45, χ²=115.2) → data_splitter.py uses stratified sampling. Every preprocessing step traceable to EDA finding.",
+      "interview_usage": "Excellent candidates show clear EDA → Pipeline causality"
+    }
+  ],
+  
+  "interview_assessment_queries": [
+    {
+      "assessment_type": "gap_detection",
+      "query": "Compare candidate's EDA description to reference graph nodes in L3_statistical",
+      "missing_nodes_indicate": "Poor candidate if missing: MNAR, chi-square, VIF, Q-Q plots, stratified validation",
+      "evaluation": "Count how many statistical nodes candidate mentions naturally vs when prompted"
+    },
+    {
+      "assessment_type": "depth_testing",
+      "query": "Ask candidate to traverse from business_fraud_exposure → kpi_recall → model_threshold_tuning → mathematical_gradient_descent",
+      "excellent_candidate": "Traverses all layers without prompting, quantifies at each level",
+      "qualified_candidate": "Reaches L4_model but struggles with L6_mathematical",
+      "poor_candidate": "Cannot connect business to technical, stays at one layer"
+    },
+    {
+      "assessment_type": "stakeholder_translation",
+      "query": "Ask candidate to explain any L6_mathematical node to stakeholder_product_manager",
+      "excellent_candidate": "Uses analogies, avoids jargon, quantifies business impact",
+      "qualified_candidate": "Simplifies but still uses some technical terms",
+      "poor_candidate": "Cannot translate, says 'it's too complex to explain simply'"
+    },
+    {
+      "assessment_type": "bidirectional_reasoning",
+      "query": "Present business constraint (FPR≤5%) and ask candidate to traverse down to mathematical implementation",
+      "traversal_path": "business_customer_trust → kpi_fpr → model_threshold_tuning → mathematical_sigmoid_function",
+      "excellent_candidate": "Explains full chain: business cost → metric → algorithm → math",
+      "qualified_candidate": "Explains business → metric → algorithm, struggles with math",
+      "poor_candidate": "Cannot connect layers, treats as independent concepts"
+    }
+  ],
+  
+  "visualization_config": {
+    "d3js_layout": "force-directed graph with layer-based y-positioning",
+    "layers": [
+      {"id": "L0", "y": 0, "color": "#667eea", "label": "Business Outcomes"},
+      {"id": "L1", "y": 100, "color": "#764ba2", "label": "Stakeholder Constraints"},
+      {"id": "L2", "y": 200, "color": "#f093fb", "label": "KPIs & Metrics"},
+      {"id": "L3", "y": 300, "color": "#4facfe", "label": "Statistical Methods"},
+      {"id": "L4", "y": 400, "color": "#00f2fe", "label": "ML Models"},
+      {"id": "L5", "y": 500, "color": "#43e97b", "label": "Implementation"},
+      {"id": "L6", "y": 600, "color": "#38f9d7", "label": "Mathematics"}
+    ],
+    "edge_styles": {
+      "drives_metric": {"color": "#e03131", "width": 3, "dashed": false},
+      "requires_model": {"color": "#2b8a3e", "width": 2, "dashed": false},
+      "trades_off_with": {"color": "#fd7e14", "width": 2, "dashed": true},
+      "optimizes": {"color": "#1c7ed6", "width": 2, "dashed": false},
+      "validated_by": {"color": "#9c36b5", "width": 2, "dashed": true}
+    },
+    "node_sizes": {
+      "critical_importance": 20,
+      "high_importance": 15,
+      "medium_importance": 10
+    },
+    "interactive_features": [
+      "Hover on node: Show stakeholder_explanation + interview_depth",
+      "Click node: Highlight connected edges and nodes",
+      "Double-click node: Show traversal examples involving this node",
+      "Right-click edge: Display reasoning and quantification"
+    ]
+  }
+}

@@ -1,0 +1,776 @@
+{
+  "meta": {
+    "title": "EDA → MLP Excellent Path Extended v2: Maximum Granularity",
+    "description": "Second extension layer: Code snippets, mathematical proofs, stakeholder dialogues, error handling, performance benchmarks, testing strategies, debugging traces",
+    "extends": "eda-mlp-excellent-path-extended.json",
+    "new_layers": [0.25, 0.75, 1.25, 1.75, 2.25, 2.75, 3.25, 3.75, 4.25, 4.75, 5.25, 5.75, 6.25, 6.75],
+    "detail_types": ["code_snippet", "mathematical_proof", "stakeholder_dialogue", "error_handling", "performance_benchmark", "documentation", "testing_strategy", "debugging_trace", "alternative_implementation"],
+    "version": "2.0-extended-v2"
+  },
+  "extended_nodes_v2": [
+    {
+      "id": "dialogue-product-kickoff",
+      "type": "stakeholder_dialogue",
+      "layer": 0.25,
+      "narrative": "problem_framing",
+      "parent": "stakeholder-product",
+      "label": "Initial Product Requirements Meeting",
+      "description": "Conversation between ML engineer (candidate) and Product Manager establishing requirements",
+      "dialogue": [
+        {
+          "speaker": "Product Manager",
+          "text": "We're seeing 45% of phishing attacks get through to users. That's causing about $20M in fraud losses annually. We need an ML model to catch at least 70% of these attacks."
+        },
+        {
+          "speaker": "ML Engineer (Candidate)",
+          "text": "Got it. What's the user experience? Are we blocking sites outright or showing warnings?"
+        },
+        {
+          "speaker": "Product Manager",
+          "text": "Browser extension warning. Users can still proceed, but we want to catch their attention. Critical constraint: false positives must stay under 5%. Above that, we'll drown in support tickets."
+        },
+        {
+          "speaker": "ML Engineer",
+          "text": "Understood. So 70% recall minimum, 5% FPR maximum. What about latency? This is real-time classification?"
+        },
+        {
+          "speaker": "Product Manager",
+          "text": "Yes, real-time. User visits a site, we classify within 100ms or they'll notice lag. Also, Legal wants explainability—users need to understand why a site was flagged if they appeal."
+        },
+        {
+          "speaker": "ML Engineer",
+          "text": "Perfect. Let me confirm the constraints: (1) Recall ≥ 70%, (2) FPR ≤ 5%, (3) Latency < 100ms, (4) Explainable decisions. ROC AUC ≥ 0.80 as overall performance metric. Does that capture it?"
+        },
+        {
+          "speaker": "Product Manager",
+          "text": "Exactly. When can you have a baseline?"
+        },
+        {
+          "speaker": "ML Engineer",
+          "text": "Two weeks for EDA and baseline models. I'll document findings and share preliminary results midpoint. Sound good?"
+        }
+      ],
+      "outcome": "Clear KPI agreement: Recall ≥ 70%, FPR ≤ 5%, ROC AUC ≥ 0.80. Explainability and latency constraints documented.",
+      "communication_best_practices": [
+        "Clarify ambiguous terms early ('blocking' vs 'warning')",
+        "Repeat constraints back for confirmation",
+        "Propose concrete timeline (2 weeks) vs vague 'soon'",
+        "Document everything in writing post-meeting"
+      ],
+      "scoring": "excellent",
+      "score": 10,
+      "brightness": 1.0,
+      "color": "#667eea",
+      "size": 12,
+      "selected": true
+    },
+    {
+      "id": "dialogue-legal-explainability",
+      "type": "stakeholder_dialogue",
+      "layer": 0.75,
+      "narrative": "problem_framing",
+      "parent": "stakeholder-legal",
+      "label": "Legal Explainability Requirements Discussion",
+      "description": "Conversation clarifying GDPR Article 22 compliance and explainability depth needed",
+      "dialogue": [
+        {
+          "speaker": "Legal Officer",
+          "text": "Under GDPR Article 22, users have the right to understand automated decisions. If we block a site, we need to explain why in terms users can understand."
+        },
+        {
+          "speaker": "ML Engineer",
+          "text": "Understood. What level of detail? Do you need coefficient-based models, or can we use SHAP values for complex models like XGBoost?"
+        },
+        {
+          "speaker": "Legal Officer",
+          "text": "What's the difference for a non-technical user?"
+        },
+        {
+          "speaker": "ML Engineer",
+          "text": "Coefficient-based: 'Site flagged because domain is 2 months old (high risk) and has no external references (suspicious).' SHAP: Same explanation but generated via model-agnostic interpretation. Both human-readable, but SHAP allows more complex models."
+        },
+        {
+          "speaker": "Legal Officer",
+          "text": "SHAP is fine if it's human-readable. I need reports that say: 'This site was flagged because: Factor 1 (domain age) contributed +30% risk, Factor 2 (no HTTPS) contributed +25% risk...' Can you do that?"
+        },
+        {
+          "speaker": "ML Engineer",
+          "text": "Yes. SHAP generates exactly that—contribution of each feature to the final decision. I'll include it in the API response and log it for audit trails."
+        },
+        {
+          "speaker": "Legal Officer",
+          "text": "Perfect. Also, we need to test for bias. Can your model discriminate against startups with new domains?"
+        },
+        {
+          "speaker": "ML Engineer",
+          "text": "Valid concern. I'll run fairness audits: stratify false positive rates by industry and domain age. If startups have significantly higher FPR, we'll adjust thresholds or retrain."
+        }
+      ],
+      "outcome": "SHAP explainability approved. Fairness audit required (FPR by industry/domain age). Audit trail logging mandatory.",
+      "compliance_requirements": [
+        "GDPR Article 22: Right to explanation",
+        "Feature contribution report for every blocked site",
+        "Fairness metrics: FPR by protected groups (startups, industries)",
+        "Audit trail: 2-year retention of decisions + explanations"
+      ],
+      "scoring": "excellent",
+      "score": 10,
+      "brightness": 1.0,
+      "color": "#667eea",
+      "size": 12,
+      "selected": true
+    },
+    {
+      "id": "math-gradient-descent-derivation",
+      "type": "mathematical_proof",
+      "layer": 3.75,
+      "narrative": "model_selection",
+      "parent": "decision-model-logistic-training",
+      "label": "Complete Gradient Descent Derivation with L2",
+      "description": "Full mathematical derivation from cross-entropy loss to gradient descent update rule with L2 regularization",
+      "proof": [
+        {
+          "step": 1,
+          "label": "Loss Function Definition",
+          "equation": "L(θ) = -(1/m) Σ[y_i log(σ(x_i^T θ)) + (1-y_i) log(1-σ(x_i^T θ))] + (λ/2m) ||θ||²",
+          "description": "Cross-entropy loss (first term) + L2 regularization penalty (second term). m = number of samples, λ = regularization strength, σ = sigmoid function."
+        },
+        {
+          "step": 2,
+          "label": "Sigmoid Function",
+          "equation": "σ(z) = 1 / (1 + e^(-z))",
+          "properties": ["σ'(z) = σ(z)(1 - σ(z))", "σ(-z) = 1 - σ(z)"],
+          "description": "Logistic function mapping real numbers to (0,1) probabilities."
+        },
+        {
+          "step": 3,
+          "label": "Partial Derivative of Loss w.r.t θ_j",
+          "equation": "∂L/∂θ_j = -(1/m) Σ[y_i (1/σ(z_i)) σ'(z_i) x_{ij} - (1-y_i) (1/(1-σ(z_i))) σ'(z_i) x_{ij}] + (λ/m) θ_j",
+          "description": "Apply chain rule: ∂L/∂θ_j = ∂L/∂σ × ∂σ/∂z × ∂z/∂θ_j. Note: z_i = x_i^T θ, so ∂z_i/∂θ_j = x_{ij}."
+        },
+        {
+          "step": 4,
+          "label": "Simplify using σ'(z) = σ(z)(1-σ(z))",
+          "equation": "∂L/∂θ_j = -(1/m) Σ[y_i (1-σ(z_i)) x_{ij} - (1-y_i) σ(z_i) x_{ij}] + (λ/m) θ_j",
+          "description": "Substitute σ'(z_i) = σ(z_i)(1-σ(z_i)) and cancel terms."
+        },
+        {
+          "step": 5,
+          "label": "Final Gradient",
+          "equation": "∂L/∂θ_j = (1/m) Σ[(σ(z_i) - y_i) x_{ij}] + (λ/m) θ_j",
+          "description": "Factor out and simplify: y_i(1-σ) - (1-y_i)σ = y_i - y_i σ - σ + y_i σ = y_i - σ = -(σ - y_i)."
+        },
+        {
+          "step": 6,
+          "label": "Vectorized Gradient",
+          "equation": "∇L(θ) = (1/m) X^T (σ(Xθ) - y) + (λ/m) θ",
+          "description": "Matrix form: X is (m × n) feature matrix, θ is (n × 1) weights, y is (m × 1) labels, σ(Xθ) is (m × 1) predictions."
+        },
+        {
+          "step": 7,
+          "label": "Gradient Descent Update",
+          "equation": "θ := θ - α ∇L(θ) = θ - α [(1/m) X^T (σ(Xθ) - y) + (λ/m) θ]",
+          "description": "Update rule: Move weights in direction opposite to gradient. α = learning rate (step size)."
+        },
+        {
+          "step": 8,
+          "label": "L2 Regularization Interpretation",
+          "bayesian_view": "L2 penalty λ||θ||²/2 equivalent to MAP estimation with Gaussian prior p(θ) ~ N(0, 1/λ). Larger λ → stronger prior belief that weights should be small.",
+          "weight_decay_view": "Update can be rewritten as: θ := (1 - αλ/m)θ - α(1/m)X^T(σ(Xθ) - y). Factor (1 - αλ/m) < 1 shrinks weights toward zero each iteration (weight decay)."
+        }
+      ],
+      "example_calculation": {
+        "scenario": "2 samples, 3 features, θ = [0.1, 0.2, 0.3], λ = 0.01, α = 0.1",
+        "X": "[[1, 2, 3], [4, 5, 6]]",
+        "y": "[0, 1]",
+        "computation": "z = Xθ = [1.4, 2.8]; σ(z) = [0.802, 0.943]; error = σ(z) - y = [0.802, -0.057]; X^T error = [3.97, 4.83, 5.69]; gradient = (1/2)[3.97, 4.83, 5.69] + (0.01/2)[0.1, 0.2, 0.3] = [1.985, 2.415, 2.845] + [0.0005, 0.001, 0.0015] = [1.9855, 2.416, 2.8465]; θ_new = θ - 0.1*gradient = [0.1, 0.2, 0.3] - [0.19855, 0.2416, 0.28465] = [-0.09855, -0.0416, 0.01535]"
+      },
+      "numerical_stability_notes": [
+        "For z >> 0: σ(z) ≈ 1, log(σ(z)) ≈ 0. Use log(1 + exp(-z)) instead of log(exp(z)/(1+exp(z))) to avoid overflow.",
+        "For z << 0: σ(z) ≈ 0, log(1-σ(z)) ≈ 0. Use log(1 + exp(z)) symmetrically.",
+        "Add epsilon=1e-15 to predictions before log: log(pred + eps) to prevent log(0) = -∞."
+      ],
+      "scoring": "excellent",
+      "score": 10,
+      "brightness": 1.0,
+      "color": "#667eea",
+      "size": 16,
+      "selected": true
+    },
+    {
+      "id": "code-gradient-descent-implementation",
+      "type": "code_snippet",
+      "layer": 4.25,
+      "narrative": "model_selection",
+      "parent": "decision-model-logistic-training",
+      "label": "NumPy Gradient Descent Implementation",
+      "description": "Production-quality Python implementation with error handling, logging, early stopping",
+      "code": "import numpy as np\nimport logging\nfrom typing import Tuple, Optional\n\nlogger = logging.getLogger(__name__)\n\nclass LogisticRegressionGD:\n    \"\"\"Logistic Regression with Gradient Descent and L2 regularization.\n    \n    Implements full-batch gradient descent with early stopping.\n    \n    Parameters\n    ----------\n    learning_rate : float, default=0.1\n        Step size for gradient descent updates.\n    max_epochs : int, default=120\n        Maximum number of training iterations.\n    l2_lambda : float, default=0.001\n        L2 regularization strength. Higher values → stronger regularization.\n    convergence_threshold : float, default=1e-4\n        Training stops if loss change < threshold for consecutive epochs.\n    patience : int, default=10\n        Number of epochs to wait for improvement before early stopping.\n    random_state : int, optional\n        Seed for weight initialization reproducibility.\n    \n    Attributes\n    ----------\n    theta : np.ndarray, shape (n_features,)\n        Learned weight vector.\n    loss_history : list\n        Training loss at each epoch.\n    converged : bool\n        True if training converged before max_epochs.\n    \"\"\"\n    \n    def __init__(\n        self,\n        learning_rate: float = 0.1,\n        max_epochs: int = 120,\n        l2_lambda: float = 0.001,\n        convergence_threshold: float = 1e-4,\n        patience: int = 10,\n        random_state: Optional[int] = None\n    ):\n        self.learning_rate = learning_rate\n        self.max_epochs = max_epochs\n        self.l2_lambda = l2_lambda\n        self.convergence_threshold = convergence_threshold\n        self.patience = patience\n        self.random_state = random_state\n        \n        self.theta = None\n        self.loss_history = []\n        self.converged = False\n        \n    def _sigmoid(self, z: np.ndarray) -> np.ndarray:\n        \"\"\"Numerically stable sigmoid function.\n        \n        Prevents overflow by splitting positive/negative cases.\n        \"\"\"\n        # Clip to prevent overflow in exp\n        z = np.clip(z, -500, 500)\n        \n        # For positive z: σ(z) = 1 / (1 + exp(-z))\n        # For negative z: σ(z) = exp(z) / (1 + exp(z)) = 1 - σ(-z)\n        pos_mask = z >= 0\n        neg_mask = ~pos_mask\n        \n        sigmoid = np.zeros_like(z)\n        sigmoid[pos_mask] = 1 / (1 + np.exp(-z[pos_mask]))\n        sigmoid[neg_mask] = np.exp(z[neg_mask]) / (1 + np.exp(z[neg_mask]))\n        \n        return sigmoid\n    \n    def _compute_loss(\n        self,\n        X: np.ndarray,\n        y: np.ndarray,\n        predictions: np.ndarray\n    ) -> float:\n        \"\"\"Cross-entropy loss with L2 regularization.\n        \n        L(θ) = -(1/m) Σ[y log(σ) + (1-y) log(1-σ)] + (λ/2m)||θ||²\n        \"\"\"\n        m = len(y)\n        epsilon = 1e-15  # Numerical stability\n        \n        # Clip predictions to [epsilon, 1-epsilon]\n        predictions = np.clip(predictions, epsilon, 1 - epsilon)\n        \n        # Cross-entropy loss\n        ce_loss = -(1/m) * np.sum(\n            y * np.log(predictions) + (1 - y) * np.log(1 - predictions)\n        )\n        \n        # L2 regularization (don't penalize bias term theta[0] if exists)\n        l2_penalty = (self.l2_lambda / (2 * m)) * np.sum(self.theta**2)\n        \n        return ce_loss + l2_penalty\n    \n    def fit(self, X: np.ndarray, y: np.ndarray) -> 'LogisticRegressionGD':\n        \"\"\"Train logistic regression using gradient descent.\n        \n        Parameters\n        ----------\n        X : np.ndarray, shape (m, n)\n            Training features. m samples, n features.\n        y : np.ndarray, shape (m,)\n            Binary labels (0 or 1).\n            \n        Returns\n        -------\n        self : LogisticRegressionGD\n            Fitted estimator.\n        \"\"\"\n        m, n = X.shape\n        \n        # Validate inputs\n        assert y.shape[0] == m, f\"X and y length mismatch: {m} vs {y.shape[0]}\"\n        assert set(y).issubset({0, 1}), \"y must be binary (0 or 1)\"\n        \n        # Initialize weights\n        if self.random_state is not None:\n            np.random.seed(self.random_state)\n        self.theta = np.random.normal(0, 0.01, size=n)  # Small random init\n        \n        logger.info(f\"Training started: {m} samples, {n} features\")\n        logger.info(f\"Hyperparameters: lr={self.learning_rate}, lambda={self.l2_lambda}\")\n        \n        # Training loop\n        no_improvement_count = 0\n        best_loss = float('inf')\n        \n        for epoch in range(self.max_epochs):\n            # Forward pass\n            z = X @ self.theta\n            predictions = self._sigmoid(z)\n            \n            # Compute loss\n            loss = self._compute_loss(X, y, predictions)\n            self.loss_history.append(loss)\n            \n            # Compute gradient: ∇L = (1/m)X^T(σ(Xθ) - y) + (λ/m)θ\n            error = predictions - y\n            gradient = (1/m) * (X.T @ error) + (self.l2_lambda / m) * self.theta\n            \n            # Update weights: θ := θ - α∇L\n            self.theta -= self.learning_rate * gradient\n            \n            # Logging\n            if epoch % 20 == 0:\n                grad_norm = np.linalg.norm(gradient)\n                logger.info(\n                    f\"Epoch {epoch}/{self.max_epochs}: \"\n                    f\"Loss={loss:.6f}, GradNorm={grad_norm:.6f}\"\n                )\n            \n            # Early stopping check\n            if epoch > 0:\n                loss_change = abs(self.loss_history[-2] - loss)\n                \n                if loss < best_loss:\n                    best_loss = loss\n                    no_improvement_count = 0\n                else:\n                    no_improvement_count += 1\n                \n                if loss_change < self.convergence_threshold:\n                    if no_improvement_count >= self.patience:\n                        self.converged = True\n                        logger.info(\n                            f\"Converged at epoch {epoch}. \"\n                            f\"Loss change: {loss_change:.2e} < {self.convergence_threshold:.2e}\"\n                        )\n                        break\n        \n        if not self.converged:\n            logger.warning(\n                f\"Did not converge after {self.max_epochs} epochs. \"\n                f\"Final loss: {loss:.6f}. Consider increasing max_epochs or learning_rate.\"\n            )\n        \n        return self\n    \n    def predict_proba(self, X: np.ndarray) -> np.ndarray:\n        \"\"\"Predict class probabilities.\n        \n        Parameters\n        ----------\n        X : np.ndarray, shape (m, n)\n            Test features.\n            \n        Returns\n        -------\n        proba : np.ndarray, shape (m, 2)\n            Class probabilities. [:, 0] = P(y=0), [:, 1] = P(y=1).\n        \"\"\"\n        if self.theta is None:\n            raise ValueError(\"Model not fitted. Call fit() first.\")\n        \n        z = X @ self.theta\n        p_positive = self._sigmoid(z)\n        p_negative = 1 - p_positive\n        \n        return np.column_stack([p_negative, p_positive])\n    \n    def predict(self, X: np.ndarray, threshold: float = 0.5) -> np.ndarray:\n        \"\"\"Predict binary class labels.\n        \n        Parameters\n        ----------\n        X : np.ndarray, shape (m, n)\n            Test features.\n        threshold : float, default=0.5\n            Classification threshold. P(y=1) >= threshold → predict 1.\n            \n        Returns\n        -------\n        predictions : np.ndarray, shape (m,)\n            Binary predictions (0 or 1).\n        \"\"\"\n        proba = self.predict_proba(X)\n        return (proba[:, 1] >= threshold).astype(int)\n\n\n# Usage example\nif __name__ == \"__main__\":\n    # Configure logging\n    logging.basicConfig(level=logging.INFO)\n    \n    # Load data (assuming preprocessed)\n    from sklearn.datasets import make_classification\n    X_train, y_train = make_classification(\n        n_samples=8000, n_features=20, n_informative=15,\n        n_redundant=5, random_state=42\n    )\n    \n    # Train model\n    model = LogisticRegressionGD(\n        learning_rate=0.1,\n        max_epochs=120,\n        l2_lambda=0.001,\n        random_state=42\n    )\n    model.fit(X_train, y_train)\n    \n    # Predict\n    y_pred = model.predict(X_train)\n    accuracy = (y_pred == y_train).mean()\n    print(f\"Training accuracy: {accuracy:.4f}\")\n    \n    # Plot loss curve\n    import matplotlib.pyplot as plt\n    plt.plot(model.loss_history)\n    plt.xlabel('Epoch')\n    plt.ylabel('Loss')\n    plt.title('Training Loss Curve')\n    plt.savefig('results/training_loss.png')\n",
+      "file_location": "src/models/logistic_regression.py",
+      "lines_of_code": 247,
+      "dependencies": ["numpy", "logging", "matplotlib (for plotting)"],
+      "testing_notes": "See tests/test_logistic_regression.py for unit tests. Tests cover: sigmoid stability, gradient correctness, convergence, sklearn parity.",
+      "performance_notes": "Full-batch GD: O(m*n) per epoch. For m=8000, n=20, single epoch ~2ms on MacBook Pro. Total training: 120 epochs * 2ms = 240ms.",
+      "scoring": "excellent",
+      "score": 10,
+      "brightness": 1.0,
+      "color": "#667eea",
+      "size": 16,
+      "selected": true
+    },
+    {
+      "id": "error-preprocessing-negatives",
+      "type": "error_handling",
+      "layer": 2.75,
+      "narrative": "preprocessing_decisions",
+      "parent": "decision-clip-implementation",
+      "label": "Edge Cases in Clipping Negative Values",
+      "description": "Comprehensive error handling for impossible negative values in NoOfImage",
+      "edge_cases": [
+        {
+          "case": "All values negative",
+          "scenario": "Entire dataset has NoOfImage < 0 (extreme data corruption)",
+          "detection": "if (df['NoOfImage'] < 0).all(): raise ValueError('All NoOfImage values negative—data corruption suspected')",
+          "handling": "Abort pipeline, log error, alert data engineering team. Do NOT proceed with clipping—requires data investigation.",
+          "rationale": "If all values corrupt, dataset unusable. Clipping would mask systemic issue."
+        },
+        {
+          "case": "Negatives cluster in specific rows",
+          "scenario": "377 negative values all in first 1000 rows (not random)",
+          "detection": "negative_indices = df[df['NoOfImage'] < 0].index; if len(set(negative_indices[:100])) < 10: log_warning('Negatives clustered')",
+          "handling": "Investigate pattern: Are these all from same data source? Same date range? May indicate specific ETL bug.",
+          "example": "Rows 1-377 all negative → Suspect data generation script bug (loop starting at -377?)."
+        },
+        {
+          "case": "Negative values outside reasonable range",
+          "scenario": "NoOfImage = -9999 (sentinel value for missing?)",
+          "detection": "if (df['NoOfImage'] < -100).any(): log_warning('Extreme negative values detected')",
+          "handling": "Check if -9999 is sentinel for missing data. If yes, convert to NaN, then impute. If no, clip to 0.",
+          "rationale": "Sentinel values (e.g., -9999, -1) sometimes used in raw data to indicate 'missing' rather than 'impossible'."
+        },
+        {
+          "case": "Negative values paired with NULL in other features",
+          "scenario": "All rows with NoOfImage < 0 also have IsResponsive = NULL",
+          "detection": "negative_mask = df['NoOfImage'] < 0; null_mask = df['IsResponsive'].isnull(); if (negative_mask == null_mask).mean() > 0.9: log_warning('Negatives correlated with NULLs')",
+          "handling": "Likely systematic data issue (e.g., scraping failure). Consider dropping these rows entirely if data quality suspect.",
+          "example": "Scraper failed → returned NoOfImage=-1, IsResponsive=NULL. Better to drop than impute low-quality samples."
+        }
+      ],
+      "validation_checks": [
+        "assert (df['NoOfImage'] >= 0).all(), 'Post-clip validation failed: negatives remain'",
+        "assert df['NoOfImage'].isnull().sum() == pre_clip_null_count, 'Clipping introduced NaNs'",
+        "assert df.shape[0] == pre_clip_row_count, 'Clipping dropped rows (should not happen)'"
+      ],
+      "logging_example": "logger.info(f'Clipped {negative_count} negative NoOfImage values to 0. Range before: [{df['NoOfImage'].min()}, {df['NoOfImage'].max()}], after: [{df_clipped['NoOfImage'].min()}, {df_clipped['NoOfImage'].max()}]')",
+      "rollback_plan": "If clipping causes downstream issues (e.g., model performance drops), revert to pre-clip state: df['NoOfImage'] = df['NoOfImage_backup']. Re-evaluate imputation strategy.",
+      "scoring": "excellent",
+      "score": 9,
+      "brightness": 0.9,
+      "color": "#667eea",
+      "size": 12,
+      "selected": true
+    },
+    {
+      "id": "benchmark-preprocessing-pipeline",
+      "type": "performance_benchmark",
+      "layer": 3.25,
+      "narrative": "preprocessing_decisions",
+      "parent": "decision-log-transform",
+      "label": "Preprocessing Pipeline Performance Profile",
+      "description": "Detailed timing breakdown of each preprocessing step on 11,430 samples",
+      "benchmark_setup": {
+        "hardware": "MacBook Pro (2019), 2.6 GHz 6-Core Intel i7, 16GB RAM",
+        "dataset_size": "11,430 samples, 20 features",
+        "profiling_tool": "cProfile + line_profiler",
+        "iterations": 10,
+        "metric": "Mean ± std over 10 runs"
+      },
+      "timing_breakdown": [
+        {
+          "step": "Load CSV from SQLite",
+          "time_ms": 42.3,
+          "std_ms": 3.1,
+          "percentage": 8.2,
+          "bottleneck": "I/O bound"
+        },
+        {
+          "step": "Clip negative values (NoOfImage)",
+          "time_ms": 1.8,
+          "std_ms": 0.2,
+          "percentage": 0.3,
+          "bottleneck": "Memory access"
+        },
+        {
+          "step": "Identify skewed features (|skew| > 1)",
+          "time_ms": 15.2,
+          "std_ms": 1.1,
+          "percentage": 2.9,
+          "bottleneck": "Compute skewness for 20 features"
+        },
+        {
+          "step": "Log-transform 10 features",
+          "time_ms": 12.7,
+          "std_ms": 0.9,
+          "percentage": 2.5,
+          "bottleneck": "np.log1p vectorized operations"
+        },
+        {
+          "step": "StandardScaler fit (compute μ, σ)",
+          "time_ms": 8.4,
+          "std_ms": 0.6,
+          "percentage": 1.6,
+          "bottleneck": "np.mean, np.std over 20 features"
+        },
+        {
+          "step": "StandardScaler transform (apply (x-μ)/σ)",
+          "time_ms": 18.9,
+          "std_ms": 1.3,
+          "percentage": 3.7,
+          "bottleneck": "Broadcasting operations"
+        },
+        {
+          "step": "Impute missing values (median)",
+          "time_ms": 23.6,
+          "std_ms": 2.1,
+          "percentage": 4.6,
+          "bottleneck": "np.nanmedian, fillna operations"
+        },
+        {
+          "step": "Train/val/test split (stratified)",
+          "time_ms": 67.8,
+          "std_ms": 5.2,
+          "percentage": 13.2,
+          "bottleneck": "Stratified sampling requires sorting"
+        },
+        {
+          "step": "Save processed splits to disk",
+          "time_ms": 325.1,
+          "std_ms": 18.4,
+          "percentage": 63.0,
+          "bottleneck": "I/O bound (3 CSV writes)"
+        }
+      ],
+      "total_time_ms": 515.8,
+      "total_time_readable": "0.52 seconds",
+      "optimization_opportunities": [
+        {
+          "target": "Save to disk",
+          "current": "325ms (63% of time)",
+          "optimization": "Use Parquet instead of CSV → ~80ms (4x faster)",
+          "estimated_speedup": "Reduce total time from 516ms to 271ms (47% faster)",
+          "implementation": "df.to_parquet('data/processed/train.parquet', engine='pyarrow', compression='snappy')"
+        },
+        {
+          "target": "Stratified split",
+          "current": "68ms",
+          "optimization": "Use numpy random sampling instead of sklearn (less overhead)",
+          "estimated_speedup": "~20ms (3x faster)",
+          "trade_off": "Manual implementation less robust, not worth complexity for 48ms gain"
+        },
+        {
+          "target": "Parallelization",
+          "current": "Single-threaded",
+          "optimization": "Parallelize feature-wise operations (skewness, log-transform) using joblib",
+          "estimated_speedup": "Minimal (~5ms gain on 6 cores)",
+          "rationale": "Overhead of process spawning exceeds benefit for small dataset. Worthwhile only for n > 1M samples."
+        }
+      ],
+      "memory_usage": {
+        "peak_mb": 45.2,
+        "baseline_mb": 12.8,
+        "delta_mb": 32.4,
+        "explanation": "Original df: 11,430 rows × 20 features × 8 bytes (float64) = 1.8MB. Intermediate copies (log-transform, scaling) create temporary arrays → 3x data (5.4MB). Remaining: Python object overhead, sklearn internal buffers."
+      },
+      "profiling_output_sample": "line_profiler results:\n  Line 45 (log-transform): 12.7ms (2.5%)\n  Line 67 (StandardScaler.fit): 8.4ms (1.6%)\n  Line 72 (StandardScaler.transform): 18.9ms (3.7%)\n  Line 89 (train_test_split): 67.8ms (13.2%)\n  Line 102 (to_csv): 325.1ms (63.0%)",
+      "scoring": "excellent",
+      "score": 10,
+      "brightness": 1.0,
+      "color": "#667eea",
+      "size": 14,
+      "selected": true
+    },
+    {
+      "id": "test-gradient-correctness",
+      "type": "testing_strategy",
+      "layer": 4.75,
+      "narrative": "model_selection",
+      "parent": "decision-model-logistic-training",
+      "label": "Unit Tests for Gradient Descent",
+      "description": "Comprehensive test suite validating gradient computation correctness",
+      "test_suite": [
+        {
+          "test_name": "test_gradient_numerical_approximation",
+          "description": "Validate gradient via finite differences: ∇L ≈ [L(θ+ε) - L(θ-ε)] / 2ε",
+          "method": "For each weight θ_j, perturb by ε=1e-5, compute loss, estimate gradient. Compare to analytical gradient.",
+          "code": "def test_gradient_numerical_approximation():\n    X = np.random.randn(100, 5)\n    y = np.random.randint(0, 2, 100)\n    model = LogisticRegressionGD()\n    model.theta = np.random.randn(5)\n    \n    # Analytical gradient\n    z = X @ model.theta\n    pred = model._sigmoid(z)\n    analytical_grad = (1/100) * X.T @ (pred - y)\n    \n    # Numerical gradient\n    epsilon = 1e-5\n    numerical_grad = np.zeros(5)\n    for j in range(5):\n        theta_plus = model.theta.copy()\n        theta_plus[j] += epsilon\n        loss_plus = model._compute_loss(X, y, model._sigmoid(X @ theta_plus))\n        \n        theta_minus = model.theta.copy()\n        theta_minus[j] -= epsilon\n        loss_minus = model._compute_loss(X, y, model._sigmoid(X @ theta_minus))\n        \n        numerical_grad[j] = (loss_plus - loss_minus) / (2 * epsilon)\n    \n    # Assert close (within 1e-4 relative error)\n    np.testing.assert_allclose(analytical_grad, numerical_grad, rtol=1e-4)\n",
+          "rationale": "If analytical gradient implementation wrong, finite differences will differ. This catches mathematical errors."
+        },
+        {
+          "test_name": "test_sklearn_parity",
+          "description": "Compare custom implementation to sklearn LogisticRegression on same data",
+          "code": "def test_sklearn_parity():\n    from sklearn.linear_model import LogisticRegression as SklearnLR\n    \n    X_train, y_train = make_classification(n_samples=500, n_features=10, random_state=42)\n    \n    # Custom model\n    custom = LogisticRegressionGD(learning_rate=0.1, l2_lambda=0.001, random_state=42)\n    custom.fit(X_train, y_train)\n    custom_pred = custom.predict_proba(X_train)[:, 1]\n    \n    # Sklearn model (C = 1/lambda for L2)\n    sklearn = SklearnLR(penalty='l2', C=1/0.001, solver='lbfgs', random_state=42)\n    sklearn.fit(X_train, y_train)\n    sklearn_pred = sklearn.predict_proba(X_train)[:, 1]\n    \n    # Predictions should correlate highly (r > 0.99)\n    from scipy.stats import pearsonr\n    corr, _ = pearsonr(custom_pred, sklearn_pred)\n    assert corr > 0.99, f'Low correlation: {corr:.4f}'\n    \n    # AUC should be within 0.01\n    from sklearn.metrics import roc_auc_score\n    auc_custom = roc_auc_score(y_train, custom_pred)\n    auc_sklearn = roc_auc_score(y_train, sklearn_pred)\n    assert abs(auc_custom - auc_sklearn) < 0.01, f'AUC diff: {abs(auc_custom - auc_sklearn):.4f}'\n",
+          "rationale": "sklearn battle-tested. If custom implementation differs significantly, likely has bugs."
+        },
+        {
+          "test_name": "test_convergence_on_toy_data",
+          "description": "Linearly separable toy data should converge to near-zero loss",
+          "code": "def test_convergence_on_toy_data():\n    # Linearly separable data\n    X = np.array([[1, 1], [2, 2], [3, 3], [1, 2], [2, 3]])\n    y = np.array([0, 0, 0, 1, 1])\n    \n    model = LogisticRegressionGD(learning_rate=0.5, max_epochs=500, l2_lambda=0)\n    model.fit(X, y)\n    \n    # Should achieve near-perfect classification\n    pred = model.predict(X)\n    accuracy = (pred == y).mean()\n    assert accuracy >= 0.95, f'Low accuracy on toy data: {accuracy:.2f}'\n    \n    # Final loss should be small\n    assert model.loss_history[-1] < 0.1, f'Loss did not converge: {model.loss_history[-1]:.4f}'\n",
+          "rationale": "If can't fit toy data, gradient descent fundamentally broken."
+        },
+        {
+          "test_name": "test_sigmoid_stability",
+          "description": "Sigmoid should not overflow/underflow for extreme inputs",
+          "code": "def test_sigmoid_stability():\n    model = LogisticRegressionGD()\n    \n    # Extreme positive\n    z_pos = np.array([100, 500, 1000])\n    sig_pos = model._sigmoid(z_pos)\n    assert np.all(sig_pos > 0.99), 'Sigmoid underflow for large positive z'\n    assert np.all(np.isfinite(sig_pos)), 'Sigmoid overflow'\n    \n    # Extreme negative\n    z_neg = np.array([-100, -500, -1000])\n    sig_neg = model._sigmoid(z_neg)\n    assert np.all(sig_neg < 0.01), 'Sigmoid underflow for large negative z'\n    assert np.all(np.isfinite(sig_neg)), 'Sigmoid underflow'\n",
+          "rationale": "Numerical stability critical. Without clipping, exp(1000) = ∞, exp(-1000) = 0 (underflow)."
+        }
+      ],
+      "test_execution": "pytest tests/test_logistic_regression.py -v",
+      "coverage": "98% line coverage (missing: edge case handling for empty X)",
+      "continuous_integration": "Tests run on every commit via GitHub Actions. PR blocked if any test fails.",
+      "scoring": "excellent",
+      "score": 10,
+      "brightness": 1.0,
+      "color": "#667eea",
+      "size": 14,
+      "selected": true
+    },
+    {
+      "id": "debug-convergence-failure",
+      "type": "debugging_trace",
+      "layer": 4.75,
+      "narrative": "model_selection",
+      "parent": "decision-model-logistic-training",
+      "label": "Debugging Non-Convergence Issues",
+      "description": "Step-by-step debugging guide when gradient descent fails to converge",
+      "symptoms": [
+        "Loss plateaus at high value (e.g., 0.69 for binary classification)",
+        "Loss oscillates wildly between epochs",
+        "Loss decreases initially then explodes (→ ∞)",
+        "Convergence takes 1000+ epochs (expected: <200)"
+      ],
+      "debugging_checklist": [
+        {
+          "issue": "Loss stuck at ~0.69 (log(2))",
+          "diagnosis": "Model predicting constant (all 0.5 probabilities). Gradient ≈ 0.",
+          "root_causes": [
+            "Learning rate too low (e.g., 1e-6) → Updates too small",
+            "Features not scaled → Gradients dominated by large-scale features",
+            "Weights initialized to zeros → Symmetry prevents learning"
+          ],
+          "solution": [
+            "Check weight initialization: theta should be small random values, not zeros",
+            "Verify feature scaling: X.mean(axis=0) ≈ 0, X.std(axis=0) ≈ 1",
+            "Increase learning rate: Try 0.01, 0.1, 0.5 (grid search)",
+            "Print gradient norm: If ||∇L|| < 1e-6, gradients vanishing"
+          ],
+          "diagnostic_code": "print(f'Gradient norm: {np.linalg.norm(gradient):.6f}'); print(f'Weight std: {np.std(model.theta):.6f}'); print(f'Feature mean: {X.mean(axis=0)}'); print(f'Feature std: {X.std(axis=0)}')"
+        },
+        {
+          "issue": "Loss oscillates (e.g., 0.45 → 0.52 → 0.47 → 0.51)",
+          "diagnosis": "Learning rate too high. Overshooting optimal weights.",
+          "solution": [
+            "Reduce learning rate by 10x (e.g., 0.5 → 0.05)",
+            "Implement learning rate decay: α_t = α_0 / (1 + decay_rate * t)",
+            "Use adaptive optimizers: Adam, RMSprop (adjust lr per parameter)"
+          ],
+          "diagnostic_code": "if epoch > 10 and abs(loss_history[-1] - loss_history[-10]) < 0.01: print('Warning: Loss oscillating. Reduce learning rate.')"
+        },
+        {
+          "issue": "Loss explodes to ∞",
+          "diagnosis": "Numerical overflow. Sigmoid(z) → 0 or 1, log(0) = -∞.",
+          "root_causes": [
+            "z = X @ theta extremely large (|z| > 500)",
+            "No clipping in loss computation",
+            "Learning rate too high → weights explode"
+          ],
+          "solution": [
+            "Add clipping: z = np.clip(z, -500, 500) in sigmoid",
+            "Add epsilon in loss: log(pred + 1e-15) instead of log(pred)",
+            "Check weight magnitudes: If ||theta|| > 100, weights exploding"
+          ],
+          "diagnostic_code": "print(f'Max |z|: {np.abs(z).max():.2f}'); print(f'Weight norm: {np.linalg.norm(model.theta):.2f}'); print(f'Min pred: {predictions.min():.2e}, Max pred: {predictions.max():.2e}')"
+        },
+        {
+          "issue": "Convergence slow (>500 epochs)",
+          "diagnosis": "Features not normalized or learning rate suboptimal.",
+          "solution": [
+            "Apply StandardScaler: (x - μ) / σ before training",
+            "Tune learning rate: Try [0.001, 0.01, 0.1, 1.0] via grid search",
+            "Check feature scales: If one feature ranges [0, 1000] and another [0, 1], gradient descent struggles"
+          ],
+          "diagnostic_code": "for i, feat in enumerate(X.T): print(f'Feature {i}: range [{feat.min():.2f}, {feat.max():.2f}], std {feat.std():.2f}')"
+        }
+      ],
+      "visualization_for_debugging": [
+        {
+          "plot": "Loss curve (epoch vs loss)",
+          "interpretation": "Should be monotonically decreasing. If oscillating → lr too high. If flat → lr too low or vanishing gradients."
+        },
+        {
+          "plot": "Gradient norm over epochs",
+          "interpretation": "Should decrease as converging. If stays constant → not learning. If explodes → numerical instability."
+        },
+        {
+          "plot": "Weight histogram (distribution of theta values)",
+          "interpretation": "Should be roughly symmetric around 0 (with L2). If all weights ≈ 0 → not learning. If |theta| > 10 → potential overfitting."
+        }
+      ],
+      "example_debugging_session": "Symptom: Loss stuck at 0.693 (log(2)) after 100 epochs.\nStep 1: Check weights → All zeros (bug: forgot to initialize).\nStep 2: Initialize weights: theta = np.random.normal(0, 0.01, n) → Loss now 0.45.\nStep 3: Check gradient norm → ||∇L|| = 0.002 (very small).\nStep 4: Check feature scaling → X.std() ranges from 0.5 to 250 (not scaled!).\nStep 5: Apply StandardScaler → Loss converges to 0.32 in 80 epochs. ✓ Fixed.",
+      "scoring": "excellent",
+      "score": 10,
+      "brightness": 1.0,
+      "color": "#667eea",
+      "size": 14,
+      "selected": true
+    },
+    {
+      "id": "doc-api-reference",
+      "type": "documentation",
+      "layer": 5.75,
+      "narrative": "evaluation_strategy",
+      "parent": "decision-threshold-tuning",
+      "label": "API Documentation for Threshold Tuning",
+      "description": "User-facing documentation with examples for threshold optimization module",
+      "api_docs": "# Threshold Tuning Module\n\n## Overview\nOptimizes classification threshold to meet business constraints (e.g., FPR ≤ 5%).\n\n## Installation\n```bash\npip install -r requirements.txt  # Includes numpy, scikit-learn\n```\n\n## Quick Start\n```python\nfrom src.evaluation import ThresholdOptimizer\nfrom sklearn.metrics import roc_auc_score\n\n# Assume trained model\ny_proba = model.predict_proba(X_val)[:, 1]  # Probabilities for positive class\n\n# Optimize threshold\noptimizer = ThresholdOptimizer(\n    constraint='fpr',  # Constraint type: 'fpr', 'precision', 'f1'\n    constraint_value=0.05,  # FPR ≤ 5%\n    n_thresholds=1000  # Granularity\n)\n\noptimal_threshold, metrics = optimizer.fit(y_val, y_proba)\n\nprint(f'Optimal threshold: {optimal_threshold:.3f}')\nprint(f'Recall at threshold: {metrics[\"recall\"]:.3f}')\nprint(f'FPR at threshold: {metrics[\"fpr\"]:.3f}')\n```\n\n## API Reference\n\n### `ThresholdOptimizer`\nOptimizes classification threshold subject to constraints.\n\n#### Parameters\n- **constraint** : str, {'fpr', 'precision', 'f1', 'specificity'}\n  - Type of constraint to enforce.\n  - 'fpr': False positive rate (FP / (FP + TN))\n  - 'precision': Positive predictive value (TP / (TP + FP))\n  - 'f1': Harmonic mean of precision and recall\n  - 'specificity': True negative rate (TN / (TN + FP))\n\n- **constraint_value** : float, range [0, 1]\n  - Maximum allowed value for constraint metric.\n  - Example: constraint='fpr', constraint_value=0.05 → FPR ≤ 5%\n\n- **n_thresholds** : int, default=1000\n  - Number of threshold candidates to evaluate.\n  - Range: [0.0, 1.0] divided into `n_thresholds` equal steps.\n  - Higher values → finer granularity but slower computation.\n\n- **optimize_for** : str, {'recall', 'precision', 'f1'}, default='recall'\n  - Metric to maximize subject to constraint.\n  - Example: Maximize recall while keeping FPR ≤ 5%.\n\n#### Methods\n\n##### `fit(y_true, y_proba)`\nFinds optimal threshold.\n\n**Parameters:**\n- **y_true** : array-like, shape (n_samples,)\n  - Ground truth binary labels (0 or 1).\n- **y_proba** : array-like, shape (n_samples,)\n  - Predicted probabilities for positive class.\n\n**Returns:**\n- **threshold** : float\n  - Optimal classification threshold.\n- **metrics** : dict\n  - Performance metrics at optimal threshold.\n  - Keys: 'recall', 'precision', 'fpr', 'f1', 'specificity'\n\n**Raises:**\n- **ValueError** : If no threshold satisfies constraint.\n  - Example: If FPR ≤ 5% impossible with current model, raises error.\n\n**Example:**\n```python\noptimizer = ThresholdOptimizer(constraint='fpr', constraint_value=0.05)\nthreshold, metrics = optimizer.fit(y_val, y_proba)\n\nif metrics['recall'] < 0.70:\n    print('Warning: Recall below 70% target. Consider feature engineering.')\n```\n\n##### `plot_tradeoff_curve(y_true, y_proba, save_path=None)`\nVisualizes recall-FPR trade-off across thresholds.\n\n**Parameters:**\n- **y_true** : array-like, shape (n_samples,)\n- **y_proba** : array-like, shape (n_samples,)\n- **save_path** : str, optional\n  - Path to save plot. If None, displays interactively.\n\n**Returns:**\n- **fig** : matplotlib.figure.Figure\n  - Figure object for further customization.\n\n**Example:**\n```python\noptimizer.plot_tradeoff_curve(\n    y_val, y_proba,\n    save_path='results/threshold_tradeoff.png'\n)\n```\n\n## Advanced Usage\n\n### Multiple Constraints\nEnforce both FPR ≤ 5% AND precision ≥ 80%:\n\n```python\nfrom src.evaluation import MultiConstraintOptimizer\n\noptimizer = MultiConstraintOptimizer(\n    constraints=[\n        ('fpr', 0.05),      # FPR ≤ 5%\n        ('precision', 0.80)  # Precision ≥ 80%\n    ],\n    optimize_for='recall'\n)\n\ntry:\n    threshold, metrics = optimizer.fit(y_val, y_proba)\n    print(f'Threshold: {threshold:.3f}, Recall: {metrics[\"recall\"]:.3f}')\nexcept ValueError as e:\n    print(f'Constraints infeasible: {e}')\n    print('Consider: (1) Feature engineering, (2) Relaxing constraints, (3) Ensemble methods')\n```\n\n### Cost-Sensitive Threshold Selection\nSelect threshold minimizing business cost:\n\n```python\n# Define costs\ncost_fp = 500   # $500 per false positive (user churn)\ncost_fn = 2000  # $2000 per false negative (fraud loss)\n\noptimizer = ThresholdOptimizer(constraint=None)  # No hard constraint\nthreshold, metrics = optimizer.fit_cost_sensitive(\n    y_val, y_proba,\n    cost_fp=cost_fp,\n    cost_fn=cost_fn\n)\n\nprint(f'Cost-optimal threshold: {threshold:.3f}')\nprint(f'Expected cost per 1000 users: ${metrics[\"expected_cost\"]:.0f}')\n```\n\n## Performance Considerations\n\n- **Computation time**: O(n_thresholds × n_samples)\n  - For n_thresholds=1000, n_samples=10,000: ~0.5 seconds\n- **Memory usage**: O(n_thresholds)\n  - Stores threshold sweep results (negligible)\n\n## Troubleshooting\n\n### Error: \"No threshold satisfies constraint\"\n**Cause**: Model cannot achieve constraint (e.g., FPR ≤ 5%) at any threshold.\n\n**Solutions**:\n1. Relax constraint (e.g., FPR ≤ 10%)\n2. Improve model (feature engineering, hyperparameter tuning)\n3. Check validation set: Is it representative of production data?\n\n### Warning: \"Optimal threshold at boundary (0.0 or 1.0)\"\n**Cause**: Constraint so loose that boundary threshold is optimal.\n\n**Example**: FPR ≤ 50% constraint → threshold=0.0 (predict all positive) satisfies it.\n\n**Solution**: Tighten constraint to meaningful business requirement.\n\n## References\n\n- [Threshold Selection for Binary Classification](https://arxiv.org/abs/1901.08644)\n- [Cost-Sensitive Learning](https://link.springer.com/article/10.1023/A:1007663713082)\n- [SHAP Documentation](https://shap.readthedocs.io/) for explainability\n",
+      "file_location": "docs/api/threshold_optimization.md",
+      "code_examples": 5,
+      "rendering": "Markdown with syntax highlighting via MkDocs",
+      "accessibility": "Public documentation site: https://project-docs.example.com/api/threshold-optimization",
+      "maintenance": "Docs updated automatically from docstrings via Sphinx autodoc. Ensure code comments stay in sync.",
+      "scoring": "excellent",
+      "score": 10,
+      "brightness": 1.0,
+      "color": "#667eea",
+      "size": 14,
+      "selected": true
+    },
+    {
+      "id": "alternative-smote-rejected",
+      "type": "alternative_implementation",
+      "layer": 2.75,
+      "narrative": "preprocessing_decisions",
+      "parent": "decision-stratified-split",
+      "label": "SMOTE Oversampling (Rejected)",
+      "description": "Synthetic Minority Over-sampling Technique (SMOTE) was considered but rejected. Here's why.",
+      "approach": "SMOTE generates synthetic minority class samples via k-nearest neighbors interpolation to balance 55:45 class distribution to 50:50.",
+      "implementation_tested": "from imblearn.over_sampling import SMOTE; smote = SMOTE(sampling_strategy=1.0, k_neighbors=5, random_state=42); X_resampled, y_resampled = smote.fit_resample(X_train, y_train)",
+      "results": {
+        "original_distribution": "Legitimate: 5601 (55%), Phishing: 4400 (45%)",
+        "after_smote": "Legitimate: 5601 (50%), Phishing: 5601 (50%)",
+        "model_performance": {
+          "logistic_baseline": {"roc_auc": 0.825, "recall": 0.812, "fpr": 0.219},
+          "logistic_with_smote": {"roc_auc": 0.818, "recall": 0.829, "fpr": 0.238},
+          "xgboost_baseline": {"roc_auc": 0.888, "recall": 0.865, "fpr": 0.182},
+          "xgboost_with_smote": {"roc_auc": 0.881, "recall": 0.878, "fpr": 0.201}
+        }
+      },
+      "why_rejected": [
+        {
+          "reason": "Marginal recall improvement (+1-2 pp) not worth FPR increase (+2 pp)",
+          "quantification": "SMOTE improves recall 81.2% → 82.9% but worsens FPR 21.9% → 23.8%. Net business impact negative: Catch 17 more attacks (good) but trigger 190 more false alarms (bad). At $500 churn per FP, cost increase = $95K > $34K fraud prevention. ROI negative."
+        },
+        {
+          "reason": "Synthetic samples not representative of real attacks",
+          "explanation": "SMOTE interpolates between existing phishing samples. Example: If two phishing sites have DomainAge=3mo and 5mo, SMOTE creates synthetic sample with DomainAge=4mo. But real phishing attacks have discrete patterns (fresh domains <1mo, or aged domains >2yr bought from marketplaces). Interpolated 4mo samples mislead model."
+        },
+        {
+          "reason": "Validation set performance degrades",
+          "observation": "Train AUC: 0.92 (with SMOTE) vs 0.89 (baseline). Val AUC: 0.881 (with SMOTE) vs 0.888 (baseline). Gap widens: 0.92 - 0.881 = 0.039 (SMOTE) vs 0.89 - 0.888 = 0.002 (baseline). SMOTE causes overfitting to synthetic patterns that don't generalize."
+        },
+        {
+          "reason": "Class imbalance not severe (55:45)",
+          "guideline": "SMOTE most beneficial for severe imbalance (>90:10). At 55:45, stratified sampling sufficient. Literature (Chawla et al., 2002) recommends SMOTE only when minority class <30%."
+        }
+      ],
+      "alternative_considered": "ADASYN (Adaptive Synthetic Sampling): Generates more synthetic samples in regions where minority class is sparse. Tested: Results similar to SMOTE (marginal recall gain, FPR increase). Also rejected.",
+      "correct_approach": "Stratified splits preserve natural distribution + threshold tuning optimizes operating point. More principled than artificially balancing via synthetic data.",
+      "lesson_learned": "Don't default to SMOTE just because 'imbalance exists.' Quantify business impact: Does recall improvement justify FPR increase? In this case, no.",
+      "scoring": "excellent",
+      "score": 9,
+      "brightness": 0.9,
+      "color": "#667eea",
+      "size": 12,
+      "selected": true
+    }
+  ],
+  "extended_edges_v2": [
+    {
+      "source": "stakeholder-product",
+      "target": "dialogue-product-kickoff",
+      "type": "documented_in",
+      "label": "Requirements Gathering",
+      "brightness": 1.0,
+      "width": 2,
+      "color": "#667eea",
+      "selected": true
+    },
+    {
+      "source": "stakeholder-legal",
+      "target": "dialogue-legal-explainability",
+      "type": "documented_in",
+      "label": "Compliance Discussion",
+      "brightness": 1.0,
+      "width": 2,
+      "color": "#667eea",
+      "selected": true
+    },
+    {
+      "source": "decision-model-logistic-training",
+      "target": "math-gradient-descent-derivation",
+      "type": "theoretically_grounded_in",
+      "label": "Mathematical Foundation",
+      "brightness": 1.0,
+      "width": 2.5,
+      "color": "#667eea",
+      "selected": true
+    },
+    {
+      "source": "math-gradient-descent-derivation",
+      "target": "code-gradient-descent-implementation",
+      "type": "implemented_as",
+      "label": "Code Translation",
+      "brightness": 1.0,
+      "width": 2.5,
+      "color": "#667eea",
+      "selected": true
+    },
+    {
+      "source": "decision-clip-implementation",
+      "target": "error-preprocessing-negatives",
+      "type": "error_handling_via",
+      "label": "Edge Case Coverage",
+      "brightness": 0.9,
+      "width": 2,
+      "color": "#667eea"
+    },
+    {
+      "source": "decision-log-transform",
+      "target": "benchmark-preprocessing-pipeline",
+      "type": "profiled_by",
+      "label": "Performance Analysis",
+      "brightness": 1.0,
+      "width": 2,
+      "color": "#667eea",
+      "selected": true
+    },
+    {
+      "source": "code-gradient-descent-implementation",
+      "target": "test-gradient-correctness",
+      "type": "validated_by",
+      "label": "Test Coverage",
+      "brightness": 1.0,
+      "width": 2.5,
+      "color": "#667eea",
+      "selected": true
+    },
+    {
+      "source": "code-gradient-descent-implementation",
+      "target": "debug-convergence-failure",
+      "type": "debuggable_via",
+      "label": "Troubleshooting Guide",
+      "brightness": 0.9,
+      "width": 2,
+      "color": "#667eea"
+    },
+    {
+      "source": "decision-threshold-tuning",
+      "target": "doc-api-reference",
+      "type": "documented_in",
+      "label": "User Documentation",
+      "brightness": 1.0,
+      "width": 2,
+      "color": "#667eea",
+      "selected": true
+    },
+    {
+      "source": "decision-stratified-split",
+      "target": "alternative-smote-rejected",
+      "type": "alternative_rejected",
+      "label": "Design Decision",
+      "brightness": 0.9,
+      "width": 2,
+      "color": "#667eea"
+    }
+  ],
+  "implementation_details_summary_v2": {
+    "total_extended_nodes_v2": 13,
+    "total_extended_edges_v2": 10,
+    "new_node_types": ["stakeholder_dialogue", "mathematical_proof", "code_snippet", "error_handling", "performance_benchmark", "testing_strategy", "debugging_trace", "documentation", "alternative_implementation"],
+    "detail_categories": {
+      "stakeholder_dialogues": {
+        "nodes": 2,
+        "description": "Actual conversations between ML engineer and stakeholders (product, legal). Shows real-world communication: clarifying ambiguity, negotiating constraints, documenting agreements."
+      },
+      "mathematical_proofs": {
+        "nodes": 1,
+        "description": "Full gradient descent derivation with L2 regularization: 8 steps from loss function → update rule. Includes Bayesian interpretation, numerical stability notes, worked example."
+      },
+      "code_snippets": {
+        "nodes": 1,
+        "description": "247-line production-quality Python implementation with docstrings, type hints, error handling, logging. Shows industry best practices: early stopping, numerical stability, sklearn parity validation."
+      },
+      "error_handling": {
+        "nodes": 1,
+        "description": "Comprehensive edge case analysis: What if all values negative? Clustered negatives? Sentinel values (-9999)? Validation checks, logging, rollback plans."
+      },
+      "performance_benchmarks": {
+        "nodes": 1,
+        "description": "Detailed profiling: 9 pipeline steps timed individually. Identifies bottlenecks (I/O: 63%), optimization opportunities (Parquet: 4× faster), memory usage breakdown."
+      },
+      "testing_strategies": {
+        "nodes": 1,
+        "description": "4 unit tests: Gradient numerical validation, sklearn parity, toy data convergence, sigmoid stability. 98% code coverage, CI integration."
+      },
+      "debugging_traces": {
+        "nodes": 1,
+        "description": "Systematic troubleshooting guide: 4 common failure modes (loss stuck, oscillating, exploding, slow convergence). Diagnosis → root causes → solutions with diagnostic code."
+      },
+      "documentation": {
+        "nodes": 1,
+        "description": "Complete API reference with quickstart, parameter docs, examples, advanced usage (multi-constraint, cost-sensitive), troubleshooting, performance notes. 5 runnable code examples."
+      },
+      "alternative_implementations": {
+        "nodes": 1,
+        "description": "SMOTE oversampling tested but rejected: Marginal recall gain (+2pp) not worth FPR increase (+2pp). Negative ROI quantified ($95K cost > $34K benefit). Includes experimental results, business analysis, lesson learned."
+      }
+    },
+    "key_excellent_differentiators_v2": [
+      "Stakeholder dialogues show real-world communication skills (clarifying 'blocking' vs 'warning', negotiating explainability requirements)",
+      "Full mathematical derivation (not just formula) with worked example validates deep theory understanding",
+      "Production-quality code (247 lines, docstrings, type hints, logging, error handling) far beyond tutorial-level",
+      "Comprehensive error handling (4 edge cases identified, validation checks, rollback plan)",
+      "Performance profiling identifies bottleneck (I/O: 63%) + optimization plan (Parquet: 4× faster)",
+      "Testing strategy includes numerical gradient validation (catches math errors) + sklearn parity check",
+      "Debugging guide covers 4 failure modes with diagnostic code (actionable, not just 'check logs')",
+      "API documentation production-ready (quickstart, advanced usage, troubleshooting, 5 examples)",
+      "Alternative approach (SMOTE) tested empirically, rejected with quantified business reasoning (ROI negative)"
+    ]
+  },
+  "query_examples_v2": [
+    {
+      "query": "Show me the gradient descent derivation with code implementation",
+      "cypher": "MATCH path = (math:mathematical_proof {id:'math-gradient-descent-derivation'})-[:implemented_as]->(code:code_snippet) RETURN path",
+      "insight": "Full 8-step derivation from L(θ) → ∇L → θ update. Implemented in 247-line Python class with early stopping, logging, sklearn validation."
+    },
+    {
+      "query": "What stakeholder dialogues were documented?",
+      "cypher": "MATCH (s:stakeholder)-[:documented_in]->(d:stakeholder_dialogue) RETURN s.label, d.dialogue",
+      "insight": "Product kickoff: Negotiated KPIs (recall ≥70%, FPR ≤5%), latency <100ms, explainability. Legal discussion: SHAP explainability approved, fairness audit required."
+    },
+    {
+      "query": "How was the gradient descent implementation validated?",
+      "cypher": "MATCH (code:code_snippet)-[:validated_by]->(test:testing_strategy) RETURN code.label, test.test_suite",
+      "insight": "4 unit tests: (1) Numerical gradient check (finite differences), (2) sklearn parity (AUC diff <0.01), (3) Toy data convergence (accuracy >95%), (4) Sigmoid stability (extreme inputs)."
+    },
+    {
+      "query": "What performance bottleneck was identified and how to fix it?",
+      "cypher": "MATCH (pipeline)-[:profiled_by]->(benchmark:performance_benchmark) RETURN benchmark.timing_breakdown, benchmark.optimization_opportunities",
+      "insight": "Bottleneck: Saving to disk (325ms, 63% of pipeline). Solution: Use Parquet instead of CSV → 80ms (4× faster). Estimated total time reduction: 516ms → 271ms (47% faster)."
+    },
+    {
+      "query": "Why was SMOTE rejected as a preprocessing approach?",
+      "cypher": "MATCH (decision)-[:alternative_rejected]->(alt:alternative_implementation {id:'alternative-smote-rejected'}) RETURN alt.why_rejected, alt.results",
+      "insight": "SMOTE tested: +2pp recall but +2pp FPR. Business impact: Catch 17 more attacks ($34K saved) but 190 more false alarms ($95K churn cost). ROI negative. Synthetic samples don't represent real attack patterns. Stratified splits + threshold tuning more principled."
+    }
+  ]
+}
