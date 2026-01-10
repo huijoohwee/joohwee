@@ -1,7 +1,7 @@
 ---
 title: "eda-mlp-interview-session"
-author: "h3"
-tags: [GraphRAG, Agentic, Test]
+author: "joohwee"
+tags: [EDA, MLP, Test]
 date: 2026-01-09
 mermaidAnchorsOnly: true
 mermaid: |
