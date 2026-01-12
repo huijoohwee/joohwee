@@ -19,6 +19,8 @@ comprehensive multi-ontology knowledge graph that integrates 6 major vocabularie
 - Step dependencies: `pplan:isPrecededBy`, `pplan:isSucceededBy`
 - Variables: Input/output data at each step (`pplan:hasInputVar`, `pplan:hasOutputVar`)
 
+---
+
 **4. RO-Crate (Research Object Packaging)**
 - Root entity: Complete submission as research object
 - Conforms to RO-Crate 1.1 specification
@@ -50,6 +52,8 @@ Eight polygon layers with different spatial metrics:
 - Spatial metric: Class proportion embedding
 - Enables: "Find datasets with similar imbalance patterns"
 
+---
+
 **D. Preprocessing Cluster**
 - Groups transformations by purpose
 - Cohesion score: 0.92
@@ -72,6 +76,8 @@ Eight polygon layers with different spatial metrics:
 **H. Assessment Region**
 - Strong hire polygon: Overall score ≥92
 - Spatial metric: Composite assessment score
+
+---
 
 ## **Advanced GraphRAG Query Examples**
 
@@ -122,6 +128,8 @@ SELECT ?model ?distance WHERE {
   FILTER(?distance < 5.0)
 }
 ```
+
+---
 
 ## **Key Advantages for Agentic GraphRAG**
 

@@ -1,3 +1,704 @@
+---
+title: "eda-mlp-interview-session"
+author: "joohwee"
+tags: [EDA, MLP, Test]
+date: 2026-01-09
+mermaidAnchorsOnly: true
+mermaid: |
+  graph TB
+    %% =====================================
+    %% PHASE 0: DATA QUALITY & VALIDATION
+    %% =====================================
+    subgraph P0["🔍 Phase 0: Data Quality & Validation"]
+        direction TB
+        
+        DF[DataFrame/df]:::implemented
+        SCHEMA[Schema Validation]:::critical
+        TARGET[Target Validation]:::critical
+        ASSERT[Assert/Defensive]:::implemented
+        ROWCOUNT[Sample Size]:::implemented
+        
+        DF --> SCHEMA
+        SCHEMA --> TARGET
+        TARGET --> ASSERT
+        SCHEMA --> ROWCOUNT
+    end
+    
+    %% =====================================
+    %% PHASE 1: EDA & STATISTICAL TESTING
+    %% =====================================
+    subgraph P1["📊 Phase 1: EDA & Statistical Testing"]
+        direction TB
+        
+        UNIVAR[Univariate Analysis]:::partial
+        CORR[Correlation]:::implemented
+        SKEW[Skewness]:::implemented
+        OUTLIER[Outlier Detection/IQR]:::implemented
+        MNAR[MNAR]:::implemented
+        CHISQ[Chi-Square Test]:::partial
+        HYPO[Hypothesis Testing]:::partial
+        PVAL[p-value]:::implemented
+        VIF[VIF Inflation]:::implemented
+        MULTI[Multicollinearity]:::implemented
+        
+        UNIVAR --> SKEW
+        UNIVAR --> OUTLIER
+        UNIVAR --> MNAR
+        CORR --> MULTI
+        MULTI --> VIF
+        CHISQ --> PVAL
+        HYPO --> CHISQ
+        MNAR --> CHISQ
+    end
+    
+    %% =====================================
+    %% PHASE 2: FEATURE ENGINEERING
+    %% =====================================
+    subgraph P2["⚙️ Phase 2: Feature Engineering & Preprocessing"]
+        direction TB
+        
+        FE[Feature Engineering]:::implemented
+        RATIO[Ratio Features]:::implemented
+        BIN[Binning/Quantile]:::implemented
+        FREQ[Frequency Encoding]:::implemented
+        ONEHOT[One-Hot Encoding]:::implemented
+        
+        IMPUTE[Imputation/Median]:::implemented
+        CLIP[Clipping/np.clip]:::implemented
+        LOG[Log Transform/log1p]:::implemented
+        SCALE[Standardization/Scale]:::implemented
+        
+        PREPROC[Preprocessor]:::critical
+        FITTRANS[fit_transform]:::critical
+        TRANS[transform]:::implemented
+        LEAK[Data Leakage]:::critical
+        
+        FE --> RATIO
+        FE --> BIN
+        FE --> FREQ
+        FE --> ONEHOT
+        
+        MNAR --> FE
+        SKEW --> LOG
+        OUTLIER --> CLIP
+        
+        CLIP --> LOG
+        LOG --> IMPUTE
+        IMPUTE --> ONEHOT
+        ONEHOT --> SCALE
+        
+        SCALE --> PREPROC
+        PREPROC --> FITTRANS
+        PREPROC --> TRANS
+        FITTRANS -.-> LEAK
+    end
+    
+    %% =====================================
+    %% PHASE 3: DATA SPLITTING
+    %% =====================================
+    subgraph P3["🎲 Phase 3: Data Splitting & Validation"]
+        direction TB
+        
+        STRAT[Stratification]:::implemented
+        STRATSPLIT[stratified_split]:::implemented
+        TRAINTEST[Train-Test Split]:::implemented
+        TESTSET[Test Set]:::implemented
+        VALSET[Validation Set]:::implemented
+        RANDSEED[Random State]:::implemented
+        CHIVAL[Chi-Square Validation]:::partial
+        SAMPSIZE[Sample Size]:::implemented
+        CI[Confidence Interval]:::implemented
+        
+        STRAT --> STRATSPLIT
+        STRATSPLIT --> TRAINTEST
+        TRAINTEST --> TESTSET
+        TRAINTEST --> VALSET
+        STRATSPLIT --> RANDSEED
+        STRAT --> CHIVAL
+        TESTSET --> SAMPSIZE
+        SAMPSIZE --> CI
+    end
+    
+    %% =====================================
+    %% PHASE 4: MODEL TRAINING
+    %% =====================================
+    subgraph P4["🤖 Phase 4: Model Training & Selection"]
+        direction TB
+        
+        LOGISTIC[Logistic Regression]:::implemented
+        KNN[KNN]:::implemented
+        XGB[XGBoost]:::implemented
+        
+        GRAD[Gradient Descent]:::implemented
+        HYPER[Hyperparameter Tuning]:::implemented
+        GRID[Grid Search]:::implemented
+        CV[Cross-Validation]:::implemented
+        CLASSW[Class Weights]:::implemented
+        
+        MODSEL[Model Selection]:::implemented
+        INTERP[Interpretability]:::implemented
+        FIMP[Feature Importance]:::implemented
+        
+        LOGISTIC --> GRAD
+        LOGISTIC --> INTERP
+        XGB --> FIMP
+        XGB --> CLASSW
+        
+        HYPER --> GRID
+        GRID --> CV
+        
+        LOGISTIC --> MODSEL
+        KNN --> MODSEL
+        XGB --> MODSEL
+    end
+    
+    %% =====================================
+    %% PHASE 5: THRESHOLD TUNING
+    %% =====================================
+    subgraph P5["🎚️ Phase 5: Threshold Tuning & Optimization"]
+        direction TB
+        
+        THRESH[Threshold Tuning]:::partial
+        LINSPACE[np.linspace]:::implemented
+        PREDPROBA[predict_proba]:::implemented
+        
+        FPR[FPR]:::implemented
+        RECALL[Recall]:::critical
+        PRECISION[Precision]:::implemented
+        
+        PARETO[Pareto Frontier]:::partial
+        TRADEOFF[Trade-off Analysis]:::critical
+        KPI[KPI Alignment]:::critical
+        
+        PREDPROBA --> THRESH
+        LINSPACE --> THRESH
+        THRESH --> FPR
+        THRESH --> RECALL
+        THRESH --> PRECISION
+        THRESH --> PARETO
+        PARETO --> TRADEOFF
+        KPI --> THRESH
+    end
+    
+    %% =====================================
+    %% PHASE 6: EVALUATION
+    %% =====================================
+    subgraph P6["📈 Phase 6: Evaluation & Metrics"]
+        direction TB
+        
+        CONF[Confusion Matrix]:::implemented
+        TP[TP]:::implemented
+        TN[TN]:::implemented
+        FP[FP]:::implemented
+        FN[FN]:::implemented
+        TPR[TPR]:::implemented
+        SPEC[Specificity]:::implemented
+        
+        ROCAUC[ROC AUC]:::implemented
+        PRAUC[PR AUC]:::implemented
+        AUC[AUC]:::implemented
+        
+        METRICS[Evaluation Metrics]:::implemented
+        HIER[Metric Hierarchy]:::implemented
+        
+        BUSINESS[Business Impact]:::critical
+        COST[Cost-Benefit Analysis]:::critical
+        
+        CONF --> TP
+        CONF --> TN
+        CONF --> FP
+        CONF --> FN
+        
+        TP --> RECALL
+        TP --> PRECISION
+        FN --> RECALL
+        FP --> FPR
+        FP --> PRECISION
+        TN --> SPEC
+        
+        TPR --> ROCAUC
+        FPR --> ROCAUC
+        RECALL --> PRAUC
+        PRECISION --> PRAUC
+        
+        ROCAUC --> AUC
+        PRAUC --> AUC
+        
+        METRICS --> HIER
+        HIER --> MODSEL
+        
+        CONF --> BUSINESS
+        FN --> COST
+        FP --> COST
+        BUSINESS --> COST
+    end
+    
+    %% =====================================
+    %% PHASE 7: DEPLOYMENT
+    %% =====================================
+    subgraph P7["🚀 Phase 7: Deployment & Serving"]
+        direction TB
+        
+        DEPLOY[Deployment]:::critical
+        DOCKER[Docker/Containerization]:::critical
+        KUBE[Kubernetes]:::critical
+        FASTAPI[FastAPI]:::critical
+        API[API Design]:::critical
+        
+        DEPLOY --> DOCKER
+        DOCKER --> KUBE
+        DEPLOY --> FASTAPI
+        FASTAPI --> API
+    end
+    
+    %% =====================================
+    %% PHASE 8: MONITORING
+    %% =====================================
+    subgraph P8["📡 Phase 8: Monitoring & Maintenance"]
+        direction TB
+        
+        MONITOR[Monitoring]:::critical
+        PROM[Prometheus]:::critical
+        GRAF[Grafana]:::critical
+        ALERT[Alert]:::critical
+        
+        DRIFT[Feature Drift]:::critical
+        KLDIV[KL Divergence]:::critical
+        
+        SHADOW[Shadow Mode]:::critical
+        CANARY[Canary Deployment]:::critical
+        BLUEGREEN[Blue-Green Deployment]:::critical
+        ROLLBACK[Rollback]:::critical
+        PROGRESS[Progressive Rollout]:::critical
+        
+        MONITOR --> PROM
+        PROM --> GRAF
+        GRAF --> ALERT
+        
+        MONITOR --> DRIFT
+        DRIFT --> KLDIV
+        
+        DEPLOY --> SHADOW
+        SHADOW --> CANARY
+        CANARY --> BLUEGREEN
+        BLUEGREEN --> ROLLBACK
+        CANARY --> PROGRESS
+    end
+    
+    %% =====================================
+    %% CROSS-CUTTING CONCERNS
+    %% =====================================
+    subgraph CROSS["🔧 Cross-Cutting Concerns"]
+        direction TB
+        
+        SKLEARN[scikit-learn]:::implemented
+        SCIPY[scipy.stats]:::implemented
+        PANDAS[Pandas]:::implemented
+        NUMPY[NumPy]:::implemented
+        
+        DEBUG[Debugging/Root Cause]:::implemented
+        ERROR[Error Handling]:::implemented
+        VALID[Validation]:::partial
+        REPRO[Reproducibility]:::implemented
+        
+        SKLEARN --> GRID
+        SKLEARN --> CV
+        SKLEARN --> METRICS
+        SCIPY --> CHISQ
+        SCIPY --> KLDIV
+        PANDAS --> DF
+        NUMPY --> CLIP
+        NUMPY --> LOG
+        
+        DEBUG --> ERROR
+        VALID --> ASSERT
+        REPRO --> RANDSEED
+    end
+    
+    %% =====================================
+    %% PIPELINE FLOW (MAIN PATH)
+    %% =====================================
+    P0 --> P1
+    P1 --> P2
+    P2 --> P3
+    P3 --> P4
+    P4 --> P5
+    P5 --> P6
+    P6 --> P7
+    P7 --> P8
+    
+    %% Critical dependencies across phases
+    LEAK -.->|"FIX: fit on train only"| TRAINTEST
+    SCHEMA -.->|validates| DF
+    MNAR -.->|informs| FE
+    SKEW -.->|drives| LOG
+    STRAT -.->|ensures| CLASSW
+    KPI -.->|constrains| THRESH
+    BUSINESS -.->|justifies| COST
+    
+    %% Styling
+    classDef critical fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    classDef partial fill:#ffd93d,stroke:#f08c00,stroke-width:2px,color:#000
+    classDef implemented fill:#6bcf7f,stroke:#2f9e44,stroke-width:2px,color:#000
+---
+
+# Interview Session Keywords Mermaid Diagram
+
+**Filename**: `interview-session-keywords.mmd`  
+**Purpose**: Visual knowledge graph of ML pipeline keywords with dependencies  
+**Color Legend**: 🔴 Critical Gap | 🟡 Partial | 🟢 Implemented
+
+---
+
+## Simplified View: Critical Path Only
+
+```mermaid
+graph LR
+    %% CRITICAL PATH (P0 gaps highlighted)
+    subgraph CRITICAL["🔴 Critical Gaps to Fix"]
+        direction LR
+        
+        L1[Data Leakage]:::critical
+        L2[KPI Misalignment]:::critical
+        L3[Business Impact Missing]:::critical
+        L4[No Deployment/Monitoring]:::critical
+        
+        L1 -->|2 hrs| FIX1[fit on train only]
+        L2 -->|1 hr| FIX2[max_fpr: 0.05]
+        L3 -->|2 hrs| FIX3[compute fraud/support cost]
+        L4 -->|Out of scope| FIX4[FastAPI + Docker]
+    end
+    
+    %% PARTIAL IMPLEMENTATIONS
+    subgraph PARTIAL["🟡 Partial - Need Enhancement"]
+        direction LR
+        
+        P1[Chi-Square Validation]:::partial
+        P2[Pareto Analysis]:::partial
+        P3[Hypothesis Testing Module]:::partial
+        
+        P1 -->|1 hr| E1[add to pipeline_validator]
+        P2 -->|2 hrs| E2[extract frontier + plot]
+        P3 -->|4 hrs| E3[src/hypothesis_tester.py]
+    end
+    
+    %% STRENGTHS
+    subgraph STRONG["🟢 Well-Implemented"]
+        direction LR
+        
+        S1[Feature Engineering]:::implemented
+        S2[Model Training]:::implemented
+        S3[Threshold Sweep]:::implemented
+        S4[Evaluation Metrics]:::implemented
+        
+        S1 --> S2
+        S2 --> S3
+        S3 --> S4
+    end
+    
+    CRITICAL -.->|"Fix first"| PARTIAL
+    PARTIAL -.->|"Then enhance"| STRONG
+    
+    classDef critical fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    classDef partial fill:#ffd93d,stroke:#f08c00,stroke-width:2px,color:#000
+    classDef implemented fill:#6bcf7f,stroke:#2f9e44,stroke-width:2px,color:#000
+```
+
+---
+
+## Concept Relationships: Statistical Foundation
+
+```mermaid
+graph TD
+    %% STATISTICAL CONCEPTS
+    subgraph STATS["📐 Statistical Foundation"]
+        direction TB
+        
+        H0[Null Hypothesis H₀]
+        ALPHA[Significance α=0.05]
+        PVAL[p-value]
+        CHISQ[Chi-Square χ²]
+        CI[Confidence Interval]
+        POWER[Statistical Power]
+        
+        H0 --> PVAL
+        ALPHA --> PVAL
+        PVAL -.->|"p < α → reject H₀"| DECISION{Reject?}
+        DECISION -->|Yes| SIG[Statistically Significant]
+        DECISION -->|No| NSIG[Cannot Reject H₀]
+        
+        CHISQ --> PVAL
+        CI --> POWER
+        POWER --> SAMPSIZE[Sample Size n≥1000]
+    end
+    
+    %% APPLICATIONS
+    subgraph APP["🎯 Applications"]
+        direction TB
+        
+        IMBAL[Class Imbalance Test]
+        STRATVAL[Stratification Validation]
+        MNARTEST[MNAR Hypothesis]
+        METRICCI[Metric Confidence]
+        
+        IMBAL -.->|"χ²=110, p<0.001"| SIG
+        STRATVAL -.->|"p=0.08 > 0.05"| NSIG
+        MNARTEST -.->|"DomainAge missing"| CHISQ
+        METRICCI -.->|"Recall ±3.6%"| CI
+    end
+    
+    STATS --> APP
+    
+    classDef concept fill:#a8dadc,stroke:#457b9d,stroke-width:2px
+    classDef test fill:#f1faee,stroke:#1d3557,stroke-width:2px
+    
+    class H0,ALPHA,PVAL,CHISQ,CI,POWER concept
+    class IMBAL,STRATVAL,MNARTEST,METRICCI test
+```
+
+---
+
+## ML Pipeline Dependencies
+
+```mermaid
+graph TD
+    %% DATA FLOW
+    RAW[Raw Data<br/>phishing.db]
+    
+    %% PHASE 0-1
+    RAW --> LOAD[load_data]
+    LOAD --> VALIDATE[Schema/Target<br/>Validation]
+    VALIDATE --> EDA[EDA Notebook]
+    
+    %% PHASE 2
+    EDA -.->|informs| FE[Feature<br/>Engineer]
+    VALIDATE --> FE
+    FE --> MNARFLAG[MNAR Flags]
+    FE --> RATIO[Ratio Features]
+    FE --> BINS[Age Bins]
+    
+    %% PHASE 3 - CRITICAL FORK
+    MNARFLAG --> SPLIT{Split FIRST?}
+    RATIO --> SPLIT
+    BINS --> SPLIT
+    
+    SPLIT -->|❌ CURRENT| WRONG[fit_transform<br/>on full dataset]
+    SPLIT -->|✅ FIX| RIGHT[fit only on<br/>train set]
+    
+    WRONG -.->|leakage| BIAS[2-5% optimistic<br/>bias]
+    RIGHT --> NOTRANS[No leakage]
+    
+    %% PHASE 4
+    WRONG --> TRAIN[Model Training]
+    RIGHT --> TRAIN
+    TRAIN --> LR[Logistic]
+    TRAIN --> KNN[KNN]
+    TRAIN --> XGB[XGBoost]
+    
+    %% PHASE 5
+    LR --> TUNE[Threshold<br/>Tuning]
+    KNN --> TUNE
+    XGB --> TUNE
+    
+    TUNE --> CHECK{max_fpr?}
+    CHECK -->|0.03 ❌| LOW[Recall 12%<br/>Miss 88%]
+    CHECK -->|0.05 ✅| HIGH[Recall 70%<br/>Miss 30%]
+    
+    %% PHASE 6
+    LOW --> METRICS[Evaluation<br/>Metrics]
+    HIGH --> METRICS
+    METRICS --> MISSING{Business<br/>Impact?}
+    MISSING -->|❌ No| NOGAP[No cost<br/>calculation]
+    MISSING -->|✅ Yes| BIZMET[Fraud: $67M<br/>Support: $138K]
+    
+    %% STYLING
+    classDef wrong fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    classDef right fill:#6bcf7f,stroke:#2f9e44,stroke-width:3px,color:#000
+    classDef neutral fill:#e9ecef,stroke:#495057,stroke-width:2px
+    
+    class WRONG,BIAS,LOW,NOGAP wrong
+    class RIGHT,NOTRANS,HIGH,BIZMET right
+    class RAW,LOAD,VALIDATE,EDA,FE,TRAIN,TUNE,METRICS neutral
+```
+
+---
+
+## Monitoring & Deployment Stack
+
+```mermaid
+graph TB
+    %% DEPLOYMENT LAYERS
+    subgraph INFRA["🏗️ Infrastructure"]
+        DOCKER[Docker<br/>Container]
+        KUBE[Kubernetes<br/>Orchestration]
+        LB[Load<br/>Balancer]
+        
+        DOCKER --> KUBE
+        KUBE --> LB
+    end
+    
+    subgraph APP["🔌 Application Layer"]
+        API[FastAPI<br/>Endpoint]
+        PREPROC[Preprocessor<br/>.pkl]
+        MODEL[Model<br/>.pkl]
+        
+        API --> PREPROC
+        PREPROC --> MODEL
+    end
+    
+    subgraph DEPLOY["🚦 Deployment Strategy"]
+        SHADOW[Shadow Mode<br/>0% traffic]
+        CANARY[Canary<br/>5% traffic]
+        GRADUAL[Gradual<br/>25→50→100%]
+        ROLLBACK[Rollback<br/>if error>1%]
+        
+        SHADOW --> CANARY
+        CANARY --> GRADUAL
+        CANARY -.->|failure| ROLLBACK
+    end
+    
+    subgraph MONITOR["📊 Monitoring Stack"]
+        direction TB
+        
+        LAYER1[System Health<br/>Latency, Errors]
+        LAYER2[Feature Drift<br/>KL Divergence]
+        LAYER3[ML Metrics<br/>Recall, FPR]
+        LAYER4[Business<br/>Fraud, Support $]
+        
+        PROM[Prometheus<br/>Metrics]
+        GRAF[Grafana<br/>Dashboards]
+        ALERT[Alert<br/>Manager]
+        
+        LAYER1 --> PROM
+        LAYER2 --> PROM
+        LAYER3 --> PROM
+        LAYER4 --> PROM
+        PROM --> GRAF
+        GRAF --> ALERT
+    end
+    
+    %% CONNECTIONS
+    LB --> API
+    MODEL --> LAYER1
+    MODEL --> LAYER2
+    MODEL --> LAYER3
+    MODEL --> LAYER4
+    
+    ALERT -.->|triggers| ROLLBACK
+    LAYER2 -.->|KL>0.5| RETRAIN[Trigger<br/>Retraining]
+    
+    classDef infra fill:#457b9d,stroke:#1d3557,stroke-width:2px,color:#fff
+    classDef app fill:#a8dadc,stroke:#457b9d,stroke-width:2px
+    classDef deploy fill:#f1faee,stroke:#e63946,stroke-width:2px
+    classDef monitor fill:#ffd93d,stroke:#f08c00,stroke-width:2px
+    
+    class DOCKER,KUBE,LB infra
+    class API,PREPROC,MODEL app
+    class SHADOW,CANARY,GRADUAL,ROLLBACK deploy
+    class LAYER1,LAYER2,LAYER3,LAYER4,PROM,GRAF,ALERT monitor
+```
+
+---
+
+## Interview Preparation Mind Map
+
+```mermaid
+mindmap
+  root((Interview<br/>Success))
+    Critical Gaps
+      Data Leakage
+        fit on train only
+        2 hour fix
+      KPI Misalignment
+        max_fpr 0.05
+        1 hour fix
+      Business Impact
+        fraud exposure
+        support cost
+        2 hour fix
+      Deployment
+        out of scope
+        acknowledge gap
+    
+    Statistical Foundation
+      Chi-Square
+        class balance
+        stratification
+      Hypothesis Testing
+        MNAR validation
+        p-values
+      Confidence Intervals
+        sample size
+        precision
+    
+    Model Selection
+      Logistic
+        interpretable
+        gradient descent
+      KNN
+        local patterns
+        k=15
+      XGBoost
+        interactions
+        winner
+    
+    Threshold Tuning
+      FPR constraint
+        current 3%
+        should be 5%
+      Recall optimization
+        current 12%
+        should be 70%
+      Pareto frontier
+        trade-off curve
+        missing artifact
+    
+    Deployment Ready
+      FastAPI
+        REST endpoint
+        /predict
+      Docker
+        containerization
+        reproducibility
+      Monitoring
+        Prometheus
+        Grafana
+        4 layers
+```
+
+---
+
+## Quick Reference: Node Count by Priority
+
+| Priority | Count | Examples |
+|----------|-------|----------|
+| 🔴 Critical Gap | 15 | Data Leakage, KPI Alignment, Business Impact, Deployment, Monitoring |
+| 🟡 Partial | 8 | Chi-Square Validation, Pareto Analysis, Hypothesis Testing, Univariate |
+| 🟢 Implemented | 40+ | Feature Engineering, Models, Preprocessing, Stratification, Metrics |
+
+**Total Nodes**: 120+  
+**Total Edges**: 150+  
+**Subgraphs**: 11 major phases
+
+---
+
+## Usage Instructions
+
+1. **View in Mermaid Live Editor**: https://mermaid.live/
+2. **Copy entire code block** (between triple backticks)
+3. **Paste into editor** to render interactive diagram
+4. **Export as PNG/SVG** for presentation slides
+5. **Use simplified views** for focused discussions
+
+**Interview Strategy**:
+- Show full diagram → "Here's my complete pipeline"
+- Zoom to Critical Path → "These are my gaps"
+- Navigate to fixes → "Here's how I'd solve them"
+
+Good luck! 🚀
+
+---
+
 # Interview Session Keywords Reference Guide
 
 **Version**: 1.0  
