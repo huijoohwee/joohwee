@@ -1052,8 +1052,7 @@ Step 3: **Imputation for compatibility**
   - Median imputation (24 months) for numeric compatibility with downstream models
   - But the REAL predictive power is in the missing flag
 
-Validation: Ablation study—removing the missing flag drops model recall by 7%, confirming 
-it's a top-10 feature by importance."
+Validation: Ablation study—removing the missing flag drops model recall by 7%, confirming it's a top-10 feature by importance."
 ```
 
 **Q6: "How do you know your model isn't overfitting?"**
@@ -1064,17 +1063,16 @@ it's a top-10 feature by importance."
 
 1. **Regularization**: XGBoost has L2 penalty (lambda=1.0) and max_depth=6 constraint
 
-2. **Cross-validation**: Hyperparameter tuning used 5-fold CV on train set, selected params 
-   with best mean validation score
+2. **Cross-validation**: Hyperparameter tuning used 5-fold CV on train set, selected params with best mean validation score
 
-3. **Holdout validation**: Monitored train vs validation performance during tuning. Final 
-   model: train AUC=0.92, val AUC=0.88 → 4% gap is acceptable
+3. **Holdout validation**: Monitored train vs validation performance during tuning. 
+   Final model: train AUC=0.92, val AUC=0.88 → 4% gap is acceptable
 
 4. **Test set confirmation**: Test AUC=0.888 closely matches validation AUC=0.879 → <1% gap 
    confirms generalization
 
-5. **Learning curves**: Plotted training size vs performance. Performance plateaus beyond 
-   7000 samples, suggesting model has learned generalizable patterns
+5. **Learning curves**: Plotted training size vs performance. 
+   Performance plateaus beyond 7000 samples, suggesting model has learned generalizable patterns
 
 However, I acknowledge **temporal overfitting risk**: model is tuned for current phishing tactics (as of training data collection). 
 Phishing evolves, so I'd expect performance degradation without quarterly retraining.
@@ -1092,8 +1090,8 @@ Mitigation: Production monitoring of recall/FPR with automated retraining trigge
 ```
 "Two reasons—one educational, one practical:
 
-**Educational**: The assessment encouraged demonstrating ML fundamentals. Implementing gradient 
-descent from scratch shows I understand:
+**Educational**: The assessment encouraged demonstrating ML fundamentals. 
+Implementing gradient descent from scratch shows I understand:
 - Loss function: log-loss with L2 regularization
 - Optimization: iterative weight updates via ∇J(θ)
 - Convergence: monitoring loss trajectory
@@ -1780,8 +1778,8 @@ print(f"ROC AUC: {roc_auc_score(y_test, y_proba):.3f}")
 **When asked something completely unexpected**:
 ```
 "That's outside my current implementation. Here's how I'd approach it: [framework]. 
-I'd need to research [specific tool/technique]. Could you share how this is handled 
-in production at AISG?"
+I'd need to research [specific tool/technique]. 
+Could you share how this is handled in production at AISG?"
 ```
 
 ---

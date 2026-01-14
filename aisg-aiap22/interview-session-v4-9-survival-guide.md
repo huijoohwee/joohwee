@@ -300,11 +300,12 @@ Repository root:
 └── run.sh
 ```
 
-<!--
-```
+> scaffold entire tree in one compact shell command using `mkdir -p` and `touch`; at `github % `:
+
+```bash
 mkdir -p aiap22/{data,src} && touch aiap22/data/phishing.db aiap22/src/{data_loader.py,eda_utils.py,preprocessing.py,models.py,evaluation.py} aiap22/{eda.ipynb,README.md,requirements.txt,run.sh} && echo "data/" > aiap22/.gitignore
 ```
--->
+
 
 **Step 3**: In data_loader.py, implement:
 - load_from_sqlite function
@@ -877,7 +878,8 @@ Derived Metrics:
 ```
 
 **Explanation**:
-"My model catches 735 out of 993 phishing attacks (74% recall), with 41 false alarms on 657 legitimate sites (6.2% FPR). The FPR is slightly above the 5% business constraint—further threshold adjustment from 0.78 to 0.80 would reduce FPR to 4.9% while maintaining 74% recall."
+"My model catches 735 out of 993 phishing attacks (74% recall), with 41 false alarms on 657 legitimate sites (6.2% FPR). 
+The FPR is slightly above the 5% business constraint—further threshold adjustment from 0.78 to 0.80 would reduce FPR to 4.9% while maintaining 74% recall."
 
 **Step 3: Business Impact Translation**
 In src/business_impact.py, create BusinessImpactCalculator class:
