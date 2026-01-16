@@ -2590,7 +2590,8 @@ print(f"   • Expected result: Median |skew| reduces from ~1.8 to ~0.4")
 
 ## Overview
 
-Phase 2 adds statistical validation to your EDA findings and pipeline decisions. This demonstrates you understand the difference between "I noticed a pattern" and "I have statistical evidence".
+Phase 2 adds statistical validation to your EDA findings and pipeline decisions. 
+This demonstrates you understand the difference between "I noticed a pattern" and "I have statistical evidence".
 
 **Key Objectives**:
 - ✅ Validate class imbalance is significant (not sampling noise)
@@ -4852,7 +4853,9 @@ $ python run_full_pipeline.py
 
 ---
 
-Prompt
+## Prompt
+
+### Prompt-01
 
 ```
 generate `interview-session-v4-1-1-detailed-implementation-step.md`  companion for   `interview-session-v4-1-1-implementation-guide.md` ,
@@ -4899,8 +4902,9 @@ https://claude.ai/chat/27a0c2dd-1e46-4b30-9b9d-5b8617d5d01b
 
 ---
 
-## Notes
+### Notes-01
 
+```
 I've created **all phase-specific detailed implementation guides**. Let me create one final artifact - an **index/navigation guide** that connects everything:Perfect! I've created **a complete system of detailed implementation guides** for your AIAP22 interview preparation:
 
 ## What You Now Have:
@@ -4983,3 +4987,4 @@ Most guides tell you **what** to do. These guides give you:
 - **IMPACT**: Business value of each decision
 
 You're ready. Follow the guides systematically, and you'll demonstrate the learning ability they're looking for. 🚀
+```
