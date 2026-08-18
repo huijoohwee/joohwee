@@ -1,7 +1,7 @@
 ---
 title: "Knowgrph Agentic Travel Agencies — Flight Booking, Comparison Shopping & Shared-Canvas Primitive"
 doc_type: "Combined PRD/TAD/ADR"
-version: "0.4.0"
+version: "0.5.0"
 date: "2026-08-15"
 lang: "en-US"
 owner: "Solo Founder / AI Orchestrator"
@@ -20,6 +20,8 @@ universal_scope: false
 **Phase 4 changelog (v0.2.0 → v0.3.0)**: replaces the v0.1.0 generic-REST assumption for Issuance Service with the **actual discovered reference implementation** — StraitsX exposes Cards as an **MCP server over SSE** (`card.straitsx.ai/sandbox/sse`, `card.straitsx.ai/production/sse`), and sandbox issuance is funded via an **x402/EIP-3009 self-custody-signed** flow, not custodial-balance debit. This is a correction, not just an addition: it means the Self-Custody Wallet Interface (Core.app, added in v0.2.0 as an *alternate* path) is actually **required** by Issuance Service's real funding mechanism, at least in sandbox — ADR-5's Path-A/Path-B separation was cleaner than reality. Also adds Snowtrace API as a second, independent settlement-verification source. No rung raised — this remains design-stage, corrected by documentation research, not by build evidence.
 
 **Phase 4 changelog (v0.3.0 → v0.4.0)**: adds the Avalanche Fuji Faucet (Builder Hub) as a provisioning dependency, and captures a precision this document had blurred: **not every self-custody signature needs gas.** The x402/EIP-3009 signature that funds Issuance Service (ADR-6) is gasless for the signer — StraitsX's relayer submits and pays. **Path A (on-chain-direct settlement to a merchant, US-5)** is a different, ordinary on-chain transaction that the Self-Custody Wallet Interface must submit itself, and that does require the wallet to hold Fuji AVAX for gas. This distinction was implicit before and is now explicit, since conflating the two would have understated what Path A actually needs to work. No rung raised.
+
+**Phase 4 changelog (v0.4.0 → v0.5.0)**: adds a Notification Dispatcher component (US-6) — **reference implementation: Telegram Bot API**, genuinely $0 at any volume — as a new consumer of the Webhook Normalizer's already-normalized events from the Shared-Canvas Sync Pipeline. WhatsApp Cloud API is logged as a `Should`-tier follow-on rather than built now, since Meta's business-verification and template-approval process costs calendar time, not money, the same pattern already noted for TikTok/Instagram elsewhere in this thread's research. Web Push is noted as a complementary, zero-cost channel in a footnote on the new component spec, not built out as its own component this revision. No rung raised.
 
 ---
 
@@ -52,6 +54,8 @@ Both personas occupy the same journey, different ends: **Discover** (agent finds
 
 **US-5 — As a** Shopper-Agent Principal holding XSGD in a self-custodied wallet **I want** to pay a merchant directly on-chain when the merchant accepts stablecoin **So that** I don't need to route funds through StraitsX custody for transactions that don't need a card or a fiat off-ramp.
 
+**US-6 — As a** Shopper-Agent Principal **I want** to receive a message outside the canvas when my booking's state changes (confirmed, failed, disputed) **So that** I don't have to keep the app open to know the outcome.
+
 ### Acceptance Criteria
 
 **US-1 — Given** an intent of SIN→KUL, 28 May–4 Jun, budget SGD 500, **When** the agent's Discovery returns a fare above budget, **Then** the guardrail gate blocks Issuance and triggers a bounded flexible-date retry before ever presenting a card.
@@ -70,6 +74,9 @@ Both personas occupy the same journey, different ends: **Discover** (agent finds
 > **VCC translation**: `Verify zero StraitsX API calls exist in the transaction log for a Path-A settlement, and a guardrail-approval event precedes the wallet-signature-request event by session-log order`
 >
 > **Honest gap, stated rather than implied**: unlike US-1/US-2, this VCC's guardrail half has no server-side enforcement point to bind to — StraitsX's Guardrail Gate binding assumed a StraitsX-mediated call to block. For Path A, the check can only be enforced client-side (inside Core.app or the shared-canvas orchestrator, before it ever asks Core to sign) or on-chain (a spending-limit contract), neither of which exists yet. This VCC is written as a target, not a claim — it stays `spec-complete` with no path to `dev-proven` until one of those two enforcement points is built.
+
+**US-6 — Given** a booking's state changes (confirmed, failed, or disputed) on the Shared Canvas Node, **When** the Notification Dispatcher consumes that normalized event, **Then** a Telegram message reflecting the new state reaches the shopper within a bounded delay, without the canvas needing to be open.
+> **VCC translation**: `Verify a Telegram send event exists within 10 seconds of the corresponding Shared Canvas Node state-change event, for every state in {confirmed, failed, disputed}, and that no send fires for a state the node hasn't actually reached`
 
 ### Success Metrics
 
@@ -98,6 +105,8 @@ Both personas occupy the same journey, different ends: **Discover** (agent finds
 | **[new, v0.3.0] Should** | Multi-card-per-transaction funding pattern for approved amounts exceeding the per-card cap (5–30 SGD sandbox / 5–50 USD production) | US-1's SGD 500 flight budget cannot be funded by a single card as the MCP gateway currently caps it — this is a real gap between the flagship demo and the discovered reference implementation's limits, not a hypothetical; needs resolving before US-1's Issuance step can leave `spec-complete` |
 | **[new, v0.3.0] Won't (this increment)** | Production Issuance Service integration | Tool schema unconfirmed for the production endpoint (see Open Questions) — sandbox-only for this increment, consistent with the Deploy Boundary Register below |
 | **[new, v0.4.0] Should** | Gas-provisioning flow for Path A testing (Fuji faucet or a pre-funded relayer/sponsor wallet) | Path A (US-5, on-chain-direct) cannot broadcast at all without wallet-held AVAX gas — this is a hard prerequisite, not a nice-to-have, and is scoped `Should` rather than `Must` only because Path A itself is already `Should`-tier |
+| **[new, v0.5.0] Should** | Notification Dispatcher — Telegram Bot API (US-6) | Genuinely $0 at any volume, no approval process, extends an existing pipeline (Shared-Canvas Sync Pipeline's Webhook Normalizer) rather than adding a new one — one of the cheapest `Should`-tier items in this whole document to actually ship |
+| **[new, v0.5.0] Could** | Notification Dispatcher — WhatsApp Cloud API follow-on | Higher SG/MY/SEA reach than Telegram, but costs calendar time (Meta business verification, template pre-approval) rather than money — same "budget time, not money" pattern already flagged for TikTok/Instagram; sequenced after Telegram proves the pipeline extension works |
 | **Won't (this increment)** | Full MCP Gateway federation / multi-transport agent discovery (Agent-Platform Readiness "Must" tier as defined in the guideline set) | Out of scope for this document; declared explicitly per the Readiness Tiers directive rather than implied — this PRD covers the transaction primitive, not Knowgrph's own external-agent-discovery surface |
 | **Won't (this increment)** | Privacy-preserving multi-merchant comparison | Flagged previously as architecturally hard, not just a UI toggle — needs its own Phase 0 problem-discovery pass before scoping |
 
@@ -124,6 +133,7 @@ The two flagship flows (SIN→KUL flight booking, backpack comparison shopping) 
 - **[v0.4.0]** Avalanche Fuji Faucet (`build.avax.network/console/primary-network/faucet`) — **reference implementation** for provisioning the Self-Custody Wallet Interface with testnet gas; needed for Path A (US-5) only, not for the Issuance Service funding signature (see the gas-requirement precision in that component's spec)
 - Yjs CRDT inside Cloudflare Durable Objects — **reference implementation**, already adopted per prior storage-sync architecture decisions; the shared-canvas primitive is a new consumer of an existing dependency, not a new one
 - eBay Browse API + PricesAPI — **reference implementation** for comparison-shopping Discovery
+- **[v0.5.0]** Telegram Bot API — **reference implementation** for Notification Dispatcher; genuinely $0 at any volume, created instantly via `@BotFather`, no approval process. **Footnote — Web Push**: native PWA push (VAPID) is a genuinely zero-cost complementary channel, worth keeping in view since Knowgrph is already a PWA, but it only reaches users who already have the app installed with notification permission granted — it doesn't substitute for Telegram/WhatsApp reaching someone who hasn't opened Knowgrph yet, so it isn't built out as its own component this revision.
 
 ### Open Questions
 
@@ -137,6 +147,7 @@ The two flagship flows (SIN→KUL flight booking, backpack comparison shopping) 
 - **[new, v0.3.0]** US-1's flight-booking budget (SGD 500) exceeds the per-card cap in both environments by roughly an order of magnitude. Does Issuance Service need a **multi-card-per-transaction pattern** (several disposable cards summing to one approved fare), and if so, how does that interact with each card's single-use/one-view property and the existing VCC's "≤ 1 card per transaction" assumption? This is flagged in MoSCoW below rather than silently assumed solvable.
 - **[new, v0.3.0]** Snowtrace API rate limits and scope for the generated key are unconfirmed — the key-management page requires authentication and wasn't independently verifiable from documentation alone.
 - **[new, v0.4.0]** The Fuji faucet's rate limit (~1 claim per 24h, up to 2 AVAX per address) is fine for a single developer's manual testing but may not support a pilot cohort's demo cadence if multiple session wallets need gas concurrently — does Path A testing need a dedicated pre-funded relayer/sponsor wallet instead of per-session faucet claims? Unresolved; affects whether the `Should`-tier Path A item below is actually schedulable within a sprint.
+- **[new, v0.5.0]** Should the WhatsApp follow-on go direct-to-Meta (Cloud API, no BSP) or through a Business Solution Provider (adds a platform fee but manages template approval/inbox tooling)? Affects the `Could`-tier item's actual cost, since direct-to-Meta is $0 at the infra layer but higher engineering effort, while a BSP adds a recurring fee for lower setup effort.
 
 ---
 
@@ -174,6 +185,7 @@ The two flagship flows (SIN→KUL flight booking, backpack comparison shopping) 
 | Settlement Verifier | Executor | Harness + external APIs (×2) | Authoring→Delivery | Avalanche Data API + Snowtrace API (external, independent of each other) | Sync REST | External (Avalanche-hosted / Snowtrace-hosted) |
 | **[v0.2.0] Self-Custody Wallet Interface** | Executor (signing) | Wallet (Core.app, device-local) | *outside Knowgrph lanes* | Avalanche network directly (Path A), or Wallet-Linking Service (Path B entry) | Sync (signature request/response), on-chain broadcast | Device-local keys; on-chain state is public |
 | **[v0.2.0] Wallet-Linking Service** | Router | Component (Edge) | Authoring→Delivery | Self-Custody Wallet Interface, StraitsX Customer Profile | Sync REST | Edge (Cloudflare region) |
+| **[v0.5.0] Notification Dispatcher** | Executor | Harness + external API | Authoring→Delivery | Telegram Bot API (external) | Sync REST (single POST per send) | External (Telegram-hosted) |
 
 ```mermaid
 flowchart TB
@@ -211,9 +223,13 @@ flowchart TB
   CORE -- sync REST, Path B entry --> WL
   WL -- sync REST --> SX
   CORE == x402 challenge to EIP-3009 signature, required by Issuance funding, not optional ==> SX
+  TG[Telegram Bot API\nreference implementation]
+  SCN -- normalized event, async --> ND[Notification Dispatcher]
+  ND -- sync REST, single POST --> TG
+  TG -. message .-> SC
 ```
 
-**Runtime diagram**: as above. **Version notes**: v0.3.0 — Issuance Service's edge to StraitsX changes from generic sync REST to MCP/SSE tool call; adds a bold edge from Core.app to the StraitsX Card MCP Gateway representing the x402/EIP-3009 funding signature, which v0.2.0's Path-A/Path-B model treated as optional and v0.3.0 corrects to required-in-sandbox; adds Snowtrace API as a second Settlement Verifier source. v0.2.0's additions (Self-Custody zone, Wallet-Linking Service, Path A/B edges) remain, narrowed in meaning by ADR-6 rather than removed.
+**Runtime diagram**: as above. **Version notes**: v0.5.0 — adds Notification Dispatcher as a new consumer of the Shared Canvas Node Store's normalized events, and Telegram Bot API as an external node; the dotted edge from Telegram to the Shopper Client represents message delivery happening outside Knowgrph's own client entirely (US-6's point — no canvas needs to be open). v0.3.0 — Issuance Service's edge to StraitsX changes from generic sync REST to MCP/SSE tool call; adds a bold edge from Core.app to the StraitsX Card MCP Gateway representing the x402/EIP-3009 funding signature, which v0.2.0's Path-A/Path-B model treated as optional and v0.3.0 corrects to required-in-sandbox; adds Snowtrace API as a second Settlement Verifier source. v0.2.0's additions (Self-Custody zone, Wallet-Linking Service, Path A/B edges) remain, narrowed in meaning by ADR-6 rather than removed.
 
 ### Orchestration/Harness Flows
 
@@ -249,6 +265,7 @@ flowchart TB
 | Executor | CRDT Merge (Yjs, reference implementation) | CRDT delta | Merged node state | — (not applicable, $0 by design) | Retry merge; last-write-wins per existing storage-sync ADR |
 | Observer | Webhook Normalizer | Atlas/StraitsX raw callback | Normalized canvas event | — | Silent fail; gap flagged |
 | Consumer | Shopper Client + Merchant Client | Merged node state | Rendered timeline entry | — | Stale-state banner until reconnect |
+| **[v0.5.0] Consumer** | Notification Dispatcher (Telegram, reference implementation) | Normalized canvas event (state = confirmed/failed/disputed) | Telegram message | — (non-LLM, $0) | Silent fail is not acceptable here — a failed send must itself be logged as a canvas event, not dropped, since notification failure is exactly the scenario US-6 exists to prevent |
 
 ### Component Specifications
 
@@ -345,6 +362,19 @@ flowchart TB
 **Evidence References**: none yet — `spec-complete`
 **Readiness rung**: Local: `spec-complete` / Delivered: `undocumented`
 
+**Component**: Notification Dispatcher *(v0.5.0)*
+**Responsibility**: Component consumes normalized Shared-Canvas Node state-change events and sends an out-of-canvas message to the shopper's Telegram chat.
+**Interfaces**: Telegram Bot API, **reference implementation**, single HTTPS POST per send (`sendMessage`), webhook-registered bot via `@BotFather`
+**Dependencies**: Webhook Normalizer role in the Shared-Canvas Sync Pipeline (upstream, supplies the normalized event); user must have messaged the bot once (`/start`) before the bot can send — a one-time friction cost, not recurring, since Telegram bots cannot cold-initiate a conversation
+**Configuration**: which state transitions trigger a send (confirmed/failed/disputed, per US-6's VCC); per-user chat-ID mapping stored alongside the existing Customer Profile linkage pattern
+**FOSS / Vendor**: Telegram Bot API — genuinely $0 at any volume, no tier, no per-message charge, unchanged since 2015; the single cheapest external dependency in this entire document
+**Footnote — Web Push**: native PWA push (VAPID) is a genuinely zero-cost, zero-third-party-dependency complementary channel — worth keeping in view given Knowgrph's existing PWA/mobile-first posture, but it only reaches a user who already has the app installed with notification permission granted. It is not built as its own component this revision; if built later, it would sit as an additional Consumer on the same Shared-Canvas Sync Pipeline row as Notification Dispatcher above, not as a replacement for it.
+**Harness Contract**: Input — normalized canvas event; Output — `{ message_id, chat_id, sent_at }`; Cost log — `{ model: none, api_calls: n, estimated_cost_usd: 0 }`; Fallback — failed send logs its own canvas event rather than failing silently (see Shared-Canvas Sync Pipeline table above)
+**Token Budget**: N/A (non-LLM)
+**VCC Conditions**: see US-6 VCC above
+**Evidence References**: none yet — `spec-complete`
+**Readiness rung**: Local: `spec-complete` / Delivered: `undocumented`
+
 ### Integration Contracts
 
 | Interface | Protocol | Format | Errors |
@@ -355,10 +385,11 @@ flowchart TB
 | Shared Canvas Node Store sync | WebSocket (CRDT delta stream) | Binary CRDT update (Yjs) | Last-write-wins per existing storage-sync ADR; reconnect replay on drop |
 | Self-Custody Wallet Interface (reference implementation: Core.app) *(v0.2.0)* | Standard EVM signing request/response (e.g. `eth_sendTransaction`-equivalent on C-Chain) | JSON-RPC | User rejection = no transaction broadcast, no partial state; no Knowgrph-side rollback needed since nothing was ever debited from a Knowgrph-held balance |
 | Wallet-Linking Service (reference implementation: StraitsX Customer Profile) *(v0.2.0)* | HTTPS REST | JSON | Unlinked-address inbound transfer = held unattributed pending manual linkage, not silently credited |
+| Notification Dispatcher (reference implementation: Telegram Bot API) *(v0.5.0)* | HTTPS REST (`sendMessage`) | JSON | Failed send logs its own canvas event per US-6; bot cannot cold-initiate — first contact requires the user to message the bot once |
 
 ### Architectural Decisions
 
-See ADR-1 (shared-canvas primitive), ADR-2 (flight booking API selection), ADR-3 (card issuance vendor selection, amended by ADR-6), ADR-4 (wallet selection), ADR-5 (dual settlement path), ADR-6 (card issuance transport/funding correction) below.
+See ADR-1 (shared-canvas primitive), ADR-2 (flight booking API selection), ADR-3 (card issuance vendor selection, amended by ADR-6), ADR-4 (wallet selection), ADR-5 (dual settlement path), ADR-6 (card issuance transport/funding correction), ADR-7 (notification channel selection) below.
 
 ### Quality Attributes
 
@@ -389,6 +420,7 @@ Edge-first on already-provisioned Cloudflare Workers/Durable Objects. No blue-gr
 | Harness | Settlement Verifier | `[...]` | `spec-complete` | `undocumented` |
 | Self-Custody | Self-Custody Wallet Interface *(v0.2.0)* | `[...]` | `spec-complete` | `undocumented` |
 | Edge | Wallet-Linking Service *(v0.2.0)* | `[...]` | `spec-complete` | `undocumented` |
+| Harness | Notification Dispatcher *(v0.5.0)* | `[...]` | `spec-complete` | `undocumented` |
 
 ### Deploy Boundary Register
 
@@ -604,6 +636,42 @@ The MCP/SSE transport is strictly better min-pivot-max-value than a hand-built R
 
 ---
 
+## ADR-7: Notification Channel Selection — Telegram (Primary), WhatsApp (Follow-on), Web Push (Complementary Footnote)
+**Status**: Accepted
+**Date**: 2026-08-15
+
+### Context
+US-6 requires reaching the shopper outside the canvas when a booking's state changes. Several channels were evaluated on cost and SG/MY/SEA reach.
+
+### Decision
+Build Notification Dispatcher against **Telegram Bot API** as the primary channel this increment; log WhatsApp Cloud API as a `Should`/`Could`-tier follow-on; note Web Push as a complementary, non-substituting channel in a footnote rather than building it out now; explicitly reject SMS for this use case.
+
+### Alternatives Considered
+1. **WhatsApp Cloud API as primary**: Pros — dominant channel in SG/MY/SEA, where most SME customers already are; Cons — Meta business verification and message-template pre-approval cost calendar time (days to weeks), not money, before a single message can send — the same pattern already flagged for TikTok/Instagram elsewhere in this thread's research.
+2. **SMS (Twilio-class)**: Pros — universal reach, no app/account needed; Cons — the only channel evaluated with no free tier at any volume, cost from message one — rejected outright for this use case rather than deferred, since transaction confirmations don't need SMS's universal-reach property badly enough to justify being the one paid line item in an otherwise $0 notification layer.
+3. **FOSS alternative**: Telegram's Bot API isn't FOSS-licensed itself (it's a free proprietary service, not open-source), but it imposes zero vendor lock-in risk in the way that matters for this document — no fee, no tier, no contract, switchable at will. Web Push (VAPID) is the genuinely open, standards-based alternative and is kept in view as a footnote for exactly that reason, even though it doesn't substitute for Telegram's reach today.
+
+### Rationale
+Telegram is the only channel evaluated that is simultaneously $0 at any volume, ships same-day with no approval process, and extends an existing pipeline (Shared-Canvas Sync Pipeline) rather than requiring a new one — the strongest min-pivot-max-value case among the options. WhatsApp's higher reach is real and not dismissed, just sequenced after Telegram proves the pipeline extension works, since its cost is calendar time that shouldn't block a `Should`-tier item from shipping this increment.
+
+### TCO Impact
+
+| Dimension | Chosen: Telegram Bot API | Alternative: WhatsApp Cloud API | Alternative: SMS |
+|---|---|---|---|
+| Infra cost | $0, no tier, ever | $0 infra; $0.005–$0.08/conversation beyond 1,000 free/month; BSP platform fee if not going direct-to-Meta | No free tier, cost from message one |
+| Egress cost | $0 | $0 | Included in per-message cost |
+| Token cost | $0 (non-AI) | $0 (non-AI) | $0 (non-AI) |
+| Ops burden | Lowest — instant bot creation, no approval | Medium-high — business verification, template pre-approval | Low setup, ongoing cost management |
+| Vendor risk | Low (Telegram's free-API commitment is long-standing, 2015–present) | Low-medium (Meta policy changes affect pricing/tiers periodically) | Low |
+
+### Consequences
+- **Positive**: US-6 ships this increment at genuinely $0 marginal cost, extending an existing pipeline rather than adding a new one.
+- **Negative**: Telegram's SG/MY/SEA reach is real but secondary to WhatsApp's — this decision optimizes cost and speed over maximum reach, a trade-off stated here rather than left implicit.
+- **Negative**: Telegram bots cannot cold-initiate a conversation — the user must message the bot once before it can send anything, a one-time onboarding step this document's UX (not yet specced) will need to account for.
+- **Neutral**: this ADR doesn't foreclose WhatsApp — it's logged as a follow-on with its own Open Question (direct-to-Meta vs. BSP), not rejected.
+
+---
+
 ## Alignment Note (condensed)
 
-This document is at Phase 2 exit, not yet Phase 3, and v0.4.0 remains pre-baseline — the same Phase 3 deferral from prior versions still applies, so no regression comparison against a prior baselined run is triggered by this revision. Coverage ratio: 11 of 11 artifact-bearing template sections present (PRD template fields, TAD template fields, six ADRs) — **11/11**; v0.4.0 added no new ADR since the faucet dependency has no genuine alternatives to weigh, so it's captured as a Dependency + component-spec precision + Open Question rather than forced into ADR shape it doesn't fit. Zero Evidence References exist yet for any component, so every rung remains honestly held at `spec-complete`/`undocumented`; claiming higher would be an `unproven-claim`. Ten open questions are now logged cumulatively across four revisions, none silently dropped, per the Closure Rules — nine carried from v0.1.0–v0.3.0, plus one new from v0.4.0 (whether Path A testing needs a dedicated relayer wallet instead of per-session faucet claims). The precision this revision adds, stated plainly: **not every self-custody signature costs gas** — the x402/EIP-3009 flow funding Issuance Service is gasless-for-signer (StraitsX's relayer pays), while Path A's direct on-chain settlement is an ordinary transaction the wallet must fund itself. Blurring these two in an earlier revision would have made Path A look cheaper to test than it actually is.
+This document is at Phase 2 exit, not yet Phase 3, and v0.5.0 remains pre-baseline — the same Phase 3 deferral from prior versions still applies, so no regression comparison against a prior baselined run is triggered by this revision. Coverage ratio: 12 of 12 artifact-bearing template sections present (PRD template fields, TAD template fields, seven ADRs) — **12/12**. Zero Evidence References exist yet for any component, so every rung remains honestly held at `spec-complete`/`undocumented`; claiming higher would be an `unproven-claim`. Eleven open questions are now logged cumulatively across five revisions, none silently dropped, per the Closure Rules — ten carried from v0.1.0–v0.4.0, plus one new from v0.5.0 (direct-to-Meta vs. BSP for the WhatsApp follow-on). This revision's shape is different from v0.2.0–v0.4.0: rather than correcting an assumption against newly discovered vendor documentation, it adds a genuinely new, low-risk capability (US-6) at the cheapest point in the whole document's dependency list — Telegram Bot API is the one external dependency here with no fee, no tier, and no approval process at all, and the ADR-7 TCO table says so plainly rather than papering over the real trade-off (cost and speed vs. WhatsApp's greater SG/MY/SEA reach). Web Push is carried as a footnote, not a component, on purpose — it's genuinely $0 but doesn't substitute for reaching someone who hasn't opened Knowgrph yet, and inflating a footnote into a full component this revision would have overstated what was actually decided.
