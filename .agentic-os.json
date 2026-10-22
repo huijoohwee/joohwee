@@ -1,0 +1,35 @@
+{
+  "schema": "agentic-os/repository-profile/v1",
+  "repository": "github.com/huijoohwee/joohwee",
+  "canonical": {
+    "localRef": "refs/heads/main",
+    "remoteRef": "refs/remotes/origin/main"
+  },
+  "adapters": {
+    "repository": {
+      "id": "git",
+      "version": "1"
+    },
+    "provider": {
+      "id": "github",
+      "version": "1"
+    }
+  },
+  "requiredChecks": [],
+  "capabilities": [
+    "retain-all-cleanup"
+  ],
+  "authority": {
+    "runtime": "consumer",
+    "release": "consumer"
+  },
+  "cleanup": {
+    "localBranch": "retain",
+    "remoteBranch": "retain",
+    "remoteTrackingRef": "retain",
+    "unreachableObjects": "retain",
+    "worktreeProjection": "retain",
+    "worktreeRegistration": "retain"
+  },
+  "profileDigest": "f92aec03a677377ebae59e58ab948809becfaf53ddd11c41cc5946e69b649dd7"
+}

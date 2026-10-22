@@ -1,0 +1,18 @@
+{
+  "name": "joohwee-agentic-os-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "setup": "agentic-os setup",
+    "doctor": "agentic-os doctor",
+    "release:common": "agentic-os release-common",
+    "status": "agentic-os status"
+  },
+  "devDependencies": {
+    "agentic-os": "https://codeload.github.com/huijoohwee/agentic-os/tar.gz/c11453caedfd6d813adead235ce8fa3b4b2cacb9"
+  }
+}
