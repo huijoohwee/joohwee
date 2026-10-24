@@ -17,7 +17,7 @@
   },
   "requiredChecks": [],
   "capabilities": [
-    "retain-all-cleanup"
+    "quarantine-worktree-cleanup-opt-in"
   ],
   "authority": {
     "runtime": "consumer",
@@ -28,8 +28,8 @@
     "remoteBranch": "retain",
     "remoteTrackingRef": "retain",
     "unreachableObjects": "retain",
-    "worktreeProjection": "retain",
-    "worktreeRegistration": "retain"
+    "worktreeProjection": "quarantine",
+    "worktreeRegistration": "quarantine"
   },
   "profileDigest": "f92aec03a677377ebae59e58ab948809becfaf53ddd11c41cc5946e69b649dd7"
 }
