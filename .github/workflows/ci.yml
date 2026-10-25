@@ -1,0 +1,43 @@
+name: Integration Gate
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-check-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22
+      - name: Install the exact development toolchain
+        run: npm ci --no-audit --no-fund
+      - name: Validate repository profile and release wiring
+        run: |
+          node --input-type=module <<'EOF'
+          import { readFileSync } from 'node:fs';
+
+          const profile = JSON.parse(readFileSync('.agentic-os.json', 'utf8'));
+          const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+
+          if (profile.repository !== 'github.com/huijoohwee/joohwee')
+            throw new Error(`unexpected repository binding: ${profile.repository}`);
+          if (!Array.isArray(profile.requiredChecks) || !profile.requiredChecks.includes('check'))
+            throw new Error('required check "check" must stay enrolled');
+          if (pkg.scripts?.['release:common'] !== 'agentic-os release-common')
+            throw new Error('release:common script must invoke agentic-os release-common');
+          if (typeof pkg.devDependencies?.['agentic-os'] !== 'string'
+            || !pkg.devDependencies['agentic-os'].includes('codeload.github.com/huijoohwee/agentic-os'))
+            throw new Error('agentic-os dependency must stay pinned to the GitHub tarball');
+          EOF

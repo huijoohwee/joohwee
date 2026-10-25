@@ -15,9 +15,17 @@
       "version": "1"
     }
   },
-  "requiredChecks": [],
+  "requiredChecks": [
+    "check"
+  ],
   "capabilities": [
-    "quarantine-worktree-cleanup-opt-in"
+    "host-qualified-repository-pin",
+    "integration-method:squash-preferred",
+    "protected-integration:pull-request",
+    "quarantine-worktree-cleanup-opt-in",
+    "read-only-repository-observation",
+    "read-only-review-observation",
+    "shallow-observation-default"
   ],
   "authority": {
     "runtime": "consumer",
@@ -31,5 +39,5 @@
     "worktreeProjection": "quarantine",
     "worktreeRegistration": "quarantine"
   },
-  "profileDigest": "bb8fad702552a3d58efe38abd301aaab64ae7fe024f60fada00dc52099669573"
+  "profileDigest": "b358b6dfc535464fc61a15a7fdfc7787ae013736a48e8d5ea33f9511476f4d9a"
 }
