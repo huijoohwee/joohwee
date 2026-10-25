@@ -13,6 +13,6 @@
     "status": "agentic-os status"
   },
   "devDependencies": {
-    "agentic-os": "https://codeload.github.com/huijoohwee/agentic-os/tar.gz/c11453caedfd6d813adead235ce8fa3b4b2cacb9"
+    "agentic-os": "https://codeload.github.com/huijoohwee/agentic-os/tar.gz/65e576a51f8c676dbbe4a4c3324d4a2810781239"
   }
 }
