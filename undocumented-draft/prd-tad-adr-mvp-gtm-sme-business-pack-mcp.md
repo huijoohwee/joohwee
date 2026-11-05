@@ -1,8 +1,8 @@
 ---
 title: "SME Business Plan Workspace — E2E Pitch, Plan, and Financial Model"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "1.4.3"
-date: "2026-11-05"
+version: "1.5.0"
+date: "2026-11-06"
 lang: "en"
 owner: "Product Manager function"
 continuity_id: "sme-business-pack"
@@ -11,6 +11,12 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 lifecycle_status: "proposed"
+prd_revision: "1.5.0"
+tad_revision: "1.5.0"
+adr_revision: "1.5.0"
+mvp_revision: "1.5.0"
+gtm_revision: "1.5.0"
+load_policy: "on-demand"
 source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@1.2.0; business-plan-guidelines.md@1.1.0; financial-model-guidelines.md@1.1.0; prd-tad-adr-mvp-gtm-venture.md@2.1.3"
 ---
 
@@ -18,11 +24,11 @@ source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@
 
 ## Document control
 
-Join key: `sme-business-pack@1.4.3`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
+Join key: `sme-business-pack@1.5.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
 
-- **Status:** proposed. Source integration is recorded below; independent product acceptance and deployment remain open.
+- **Status:** proposed. This revision updates this document only. Existing source and live observations are recorded separately from the unimplemented enhancement in §1.8; independent product acceptance and deployment remain open. PRD, TAD, ADR, MVP, and GTM all consume `sme-business-pack@1.5.0`.
 - **Audience:** people preparing or reviewing an early business or venture plan, including founders, operators, and advisers.
-- **Scope:** organize user-entered information into a twelve-role pitch deck outline, business-plan starter prompts, single-period financial arithmetic, and a neutral acquisition cash-to-close check. This MVP is not a complete guideline-conformant deck, operating plan, or financial model.
+- **Scope:** organize user-entered information into a twelve-role pitch outline, business-plan prompts, single-period arithmetic, and a neutral acquisition review from opportunity context through questions and handover preparation. Extend the existing takeover contract in the same table; retain the general plan. This is a planning workspace, with no transaction execution or complete guideline-conformance claim.
 - **No external source dependency:** the product neither searches nor fetches planning, market, pricing, company, or business data.
 - **Canonical implementation:** existing local-first SME workspace and shared Multi-dimensional Table, protocol/evaluator, codebook, and dictionary in `agentic-commerce-os`.
 
@@ -31,6 +37,16 @@ Join key: `sme-business-pack@1.4.3`. This document is the sole current product, 
 ### 1.1 User need
 
 People preparing a business plan need one place to organize the venture narrative, assumptions, evidence notes, financial inputs, deterministic arithmetic, and open questions. Inputs are often incomplete and must remain distinguishable from calculated values and independently verified facts.
+
+### 1.1a Buyer pain, reuse, and priority
+
+Priority is a product hypothesis from the requested workflow, not measured demand or a recommendation between businesses. Each row joins the same enhancement in §1.8.
+
+| Priority / pain | Hook → break → native fix → close | Minimum change / value hypothesis |
+|---|---|---|
+| P1 — Buyer cannot tell what an acquisition amount includes | Enter an opportunity → price lacks scope and obligations → reuse transfer structure, included/excluded items, location and cash inputs → review unknowns before preparing questions | Existing takeover model plus context fields; avoid repeated copying and double-counting |
+| P2 — Buyer cannot compare the basis of supplied figures | Place two options side by side → estimates and historical periods appear comparable → retain currency checks and expose basis/period differences in existing coverage and next checks → export an explicit clarification list | Reuse one ordered comparison and evaluator; no valuation, ranking or inferred normalization |
+| P3 — Buyer loses the next action between review and handover | Prepare a discussion → permission, accounts access, team continuity and support are unstructured → record user-stated states and one next action in the same row → export the worksheet for the user's own follow-up | Thirteen optional fields, existing editor and exports; no messaging, CRM or second checklist |
 
 ### 1.2 Product outcome
 
@@ -67,13 +83,13 @@ The single workflow table includes:
 
 In metadata orientation, each record attribute has its own column: record type, section, group, parameter, stable key, data type, unit, requirement, allowed values, bounds, length, pattern, definition, and each option's value. Hierarchy is represented through row depth; Base provides row and bulk collapse/expand. Commerce may derive protocol-specific path and group-label rows, but it does not implement a second collapse controller. Graph's data-view host delegates nested-row collapse state to the same Base hook while retaining its existing owner-bound filter and group settings.
 
-Coverage columns report mapped owner requirements and supplied inputs within each projection's declared MVP scope. They do not judge completeness of the full owner contract, quality, readiness, authentication, or conformance. Pitch roles trace only to declared input keys and model output keys; missing content remains explicit and roles may be combined in a final presentation. The general business plan's Buy/Build mode requires an explicit approach (`buy_existing`, `build_new`, or `undecided`). A purchase path requires user-entered acquisition and transition costs; build costs remain separate. The takeover checker records transfer structure and scope, acquisition and asset information, operating figures with a user-stated basis and period, location obligations and user-stated renewal/assignment information, handover, working capital, and available cash. Optional context fields do not silently alter cash-to-close arithmetic. Outputs show cash required, location exposure, shortfall, and monthly revenue less listed monthly costs as transparent arithmetic; they do not derive a transfer-price opinion. An unknown obligation is not treated as not applicable. Scenario mode uses the selected contract's same fields and calculation model without requiring a Buy/Build path.
+Coverage describes mapped requirements and supplied inputs within each projection's MVP scope, not full conformance, quality or authentication. Pitch roles trace to declared input/output keys; missing content stays explicit and roles may be combined in a final presentation. General-plan Buy/Build requires `buy_existing`, `build_new` or `undecided`; acquisition/transition costs stay separate from build costs. Takeover uses the scope, operating, location and handover fields and four arithmetic outputs in §1.5. Unknown obligations remain distinct from not applicable. Scenario mode keeps the selected contract's fields/model without requiring a Buy/Build path.
 
 The Data dictionary is a separate read-only route and table because it documents the contract, including projection owner revisions, requirement anchors, mapped input keys, and current support status. It does not run a second workflow or calculate a parallel report. It is generated from the live protocol and lists the canonical shared owners for invocation, `/`, `#`, `@`, skills, MCP, WebMCP, and AgenticRAG terms.
 
 ### 1.5 Data and financial model
 
-The shared contract schema is `sme-business-plan/protocol/v3`; the selector resolves `sme.business-plan@2.3.0` or `sme.takeover-checker@1.1.0`. Both protocols declare Buy/Build as default and Scenario as selectable, with mode supplied to the same build and comparison entry points. The general plan declares exact source revisions and anchor references for the parent scope and pitch, plan, model, and Venture Record owners. It includes neutral venture narrative, user-selected currency and financial inputs, twelve pitch-role columns, nine shared workflow columns, and four scoped projection/evidence outputs. The takeover checker declares user-entered transfer details, assets, operating context, conditional location obligations, working capital, and available cash. Its outputs are cash required, location exposure, cash shortfall, and monthly revenue less listed costs; every input and evidence prompt remains in the same table. Optional descriptive fields do not enter cash-to-close arithmetic. Its explicit example bundle loads only after user action. Both contracts keep missing values unknown and never convert currency.
+The current protocol is `sme-business-plan/protocol/v3`, selecting `sme.business-plan@2.3.0` or `sme.takeover-checker@1.1.0`. Both declare Buy/Build as default and Scenario as selectable. General plan maps exact owner revisions/anchors and declares twelve pitch roles, nine shared workflow columns and four scoped coverage outputs. Takeover declares acquisition, operating and location context, working capital, cash and four calculated outputs. Both retain unknowns and explicit user-loaded examples. Section 1.8 specifies the proposed takeover version delta; current source is not relabelled as that version.
 
 Money accepts a single nonnegative amount or a low/high range, up to four decimal places and a bounded maximum. Calculations propagate ranges. Currency is selected per row as a three-letter code; a comparison with mixed or absent codes is refused. Comparison also uses one shared workspace mode. The implementation does not look up, convert, or compare purchasing power.
 
@@ -87,11 +103,41 @@ Evidence is attached to a declared input field. Its provenance values describe h
 
 The MVP does not provide a market research feed, benchmarks, automated forecast, legal/tax/accounting/investment/financing advice, valuation, loan application, company registry, venture database, investor matching, public listing, payment, fundraising transaction, publishing, or agent-controlled execution. It also does not implement the guideline owners' full Variant Registers, Claim Manifest or Section Claim Record, two-method market sizing, structured business risk/review lifecycle, linked income/cash-flow/balance-sheet statements, Base/Downside/Upside model, Headline Register, actuals/variance, or ADLC Cost Ledger. The pitch output is a twelve-role structured outline and local worksheet, not a rendered slide file or investor endorsement. Each section shows its source field keys; missing text remains explicit and is not generated.
 
+### 1.8 Native acquisition review enhancement — proposed, not implemented
+
+**DIR-SME-16:** Context: §5.6 observes the current takeover table and its missing structured review context. Intent: a prospective owner can prepare one reviewable acquisition worksheet without re-entering the same facts elsewhere. Product Manager function specifies the native enhancement; Commerce owns implementation; the outcome is MVP-16–21. This directive does not grant publication, outreach, payment or runtime deployment effects.
+
+The target E2E path is **capture user-owned opportunity context → describe transfer scope → enter amounts and their basis → inspect cash and unknowns → prepare questions → record the user's review stage and handover context → export/read back**. These are field groups and states of the existing table, not routes, wizard steps, new contracts or workflow variants. The default general plan, Buy/Build and Scenario remain as defined in §1.4. No automated discovery, public catalog or seller contact is introduced.
+
+Extend `sme.takeover-checker` from current `1.1.0` to target `1.2.0` only when implemented; retain protocol envelope `sme-business-plan/protocol/v3`, model `takeover-cash/v1`, general contract `2.3.0`, the four tool names, and both modes. The thirteen additions below are optional. Blank is unknown; all text retains current privacy-pattern validation. Enum states are user assertions, never verification. These keys are the proposed delta to the existing protocol, not a second dictionary; after implementation the live protocol/codebook owns their descriptions.
+
+| Group | Proposed stable key / existing type | Bounds or values / meaning |
+|---|---|---|
+| Opportunity | `opportunity_label` / text | ≤80 characters; private alias, not an identity or public business name |
+| Opportunity | `business_activity` / text | ≤120; user-described activity, no fixed sector taxonomy |
+| Opportunity | `operating_area` / text | ≤120; broad user-described area or remote operation, no address or geolocation lookup |
+| Opportunity | `transfer_reason` / text | ≤280; user-recorded reason, no inference about the seller |
+| Buyer context | `buyer_budget` / money | Existing single/range limits and row currency; stated spending ceiling, distinct from `available_cash`; never enters cash-to-close or shortfall |
+| Buyer context | `target_handover_months` / integer | 0–120 months from the user's review; desired timing, distinct from existing `handover_months` support duration |
+| Buyer context | `operator_experience` / enum | `none_reported`, `related_reported`, `direct_reported`, `unknown`; no buyer score or eligibility decision |
+| Review | `accounts_access` / enum | `not_requested`, `requested`, `reported_available`, `reviewed_by_user`, `reported_unavailable`, `unknown`; no documents ingested or authenticated |
+| Review | `permission_transfer_status` / enum | `not_applicable`, `not_checked`, `reported_transferable`, `reported_new_application`, `conditional`, `unknown`; user-stated operating permission context, not legal clearance |
+| Transition | `team_continuity` / enum | `not_applicable`, `not_discussed`, `reported_continuing`, `reported_changing`, `unknown`; no person/contact records |
+| Transition | `support_scope` / text | ≤280; what the user reports is included in existing `handover_months`; no contract generation |
+| Review | `review_stage` / enum | `captured`, `clarifying`, `reviewing`, `handover_planning`, `paused`, `closed_by_user`, `unknown`; manually selected, reversible, no automatic progression or acquired/paid state |
+| Review | `next_action` / text | ≤280; one user-authored follow-up note, preserved separately from generated `next-checks`; no reminder or outbound action |
+
+Reuse `transaction_structure`, `purchase_price`, `included_items`, `excluded_items`, `financial_basis`, `financial_period_months`, `location_obligation`, `location_assignment_status`, `location_renewal_months`, and `handover_months` unchanged. A premises-only case uses `asset_transfer` plus the user's scope description; do not create an assignment pack or alias price field. Unknown business revenue remains unknown. Renewal is context and does not extend the arithmetic term automatically. Explicit zero purchase price is permitted; it does not zero transition, deposit, location or working-capital costs. Additional outlays must exclude amounts already included in the purchase price.
+
+Extend the contract's current evidence prompts and next-check field mapping for accounts, operating permissions, team and support. The existing `next-checks` output names missing context and asks the user to clarify it; it must not instruct a legal conclusion, declare diligence complete or duplicate `next_action`. Evidence stays attached to field keys and within the existing 40-record cap. Show the user-recorded basis and period beside each operating result; when comparing different, missing or `unknown` bases/periods, the existing coverage/next-check output says that operating figures are not comparable on the supplied basis. Retain each row's arithmetic and cash checks, A/B/C order, and the current currency/version refusal. Do not refuse unrelated cash checks, annualize figures, manufacture profit, or add a ratio/valuation engine.
+
+Changing any input or evidence invalidates the report. Rebuilding must recompute checks from the current row, not a stale selection or earlier contract. A review-stage edit never satisfies a missing prerequisite. Exports carry the same field keys, mode, contract version, evidence and visible unknowns; an explicit import validates all rows before replacing current state. Existing strict version refusal remains: a `1.1.0` worksheet cannot silently become `1.2.0`. Explain the mismatch and retain the current worksheet; any later migration requires one explicit tested owner path, not parallel evaluators or compatibility aliases.
+
 ## 2. TAD — architecture
 
 ### 2.1 Reference implementation — components and ownership
 
-The names in this table identify current reference implementations; the schema and user-facing contract remain neutral and portable.
+Current reference implementations; user-facing contracts remain neutral and portable.
 
 | Concern | Owner | Contract |
 |---|---|---|
@@ -111,6 +157,25 @@ Canonical tools are `pack.list`, `pack.protocol`, `business.plan.build`, and `bu
 
 MCP and WebMCP discovery do not imply connection, identity, authority, evidence verification, or persistence. The browser tool is optional. Local calculations work when MCP/WebMCP are absent and when offline.
 
+### 2.2a Grounded reuse, dependency direction, and size gate
+
+Baseline Commerce source is `45d8803fc13cb66d1fbce482bae491bab5ad1b10`; source paths in this document resolve there unless a different owner/revision is named. Read source at the pinned commit before implementation; refresh only changed ownership or contracts.
+
+| Owner / inspected contract | Existing consumer / decision | Smallest delta / check |
+|---|---|---|
+| Commerce `public/local-first/sme-pack-business-plan.js`: `TAKEOVER_PACK` | Core, generated editor, workflow and dictionary / **extend-owner** | Add §1.8 fields and prompts once; no general-plan schema growth; inspect protocol and field-key uniqueness |
+| Commerce `sme-business-pack-core.js`: `loadPack`, `TOOL_NAMES`, `invokeSmePackTool` | Browser, `scripts/sme-business-pack-local.mjs`, `src/local-first/sme-business-pack.ts` / **extend-owner** | One contract version update and basis-aware next checks; same limits, errors, local evaluator and transport schemas |
+| Base `0cd7602d0b968bf27ecdaee0d8726138bf7997df`: `packages/views-react/src/browser/DataViewBrowserAdapter.tsx`, `mountDataView`, `DATA_VIEW_BROWSER_LIMITS`; `table/MultiDimTableView.tsx` | Commerce pinned `config/agentic-base-data-view.json`; shared table family used by Graph / **reuse** | No renderer edit or consumer fork; `verifyAgenticBaseDataView()` validates pinned artifact hashes and offline boundary |
+| Design System `c18253b35e8bcc0bed548cfb717ec31909422dbe`: `site/tokens/commerce-profile.json`, `scripts/commerce-profile.mjs` | Generated `commerce-theme.css`, existing shell and Base theme slots / **reuse** | No hardcoded alternate theme; `verifySharedThemeOwner()` and narrow-screen inspection |
+| Commerce `sme-business-pack.js`, `sme-workflow-editor.js`, `sme-pack-dictionary.js` | Existing `#sme-workflow` and `#sme-dictionary` / **reuse**, minimal owner edits only if needed | Protocol-derived field editor, table, exports and read-only documentation; existing `test/local-first/sme-comparison-browser.mjs` |
+| OS runtime and dictionary owners already linked by the protocol | Existing invocation surfaces and release path / **reuse** | No new `/` command, `@` resolver, `#` route, skill, MCP server or WebMCP tool; unsupported optional transport remains explicit |
+
+Dependency direction remains portable protocol/model → existing transport adapters or browser projection → Base renderer and Design System tokens. Browser-safe modules import no CLI, filesystem, provider SDK or sibling-repository source. Reuse exact generated artifacts; future generic fixes belong in their shared owner and arrive through reviewed pins. No extraction is needed for this domain delta.
+
+The current workflow module is 589 lines; prefer its existing protocol-generated projection and keep any owner edit below 600 lines. Do not add a replacement renderer to bypass that limit.
+
+**Capacity gate:** the current general plan uses all **64** columns: row label + 28 inputs + mode + 9 workflow + 4 coverage + 9 model + 12 pitch. Takeover uses **41**: row label + 25 inputs + mode + 9 workflow + 1 coverage + 4 model. Thirteen optional fields yield **54** takeover columns, leaving ten under the existing ceiling. Retain Base's 1,000-row, 4,096-character-cell, 196,608-byte payload and depth 1–8 limits, plus Commerce's one-to-three options and 32/64 KB tool bounds. Check worst-case Unicode, three rows and 40 evidence entries per row against every bound; if they do not fit, fail clearly with retained input and an actionable limit. Do not silently truncate, raise caps, duplicate the renderer or hide required fields to make a check pass.
+
 ### 2.3 Decisions (ADR)
 
 - **ADR-001 — One neutral registry and evaluator entry point:** register the general business plan and SME takeover checker as separate versioned contracts; resolve their owned fields and calculations through one protocol/tool registry. Do not duplicate the workflow, editor, table, evidence system, tool schemas, or registry.
@@ -123,6 +188,9 @@ MCP and WebMCP discovery do not imply connection, identity, authority, evidence 
 - **ADR-007 — Shared owner reuse:** reuse Base, Design System, Agentic OS dictionaries, and existing adapters; do not duplicate shared definitions.
 - **ADR-008 — Local privacy:** hold working state in memory, perform no network request for local calculation, and clear state when leaving the route.
 - **ADR-009 — Guideline ownership:** map the four projection guidelines and their Venture Record owner by exact revision and anchor; show current support status in the shared dictionary, and leave unsupported full-lifecycle records to their canonical owners.
+
+- **ADR-011 — Extend the current takeover contract:** choose thirteen optional protocol fields and reuse the current table/editor/export path. A third contract, marketplace, CRM and parallel checklist are rejected because they duplicate workflow ownership and exceed the local planning scope. Consequence: target `1.2.0` is not readable as `1.1.0`; strict import refusal preserves existing data. Recovery uses the prior compatible artifact and its worksheet version.
+- **ADR-012 — Context does not authorize or price a deal:** keep buyer budget, stages, access and handover context separate from available cash and deterministic formulas. Reuse coverage/next checks for comparability warnings. Automated screening, scoring, valuation and stage-driven execution are rejected; uncertainty remains visible. Roll back the whole protocol/model/UI artifact if these semantics diverge.
 
 ## 3. MVP scope and acceptance criteria
 
@@ -146,6 +214,17 @@ The MVP is the existing SME workspace, its contract- and mode-aware Multi-dimens
 | MVP-14 | SME takeover checker requires user-supplied acquisition amounts, currency, location-obligation state, working-capital assumptions, and available cash. It records transfer scope, asset context, operating figures and their stated basis, renewal/assignment context, and handover in the same table. It calculates cash required, location exposure, cash shortfall, and monthly revenue less listed costs; unknown values stay unknown, explicit not-applicable stays distinct, and numeric ranges propagate. | Protocol inspection, live table/dictionary, and deterministic single/range/missing-input fixtures |
 | MVP-15 | Nested record type, section, and group rows collapse individually and in bulk through Base; pivoting preserves values and hierarchy. Graph's table continues to use the same Base collapse hook alongside its existing filters and grouping controls. | Live UI collapse/expand, pivot, and Graph settings interaction |
 
+MVP-01–15 retain their existing scope and evidence limits. MVP-16–21 are **proposed/unverified** and must be satisfied on the implemented candidate before claiming the enhancement delivered; current UI proof does not pass them.
+
+| ID / pain / design / decision | Given → when → then; required proof |
+|---|---|
+| MVP-16 / P1,P3 / §1.8, §2.2a / ADR-011 | Given the takeover contract, when loaded, then all thirteen optional fields appear once in the same editor, table, dictionary and four existing tool surfaces; general plan stays unchanged and no third contract/route appears. Inspect protocol, unique keys, imports, desktop and 360-pixel UI. |
+| MVP-17 / P1 / §1.8 / ADR-003,006,012 | Given zero purchase price, ranges, missing amounts, unknown or not-applicable location, when built, then current formulas preserve explicit zero, uncertainty and conditional prerequisites without double-counting. Altering context/budget/stage alone leaves numeric outputs identical. Deterministic fixtures plus UI readback. |
+| MVP-18 / P2 / §1.8 / ADR-012 | Given two or three rows with differing/missing bases or periods, when compared, then each operating figure retains its basis and a non-comparability check; cash checks remain usable and entry order stays fixed. Mixed/missing currency or version still refuses comparison. Browser plus local/MCP adapter parity fixtures. |
+| MVP-19 / P3 / §1.8 / ADR-005,008,012 | Given user-stated accounts/permission/team/support states, when rebuilding or changing stage, then next checks update without authentication or automated progression. Manual next action survives pivot, collapse and exports; contact/URL patterns fail and no service request occurs. UI, network and storage inspection. |
+| MVP-20 / P1–P3 / §2.2a / ADR-007,011 | Given three bounded rows and maximum evidence, when rendering/exporting, then takeover has 54 unique columns, general plan 64, all adapter/tool byte limits hold or fail explicitly without losing inputs, and only the table scrolls at 360×780 and 1440×1000. Keyboard, touch, pivot, nested/bulk collapse and offline checks must pass on the same candidate. |
+| MVP-21 / P1–P3 / §1.8, §5.4 / ADR-008,011 | Given a versioned worksheet, when round-tripping JSON/CSV/Markdown or printing, then current fields/mode/evidence match; malformed/older input leaves current state intact. Delayed results cannot overwrite contract changes or route exit; cached reload uses one artifact version. Validate import negatives, exports, reload, route races and rollback compatibility. |
+
 ## 4. MVP boundary and operating requirements
 
 - Free-tier and FOSS use only; no paid API, add-on, overage, or recurring account.
@@ -154,7 +233,9 @@ The MVP is the existing SME workspace, its contract- and mode-aware Multi-dimens
 - Route-load only the existing SME feature modules; keep unrelated application surfaces lazy.
 - Support keyboard, touch, narrow mobile widths, system zoom, and offline shell usage.
 - Fail loudly on invalid contract identity, malformed ranges, unsupported field keys, oversized requests, and stale route results.
-- Keep mutation scopes limited to the existing Commerce owner, its existing local adapter inventory, the codebook, and the corresponding PRD lane.
+- This authoring sprint changes one existing PRD only: ≤18 KB net addition, <600 lines, 0 runtime modules, 0 new dependencies, 0 always-load bytes. Target 20 minutes after preflight; refresh scope/time on drift.
+- Implementation sequence, when selected: protocol/fixtures → core and version validation → generated editor/table/dictionary/exports → exact local/MCP parity and browser checks → protected source release. Planning allowance: two 45-minute sprints, ≤20 KB authored delta across ≤8 existing Commerce modules/docs/tests, 0 new runtime modules; refresh against measured owner limits before execution.
+- Runtime delivery has no ETA until authority, artifact identity and $0 provider proof are present; name the missing condition and recheck that condition. Current document work creates no deployment obligation.
 
 ## 5. GTM and validation
 
@@ -174,17 +255,36 @@ Open the existing SME workspace; choose a plan contract and mode; use that contr
 
 Validate with time-boxed, consented walkthroughs using user-owned or fictional inputs. Do not collect scenario data or infer financial performance. Record only task completion, confusion, and requested fields. Pause if users interpret the output as verification, a forecast, or financing advice.
 
+### 5.3a First-dollar validation — hypothesis only
+
+Buyer: an owner-operator reviewing one to three supplied opportunities. Channel hypothesis: an opt-in operator walkthrough; no outreach is performed here. Demo: capture → unknown cash inputs → basis mismatch → next action → export in under five minutes. This target is unmeasured for proposed fields.
+
+Proposed experiment: five consented sessions using fictional or participant-owned inputs; success requires at least four participants to export a worksheet, identify an unresolved obligation, and distinguish an estimate from a historical figure without assistance. Record only opt-in aggregate completion/time/confusion, no worksheet contents. If fewer than four succeed or anyone interprets a stage as clearance, simplify the owner projection before adding features.
+
+Price hypothesis: optional one-time **USD 1 assisted worksheet setup**, separate from the free tool, advice and transaction fees. No payment is taken or revenue established. A later first-dollar claim needs an actual receipt plus observed delivery effort; no paid infrastructure, addons or overages are needed.
+
 ### 5.4 Release and rollback
 
-Follow `agentic-os/docs/RELEASE-WORKFLOW.md` and the repository's release/deploy/rollback procedures. Preserve source lane and artifact receipts. A green local preview does not grant publication, merge, or deployment authority. Rollback restores the last known-good route module and protocol atomically; do not leave a partial schema/UI mismatch live.
+Follow `agentic-os/docs/RELEASE-WORKFLOW.md` and the repository's release/deploy/rollback procedures. Preserve source lane and artifact receipts. A green local preview does not grant publication, merge, or deployment authority. For this document-only lane, runtime deployment and schema migration are not applicable. A later implementation must use Commerce `scripts/local-first-release/{artifact,authorization,deployment,rollback-browser}.mjs` and `docs/production-runtime.md`, with the selected deployment workflow loaded on demand. Rollback restores the exact last known-good complete artifact (protocol, model, UI, styles, manifest and service worker) and verifies route/assets/offline readback; do not leave a partial schema/UI mismatch live. Preserve both worksheet versions as user-owned files and reject unsupported imports; do not rewrite them during rollback.
 
-### 5.5 Source and verification record (2026-11-05)
+### 5.5 Retained source history (2026-11-05)
 
-- Commerce source `f593f33152550dd378dc1e736c585ee267ef0c1c` passed 233 local tests, the complete local-first browser suite, and Integration Gate run `42016964859`. PR #210 merged as `1d6977a61237c6554e6406a63315eee2c3f17a1f`; PR #209 was closed as superseded. Canonical main was synchronized and the completed task checkout was recoverably quarantined, with refs and objects retained.
-- The browser proof at that exact source covers both plan contracts, Buy/Build and Scenario modes, contract-scoped values, pivot and atomic metadata headers, the live dictionary route, local worksheet round-trips, stale-result suppression, route-exit clearing, offline mobile journeys, and no SME service writes. Earlier candidate UI observation also exercised nested collapse/expand. These are bounded implementation checks, not independent product acceptance or full guideline parity.
-- Graph's shared-collapse source `8a51ed828a9f7da0c7a5c58eaa873fb41462cdb7` passed its protected checks and merged through PR #1888 as `6e353ce3c1ec21872e9dd3a3c7abc4eefb2b216d`. Its canonical checkout was synchronized. The earlier isolated preview loaded without console errors, but its workspace data-view interaction was not reachable; no additional candidate table interaction is claimed.
-- Carried local observations: the Base demo rendered its Multi-dimensional Table and bulk collapse/expand controls; the Design System registry rendered its owner catalog without console errors. These observations are not deployment receipts.
-- Revision 1.4.3 consolidates the universal plan-contract draft and the older workflow draft into this single current PRD. Original authoring copies and patches are retained privately for recovery. Deployment, independent acceptance, user validation, and owner-guideline conformance remain unclaimed.
+Revision 1.4.3 consolidated the plan/workflow drafts. Its Commerce candidate `f593f33152550dd378dc1e736c585ee267ef0c1c` recorded 233 local tests and Integration Gate `42016964859`, then merged through PR #210 as `1d6977a61237c6554e6406a63315eee2c3f17a1f`. Graph shared-collapse merged through PR #1888 as `6e353ce3c1ec21872e9dd3a3c7abc4eefb2b216d`. Earlier Base/Design System demos rendered; Graph table interaction was not reached. These retained observations establish no fresh check, deployment or independent acceptance.
+
+### 5.6 Current source and live UI verification (2026-11-06, Asia/Singapore)
+
+Read-only Commerce baseline: `45d8803fc13cb66d1fbce482bae491bab5ad1b10`, clean tracked source. Local Worker served `/agentic-commerce-os/#sme-workflow` and `#sme-dictionary`; no remote deployment or payment was performed. The actual baseline still exposes takeover `1.1.0`; none of §1.8's thirteen new fields is implemented.
+
+| Check / evidence | Observed result and boundary |
+|---|---|
+| Existing `test/local-first/sme-comparison-browser.mjs` run in Chrome | Passed both contracts, Buy/Build and Scenario, protocol-specific columns, pivot, dictionary, currency refusal and JSON/CSV/Markdown round-trips. First illustrative general plan: 2,126 ms at 360×780; 0 SME service requests. Automated fixture timing is not human time-to-value. |
+| Direct browser inspection and focused visual/offline check | Desktop 1440×1000 and mobile 360×780 had no page-level horizontal overflow. General plan had 64 columns; takeover had 41. Pivot preserved input; bulk collapse reduced 66 metadata rows to 6, then restored them; individual collapse/expand passed. |
+| Takeover sample and offline readback | USD 117,000 cash required, 21,600 location exposure, 97,000 shortfall and 3,700 monthly revenue less costs. Offline build and cached mobile reload/rebuild passed; 0 SME service requests and 0 uncaught page errors in the focused run. Synthetic values are implementation fixtures only. |
+| Shared owner verification | `verifyAgenticBaseDataView()` passed pinned artifact integrity/offline checks; `verifySharedThemeOwner()` passed 37 tokens and 9 icons. No Base, Design System or Graph source was changed. |
+
+Local evidence is retained under workspace `output/sme-native-table-review-20261106/`: `sme-existing-suite.json`, `sme-first-report-timing.json`, `visual-offline-proof.json`, `takeover-desktop.png`, and `takeover-mobile-metadata.png`. Checks cover the existing local implementation only. Current transport parity, independent acceptance, full accessibility, new-field behavior, hosted delivery and rollback remain unproved; MVP-16–21 stay open.
+
+Authoring checks passed: one scoped file, unique delta keys, exact five-role revision joins, no conflict markers, document bounds and the repository CI profile assertions. OS baseline `f758c135` `npm run check` failed on existing `docs/adlc-closeout-simplification-plan.md` line length and 42,038-byte always-load total (40,960 limit). Read-only release closeout reports pending source/retention; no publication, integration or deployment receipt exists for this draft.
 
 ## 6. Risks and mitigations
 
@@ -196,6 +296,9 @@ Follow `agentic-os/docs/RELEASE-WORKFLOW.md` and the repository's release/deploy
 | Evidence labels appear to certify facts | Use descriptive provenance only and display “not authenticated” |
 | Multiple surfaces drift | Single tool registry/evaluator and adapter parity; exact guideline revision/anchor map in the protocol-backed dictionary; no compatibility aliases for removed task-specific tools |
 | Offline cache contains mixed versions | Include the protocol module, dictionary, and editor in the same release manifest and reject identity mismatch |
+| Added fields overflow Base or tool limits | Apply the explicit 64/54-column budget and worst-case byte checks; retain input on refusal |
+| A review stage or permission label is mistaken for clearance | Keep user-stated status and missing prerequisites visible; stages never authorize an effect |
+| Conflicting plan copies or parallel registries reappear | Amend this continuity record in place; extend the existing protocol/codebook once; no alternate PRD, route, pack, evaluator or token inventory |
 
 ## 7. Traceability
 
