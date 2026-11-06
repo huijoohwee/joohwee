@@ -1,7 +1,7 @@
 ---
 title: "SME Business Plan Workspace — E2E Pitch, Plan, and Financial Model"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "1.7.0"
+version: "1.8.0"
 date: "2026-11-06"
 lang: "en"
 owner: "Product Manager function"
@@ -11,11 +11,11 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 lifecycle_status: "in-progress"
-prd_revision: "1.7.0"
-tad_revision: "1.7.0"
-adr_revision: "1.7.0"
-mvp_revision: "1.7.0"
-gtm_revision: "1.7.0"
+prd_revision: "1.8.0"
+tad_revision: "1.8.0"
+adr_revision: "1.8.0"
+mvp_revision: "1.8.0"
+gtm_revision: "1.8.0"
 load_policy: "on-demand"
 source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@1.2.0; business-plan-guidelines.md@1.1.0; financial-model-guidelines.md@1.1.0; prd-tad-adr-mvp-gtm-venture.md@2.1.3"
 ---
@@ -24,9 +24,9 @@ source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@
 
 ## Document control
 
-Join key: `sme-business-pack@1.7.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
+Join key: `sme-business-pack@1.8.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
 
-- **Status:** the §1.8 acquisition review is released and verified in production at its retained source in §5.6. The §1.9 shared-schema review and native Gantt enhancement is merged, synced and verified locally; its separate source integration evidence is recorded in §5.8, with the earlier implementation retained in §5.7. No production activation or public-runtime readiness is claimed for §1.9. PRD, TAD, ADR, MVP, and GTM consume `sme-business-pack@1.7.0`.
+- **Status:** the §1.8 acquisition review is released and verified in production at its retained source in §5.6. The §1.9 shared-schema review and native Gantt enhancement is merged, synced and verified locally; its separate source integration evidence is recorded in §5.8. Section 5.9 records the neutral timeline refinement; earlier source checkpoints are retained as history. No production activation or public-runtime readiness is claimed for §1.9. PRD, TAD, ADR, MVP, and GTM consume `sme-business-pack@1.8.0`.
 - **Audience:** people preparing or reviewing an early business or venture plan, including founders, operators, and advisers.
 - **Scope:** organize user-entered information into a twelve-role pitch outline, business-plan prompts, single-period arithmetic, and a neutral acquisition review from opportunity context through questions and handover preparation. Extend the existing takeover contract in the same table; retain the general plan. This is a planning workspace, with no transaction execution or complete guideline-conformance claim.
 - **No external source dependency:** the product neither searches nor fetches planning, market, pricing, company, or business data.
@@ -135,13 +135,13 @@ Changing any input or evidence invalidates the report. Rebuilding must recompute
 
 ### 1.9 One schema for Plan options, Review steps and Gantt Timeline
 
-The takeover Buy/Build views reuse the same active protocol, field definitions, live values, selected-option editor and dictionary. `pack.protocol.input_fields` remains the sole definition source for the 38 financial/context inputs; each declares one `review_step` association. `pack.protocol.review_workflow` owns the three review group labels, guidance, focus-field references, view selector and local note exchange. Every input is covered once across Set your buying limits, Define the transfer and Resolve the open questions. The general plan retains its current schema and modes.
+The takeover Buy/Build views reuse the same active protocol, field definitions, live values, selected-option editor and dictionary. `pack.protocol.input_fields` remains the sole definition source for the 38 financial/context inputs; each declares one `review_step` association. `pack.protocol.review_workflow` owns the three review group labels, guidance, focus-field references, view selector and local note exchange. Every input is covered once across Frame the review, Examine the transfer, and Record questions and next action. Stable step IDs remain `limits`, `transfer`, and `questions`. The outline is suggested and revisitable; it prescribes no required transaction sequence, jurisdiction, standard duration or completion forecast. Guidance is protocol-owned and appears in the same dictionary. The general plan retains its current schema and modes.
 
 Review steps reuses the existing Plan options field-metadata projection and changes its grouping. The same stable keys, labels, types, units, requirements, allowed values, bounds, patterns, definitions and option values are shown through one builder in the existing dictionary module. Gantt adds the native Graph timeline above that same field table and receives the same input-field definitions. Selecting an input field or a Gantt step opens the existing option editor and evidence controls. There is one table host and one field registry; the earlier independent nine-column review table and client-owned step/field list are removed.
 
 Seven protocol-owned `workflow_columns` with `kind: review_view` define Step ID, predecessor, successor, instructions, linked input keys, optional start and optional exclusive end. These are per-step review parameters shown in Plan options, its metadata pivot, Review steps, the table below Gantt and the live dictionary. Only timing parameters are writable local view notes. The relationship endpoints explicitly show None when no predecessor or successor exists. No review parameter becomes a financial input, changes a calculation or authorizes an effect. Takeover uses 61 columns within Base's existing 64-column bound; its 38 financial input keys and four tools remain unchanged.
 
-Gantt defaults to dependency order with equal-width bars explicitly described as order, not elapsed time. Dates are optional. Each option uses calendar timing only after all date pairs are valid and no step starts before its predecessor ends. Ends are exclusive and equal dates are milestones. Partial or conflicting timing keeps dependency order; it never infers a schedule or advances a stage. Mobile users scroll the native timeline within its region and retain full step controls.
+Gantt defaults to suggested dependency order with equal-width bars explicitly described as order, not elapsed time. Dates are optional. Each option uses calendar timing only after all date pairs are valid and no step starts before its predecessor ends. Ends are exclusive and equal dates are milestones. Partial or overlapping timing keeps dependency-order drawing while recorded dates remain visible in the existing activity controls. The controls read predecessor, successor, start and end labels/definitions from the same workflow parameters. A boundary difference uses an entered start and its preceding activity’s exclusive end within the same option. A negative difference says the start is earlier; it does not by itself prove overlap. Actual window overlap is reported only when both complete, valid date pairs establish a positive intersection. Missing dates remain unknown, dates are never moved automatically, and an activity can be revisited or paused. No financial, legal, suitability or readiness interpretation is made, and no stage advances automatically. Mobile users scroll the native timeline within its region and retain full step controls.
 
 The protocol declares `sme-business-plan/view-notes/v1`: an explicit local JSON exchange containing pack ID/version, mode and timing records keyed by canonical `review-start` and `review-end` parameters. It carries no copied financial inputs, input summaries or field definitions. Exact identity, keys, row count, dates and the declared 64 KB bound are validated atomically; stale, old review-record or mismatched files preserve current state. There is no compatibility variant. Financial worksheet identity/import/export remains unchanged and does not carry these notes. View state clears on contract/workspace exit; export is required to retain notes. No service or persistence is added for review computation.
 
@@ -174,7 +174,7 @@ MCP and WebMCP discovery do not imply connection, identity, authority, evidence 
 
 ### 2.2a Grounded reuse, dependency direction, and size gate
 
-The §1.8 baseline Commerce source is `45d8803fc13cb66d1fbce482bae491bab5ad1b10`; §1.9 extends protected source `435fae382ed9fdfbb3b8b053ddd549464f704830`. Later exact source identities are retained in §5.6–5.8. Read source at the pinned commit before implementation; refresh only changed ownership or contracts.
+The §1.8 baseline Commerce source is `45d8803fc13cb66d1fbce482bae491bab5ad1b10`; §1.9 extends protected source `435fae382ed9fdfbb3b8b053ddd549464f704830`. Later exact source identities are retained in §5.6–5.9. Read source at the pinned commit before implementation; refresh only changed ownership or contracts.
 
 | Owner / inspected contract | Existing consumer / decision | Smallest delta / check |
 |---|---|---|
@@ -209,6 +209,8 @@ The §1.9 workflow integration module is 564 lines; its protocol-generated proje
 
 - **ADR-013 — Protocol-owned fields, alternate native views:** Plan options, Review steps and the field table below Gantt reuse the same field-metadata builder and active protocol. Review membership is an association on each existing input definition, not a second field list. Seven review parameters are declared once in workflow columns and the dictionary. Graph renders the linked steps from those same references; no copied chart, independent review table schema or runtime sibling-repository dependency is retained.
 - **ADR-014 — Optional timing remains view state:** keep review dates outside the finance protocol and four MCP/WebMCP tools. Declare bounded local view-note exchange in the active protocol using canonical workflow-field keys, atomic validation and stale-read guards; preserve the existing financial worksheet contract and refuse incompatible old review files. Date entry and review stages authorize no external effect.
+
+- **ADR-015 — Neutral review timing:** use suggested, revisitable review activities and user-entered dates. Expose partial dates and factual per-option calendar gaps/overlaps through existing activity controls and shared workflow-parameter metadata. Standard durations, jurisdiction rules, outcome predictions, automatic scheduling and readiness inference are excluded. Preserve stable record IDs and the existing financial and view-note exchange contracts.
 
 ## 3. MVP scope and acceptance criteria
 
@@ -248,6 +250,8 @@ MVP-01–15 retain their existing scope and evidence limits. MVP-16–21 have ca
 | MVP-22 / P1,P3 / §1.9 / ADR-013 | Given one to three takeover Buy/Build options, when Review steps is selected, then the same Plan options field records and metadata are grouped by their protocol review step, with full input coverage and the shared relationship/timing parameters in the existing Base host. Row activation edits that option's current fields. No parallel guide or workflow remains. |
 | MVP-23 / P3 / §1.9 / ADR-013,014 | Given no dates, when Gantt opens, then the lazy native Graph artifact shows dependency order with no clock-duration metadata above the same shared field table. Complete valid dates show entered calendar timing; incomplete/conflicting timing keeps order. Desktop, 360-pixel, first-load view-switch and cached offline reload checks must pass. |
 | MVP-24 / P3 / §1.9 / ADR-008,014 | Given review notes, when exported and reimported, then matching valid dates restore without changing financial inputs. Invalid identities, duplicate rows, dates, oversized or stale files refuse atomically. Route/contract exit clears memory; no network writes or persisted business facts occur. |
+
+| MVP-25 / P3 / §1.9 / ADR-015 | Given entered or missing dates, when the timeline is reviewed, then neutral activities and suggested links remain revisitable; partial dates stay visible; gaps, touching boundaries and overlaps use calendar-day arithmetic only within the same option. No defaults, mandatory transaction sequence, automatic date moves, jurisdiction rules or readiness outcome is inferred. Verify unknowns, leap-day arithmetic, overlap fallback, shared parameter labels and mobile visibility. |
 
 ## 4. MVP boundary and operating requirements
 
@@ -333,7 +337,7 @@ Focused review/model/import/provenance tests pass (4); native Graph math, portab
 
 Local `npm run dev` identifies this preview as `local-unreleased`; configured-capability readiness intentionally reports checkout/fulfillment unavailable in the selected browser-only profile. This is not a failed review computation or evidence of production activation. The full local-first test command passed 237/237 tests and the full browser contract on final Commerce candidate `c8e0890a543a24bcbd006d1e8588970a2c68e793`, including the enforced production CSP and 44-pixel step controls. An earlier production-style run caught blocked inline host styles; compiling the host stylesheet into the external local CSS asset resolved that finding without changing the policy. The canonical checkout was then started with bare `npm run dev` and inspected live. `canonical-live-assets.json` binds its temporary local URL and exact served module/style hashes to merged source `563e0de5af8faaecace73787e03776211157fb39`; earlier preview servers were stopped. `verification-evidence.json`, source-closeout logs and the retained browser evidence bind the results to this enhancement. No paid resource, dependency install or production effect was selected for this enhancement.
 
-### 5.8 Shared-schema implementation evidence (2026-11-06)
+### 5.8 Retained v1.7.0 shared-schema evidence (2026-11-06)
 
 Commerce candidate `92020cb67d32e560acac9a3f0d26f1ae0f048878` replaces the client-owned review schema with the existing protocol and Plan options field-metadata projection. [PR 218](https://github.com/huijoohwee/agentic-commerce-os/pull/218) merged as `6ae2c9b3b4409a84c8607508ffd6ec6531daba30` after the required [Integration Gate](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/42174190033) passed on attempt 2 (job `127751273722`). Attempt 1 reported one unit failure without retaining the failing detail; it did not repeat in the exact-candidate rerun or the full local run. The native source workflow verified the exact tree, synced canonical main and recoverably quarantined the stopped worktree; branches and objects were retained. The native Graph source remains pinned to merged `c33b635be1124381d30b2d9fbad04dd868a2f986`; no additional Graph owner change is needed.
 
@@ -341,7 +345,15 @@ The committed candidate passed 238/238 local-first tests and the full local brow
 
 Bare `npm run dev` from canonical `GitHub/agentic-commerce-os` started the merged workspace at `http://127.0.0.1:59963/agentic-commerce-os/`. The live in-app browser showed the native dependency-order Gantt and shared field table; a fresh native WebMCP read confirmed the same protocol and review-field bindings. Eight served assets matched canonical bytes (HTML matched the existing template renderer), retained in `canonical-live-assets.json`. Dev intentionally reports `local-unreleased`; this is local UI/source identity evidence, not a production readiness response. The earlier dev servers were stopped. The original browser tab and its unsaved worksheet/comment were preserved without reload.
 
-The native Gantt JavaScript is 269,844 bytes and CSS 75,914 bytes, both below 500,000 bytes. There is no new runtime module, service or dependency. The existing dictionary module supplies the shared projection and is loaded when the metadata view is needed; core offline caching and the external stylesheet under the enforced production CSP are retained. The 61-column takeover/64-column general bounds, 38 input-key ceiling, financial worksheet contract, formulas and four tools retain their existing limits. Production activation is separate and is not selected for this source/local enhancement.
+At this checkpoint the native Gantt JavaScript was 269,844 bytes and CSS 75,914 bytes, both below 500,000 bytes. There is no new runtime module, service or dependency. The existing dictionary module supplies the shared projection and is loaded when the metadata view is needed; core offline caching and the external stylesheet under the enforced production CSP are retained. The 61-column takeover/64-column general bounds, 38 input-key ceiling, financial worksheet contract, formulas and four tools retain their existing limits. Production activation is separate and is not selected for this source/local enhancement.
+
+### 5.9 Neutral timeline evidence (2026-11-06)
+
+The current refinement replaces buying/completion-implying activity labels with neutral, revisitable review activities. Protocol-owned guidance and dictionary metadata make the suggested order explicit. Recorded timing remains visible when partial or overlapping, and calendar boundary differences use only known per-option boundaries; actual window overlap requires two complete date pairs. Financial inputs, formulas, stable step IDs, the 61-column bound, four tools and `view-notes/v1` exchange remain unchanged. No external content, branding, code or runtime dependency is introduced.
+
+Commerce candidate `1b0b425c223e7a2f8a839919d74f514178c5d3de` in [PR 219](https://github.com/huijoohwee/agentic-commerce-os/pull/219) passed 239/239 local-first tests and the complete browser contract under the enforced production CSP. Six focused tests cover shared metadata, date validity, leap-day gaps, touching boundaries, overlaps, unknowns, per-option isolation, incomplete-window refusal and earlier non-overlapping windows, import refusal and artifact provenance. Desktop/360-pixel browser checks verified recorded dates under partial/overlap fallback, no automatic date moves, unchanged financial inputs, local note exchange and offline reload. Exact source/browser evidence is retained in `output/sme-neutral-timeline-20261106/`. The required [Integration Gate](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/42180865736) passed on exact-candidate attempt 2, job `127772178847`. Attempt 1 passed all 239 unit tests and the SME browser flow, then failed to fetch the unchanged Housing module in a later browser check; it did not repeat in the bounded rerun. The initial failure log is retained separately. The native source workflow merged PR 219 as `2698aed0fea5d8d838fa7f4c0369d3c6e389f7e8`, synced canonical main and recoverably quarantined the stopped worktree; branches and objects were retained. The native Graph source remains pinned to `c33b635be1124381d30b2d9fbad04dd868a2f986`; the updated browser artifacts are 271,618-byte JavaScript and 76,384-byte CSS, below the existing chunk ceiling. No new runtime module, service or dependency is added. This is source/local delivery; production activation is not selected.
+
+Bare `npm run dev` from canonical `GitHub/agentic-commerce-os` now serves `http://127.0.0.1:63161/agentic-commerce-os/`. The native in-app browser visibly verified the neutral guidance, suggested-order Gantt, optional blank timing and canonical parameter definitions. A fresh native WebMCP `pack.protocol` read confirmed the three neutral activity titles, 38 input fields, seven review parameters and unchanged `view-notes/v1` exchange. Eight served assets matched canonical source bytes (HTML through the existing template renderer), retained in `canonical-live-assets.json`. Dev reports `local-unreleased`; this observation proves local source/UI identity and does not assert production readiness. The earlier dev server was stopped; the original unsaved browser tab was preserved, and the current preview remains available.
 
 ## 6. Risks and mitigations
 
