@@ -1,7 +1,7 @@
 ---
 title: "SME Business Plan Workspace — E2E Pitch, Plan, and Financial Model"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "1.5.2"
+version: "1.6.0"
 date: "2026-11-06"
 lang: "en"
 owner: "Product Manager function"
@@ -11,11 +11,11 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 lifecycle_status: "in-progress"
-prd_revision: "1.5.2"
-tad_revision: "1.5.2"
-adr_revision: "1.5.2"
-mvp_revision: "1.5.2"
-gtm_revision: "1.5.2"
+prd_revision: "1.6.0"
+tad_revision: "1.6.0"
+adr_revision: "1.6.0"
+mvp_revision: "1.6.0"
+gtm_revision: "1.6.0"
 load_policy: "on-demand"
 source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@1.2.0; business-plan-guidelines.md@1.1.0; financial-model-guidelines.md@1.1.0; prd-tad-adr-mvp-gtm-venture.md@2.1.3"
 ---
@@ -24,9 +24,9 @@ source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@
 
 ## Document control
 
-Join key: `sme-business-pack@1.5.2`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
+Join key: `sme-business-pack@1.6.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
 
-- **Status:** implementation integrated, production released, and the bounded MVP runtime verified on the public route. Commerce PR #212 implements §1.8 in the existing owners; release `42141754796` activates that exact source. Section 5.6 separates source, production, live runtime and remaining independent product validation; this is not universal readiness or full guideline conformance. PRD, TAD, ADR, MVP, and GTM all consume `sme-business-pack@1.5.2`.
+- **Status:** the §1.8 acquisition review is released and verified in production at its retained source in §5.6. The §1.9 dependency review and native Gantt enhancement is implemented, integrated and verified locally; its separate source integration evidence is recorded in §5.7. No production activation or public-runtime readiness is claimed for §1.9. PRD, TAD, ADR, MVP, and GTM consume `sme-business-pack@1.6.0`.
 - **Audience:** people preparing or reviewing an early business or venture plan, including founders, operators, and advisers.
 - **Scope:** organize user-entered information into a twelve-role pitch outline, business-plan prompts, single-period arithmetic, and a neutral acquisition review from opportunity context through questions and handover preparation. Extend the existing takeover contract in the same table; retain the general plan. This is a planning workspace, with no transaction execution or complete guideline-conformance claim.
 - **No external source dependency:** the product neither searches nor fetches planning, market, pricing, company, or business data.
@@ -133,6 +133,16 @@ Extend the contract's current evidence prompts and next-check field mapping for 
 
 Changing any input or evidence invalidates the report. Rebuilding must recompute checks from the current row, not a stale selection or earlier contract. A review-stage edit never satisfies a missing prerequisite. Exports carry the same field keys, mode, contract version, evidence and visible unknowns; an explicit import validates all rows before replacing current state. Existing strict version refusal remains: a `1.1.0` worksheet cannot silently become `1.2.0`. Explain the mismatch and retain the current worksheet; any later migration requires one explicit tested owner path, not parallel evaluators or compatibility aliases.
 
+### 1.9 Linked review records and native Gantt Timeline
+
+The takeover Buy/Build workflow defaults to **Review steps** in the existing Multi-dimensional Table. The same three records per plan option connect **Set your buying limits → Define the transfer → Resolve the open questions**. Each record exposes its stable ID, plan option, predecessor, successor, adapted review guidance, protocol-labelled current inputs, and optional start/end dates. Links stay within the same plan option; one to three options produce three to nine records. Selecting a table row or Gantt step opens the same option and relevant field in the current editor, including its existing evidence controls.
+
+The Workflow view selector offers Review steps, Gantt Timeline, and Plan options. Plan options retains the current input/output table and metadata pivot; Scenario and the general business plan retain their existing projections. This replaces the earlier static takeover guide. There is one review projection, table host, field editor and finance model; no additional checklist, task registry, workflow route or renderer is introduced.
+
+Gantt starts with dependency order and equal-width bars, expressly labelled as order rather than elapsed time. Dates are optional local view notes, separate from contract inputs and financial calculations. A plan option switches to calendar timing only when all its date pairs are valid and no step starts before its predecessor ends. End dates are exclusive; equal dates represent a milestone. Partial, invalid or conflicting timing never invents a schedule or advances a review stage. Narrow screens scroll the native chart within its region; full step labels remain available as buttons.
+
+Review-record export is an explicit local JSON download of displayed records, input summaries and dates, bounded to 64 KB. Import accepts only matching current step identities and valid timing and applies dates atomically; it never imports financial inputs, guidance, links or stage decisions. Invalid or stale imports preserve current state. Financial worksheet import/export keeps its existing schema and does not carry these view notes. Working dates remain in memory and clear with route exit or contract changes; export is needed to retain them. No service request or persistence is added for calculation or review timing.
+
 ## 2. TAD — architecture
 
 ### 2.1 Reference implementation — components and ownership
@@ -144,6 +154,8 @@ Current reference implementations; user-facing contracts remain neutral and port
 | Both plan contracts, shared modes, fields, models, evidence tasks, artifact roles, and source alignment | `public/local-first/sme-pack-business-plan.js` | One field and mode definition source; takeover fields remain generic with no locale, sector, or currency defaults |
 | Registry, validation, deterministic models, pitch outline, worksheets, and tool schemas | `public/local-first/sme-business-pack-core.js` | One protocol/tool entry point with the active contract's declared calculation model and bounded inputs |
 | Table projection, route lifecycle, local worksheet actions | `public/local-first/sme-business-pack.js` | One E2E table, one selected-row editor, one local status channel |
+| Review records, dependency links, optional timing and local review exchange | `public/local-first/sme-review-workflow.js` | One projection for the existing Base table, native Graph timeline and review-record export |
+| Gantt rendering and time-axis model | `agentic-graph` native `VideoSequenceTimelineRuler` and `mermaidGanttTimelineModel` | Build-only adapter, immutable source/input/output hashes in `config/graph-gantt-timeline.json`; lazy local browser artifact, no Graph application store |
 | Evidence and generated field editor | `public/local-first/sme-workflow-editor.js` | Renders fields from protocol; does not maintain a second field list |
 | Contract documentation | `public/local-first/sme-pack-dictionary.js` and `docs/sme-business-pack-codebook-and-data-dictionary.md` | Read-only projection from protocol, canonical owner references, and explicit MVP support boundaries |
 | Grid, pivot, nested groups, and collapse/expand | `agentic-base` data-view adapter | `multiDimensional`; Commerce supplies protocol-derived paths/depth and Graph uses Base's nested-row hook; no duplicate renderer or collapse state |
@@ -159,7 +171,7 @@ MCP and WebMCP discovery do not imply connection, identity, authority, evidence 
 
 ### 2.2a Grounded reuse, dependency direction, and size gate
 
-Baseline Commerce source is `45d8803fc13cb66d1fbce482bae491bab5ad1b10`; source paths in this document resolve there unless a different owner/revision is named. Read source at the pinned commit before implementation; refresh only changed ownership or contracts.
+The §1.8 baseline Commerce source is `45d8803fc13cb66d1fbce482bae491bab5ad1b10`; §1.9 extends protected source `435fae382ed9fdfbb3b8b053ddd549464f704830`. Later exact source identities are retained in §5.6–5.7. Read source at the pinned commit before implementation; refresh only changed ownership or contracts.
 
 | Owner / inspected contract | Existing consumer / decision | Smallest delta / check |
 |---|---|---|
@@ -170,9 +182,9 @@ Baseline Commerce source is `45d8803fc13cb66d1fbce482bae491bab5ad1b10`; source p
 | Commerce `sme-business-pack.js`, `sme-workflow-editor.js`, `sme-pack-dictionary.js` | Existing `#sme-workflow` and `#sme-dictionary` / **reuse**, minimal owner edits only if needed | Protocol-derived field editor, table, exports and read-only documentation; existing `test/local-first/sme-comparison-browser.mjs` |
 | OS runtime and dictionary owners already linked by the protocol | Existing invocation surfaces and release path / **reuse** | No new `/` command, `@` resolver, `#` route, skill, MCP server or WebMCP tool; unsupported optional transport remains explicit |
 
-Dependency direction remains portable protocol/model → existing transport adapters or browser projection → Base renderer and Design System tokens. Browser-safe modules import no CLI, filesystem, provider SDK or sibling-repository source. Reuse exact generated artifacts; future generic fixes belong in their shared owner and arrive through reviewed pins. No extraction is needed for this domain delta.
+Dependency direction remains portable protocol/model → existing transport adapters or browser projection → Base renderer and Design System tokens. Browser-safe modules import no CLI, filesystem, provider SDK or sibling-repository source. Reuse exact generated artifacts; future generic fixes belong in their shared owner and arrive through reviewed pins. The §1.9 Graph change moves existing pure transport math to `timelineTransportMath.ts`, retains the old transport exports, and adds optional position labels to the native ruler. The browser projection imports its generated artifact rather than sibling source or the Graph store.
 
-The integrated workflow module is 578 lines; its protocol-generated projection remains the owner and every edited source module stays below 600 lines. Do not add a replacement renderer to bypass that limit.
+The §1.9 workflow integration module is 588 lines; its protocol-generated projection remains the owner and every edited source module stays below 600 lines. Do not add a replacement renderer to bypass that limit.
 
 **Capacity gate:** the current general plan uses all **64** columns: row label + 28 inputs + mode + 9 workflow + 4 coverage + 9 model + 12 pitch. Takeover now uses **54**: row label + 38 inputs + mode + 9 workflow + 1 coverage + 4 model, leaving ten under the existing ceiling. Retain Base's 1,000-row, 4,096-character-cell, 196,608-byte payload and depth 1–8 limits, plus Commerce's one-to-three options and 32/64 KB tool bounds. Check worst-case Unicode, three rows and 40 evidence entries per row against every bound; if they do not fit, fail clearly with retained input and an actionable limit. Do not silently truncate, raise caps, duplicate the renderer or hide required fields to make a check pass.
 
@@ -191,6 +203,9 @@ The integrated workflow module is 578 lines; its protocol-generated projection r
 
 - **ADR-011 — Extend the current takeover contract:** choose thirteen optional protocol fields and reuse the current table/editor/export path. A third contract, marketplace, CRM and parallel checklist are rejected because they duplicate workflow ownership and exceed the local planning scope. Consequence: implemented `1.2.0` is not readable as `1.1.0`; strict import refusal preserves existing data. Recovery uses the prior compatible artifact and its worksheet version.
 - **ADR-012 — Context does not authorize or price a deal:** keep buyer budget, stages, access and handover context separate from available cash and deterministic formulas. Reuse coverage/next checks for comparability warnings. Automated screening, scoring, valuation and stage-driven execution are rejected; uncertainty remains visible. Roll back the whole protocol/model/UI artifact if these semantics diverge.
+
+- **ADR-013 — One record projection, alternate native views:** replace the static guide with three linked records per option and reuse the existing Base host plus Graph's native workflow Gantt ruler. Extract only the store-bound pure math at its Graph owner. Reject a copied chart, second checklist or runtime sibling-repository dependency. Equal ordinal bars express dependency order, never estimated duration.
+- **ADR-014 — Optional timing remains view state:** keep review dates outside the finance protocol and four MCP/WebMCP tools. Use bounded, explicit local exchange with atomic validation and stale-read guards; preserve the existing worksheet contract. Date entry and review stages authorize no external effect.
 
 ## 3. MVP scope and acceptance criteria
 
@@ -224,6 +239,12 @@ MVP-01–15 retain their existing scope and evidence limits. MVP-16–21 have ca
 | MVP-19 / P3 / §1.8 / ADR-005,008,012 | Given user-stated accounts/permission/team/support states, when rebuilding or changing stage, then next checks update without authentication or automated progression. Manual next action survives pivot, collapse and exports; contact/URL patterns fail and no service request occurs. UI, network and storage inspection. |
 | MVP-20 / P1–P3 / §2.2a / ADR-007,011 | Given three bounded rows and maximum evidence, when rendering/exporting, then takeover has 54 unique columns, general plan 64, all adapter/tool byte limits hold or fail explicitly without losing inputs, and only the table scrolls at 360×780 and 1440×1000. Keyboard, touch, pivot, nested/bulk collapse and offline checks must pass on the same candidate. |
 | MVP-21 / P1–P3 / §1.8, §5.4 / ADR-008,011 | Given a versioned worksheet, when round-tripping JSON/CSV/Markdown or printing, then current fields/mode/evidence match; malformed/older input leaves current state intact. Delayed results cannot overwrite contract changes or route exit; cached reload uses one artifact version. Validate import negatives, exports, reload, route races and rollback compatibility. |
+
+| ID / pain / design / decision | Given → when → then; required proof |
+|---|---|
+| MVP-22 / P1,P3 / §1.9 / ADR-013 | Given one to three takeover Buy/Build options, when Review steps is selected, then three linked records per option show unique stable IDs, predecessors, successors, guidance and current inputs in the existing Base host. Row activation edits that option's current fields. No parallel guide or workflow remains. |
+| MVP-23 / P3 / §1.9 / ADR-013,014 | Given no dates, when Gantt opens, then the lazy native Graph artifact shows dependency order with no clock-duration metadata. Complete valid dates show entered calendar timing; incomplete/conflicting timing keeps order. Desktop, 360-pixel, first-load view-switch and cached offline reload checks must pass. |
+| MVP-24 / P3 / §1.9 / ADR-008,014 | Given review notes, when exported and reimported, then matching valid dates restore without changing financial inputs. Invalid identities, duplicate rows, dates, oversized or stale files refuse atomically. Route/contract exit clears memory; no network writes or persisted business facts occur. |
 
 ## 4. MVP boundary and operating requirements
 
@@ -299,6 +320,16 @@ All four public API and MCP tools matched the shared local evaluator semanticall
 
 The requested runtime release is complete within the declared MVP scope. Next product-owner action: conduct the five consented sessions in §5.3a and record aggregate outcomes before claiming independent acceptance or a first dollar. No participant outcome, revenue, full accessibility certification or complete guideline conformance is fabricated. The workspace TODO successor references this continuity record and immutable evidence; earlier checkpoint records remain history.
 
+### 5.7 Dependency review and native Gantt evidence (2026-11-06)
+
+Commerce candidate `c8e0890a543a24bcbd006d1e8588970a2c68e793` is published in [PR #217](https://github.com/huijoohwee/agentic-commerce-os/pull/217). Graph [PR #1891](https://github.com/huijoohwee/agentic-graph/pull/1891) passed required Integration Gate [42167653519](https://github.com/huijoohwee/agentic-graph/actions/runs/42167653519) on exact candidate `3a8c4050ce9717f3ca4989edc3cc5d331fecbc7d`, merged as `c33b635be1124381d30b2d9fbad04dd868a2f986`, synced canonical and completed recoverable worktree cleanup. The generated consumer artifact pins that merged revision; the manifest binds its native/dependency sources and consumer adapter, host stylesheet and output hashes. Commerce passed required [Integration Gate 42169859542](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/42169859542) on exact candidate `c8e0890a543a24bcbd006d1e8588970a2c68e793`, merged as `563e0de5af8faaecace73787e03776211157fb39`, synced canonical and completed recoverable worktree cleanup. Both source lanes retain their refs and objects; no deletion or production effect is inferred from source closure. This section covers §1.9 only; §5.6 retains the earlier production source and receipts.
+
+Verified local evidence is retained in workspace `output/sme-review-timeline-20261106/browser/`: `dev-sme-proof.json`, `takeover-gantt-desktop.png`, `takeover-gantt-mobile.png`, and the existing worksheet/offline proofs. The full SME browser flow passed with zero page errors and zero mutations; the sole SME-service GET was offline manifest preparation. A fresh mobile local plan used zero SME service calls. Checks cover three-option dependency isolation, field focus and live summaries, lazy loading, a view switch during initial Gantt loading, optional date projection, valid/invalid review exchange, existing financial worksheet flow, route lifecycle, a first visit to SME while already offline after core-cache preparation, and cached offline reload. Native WebMCP remains distinguished from the automated contract fixture.
+
+Focused review/model/import/provenance tests pass (4); native Graph math, portability and semantic tick rendering tests pass (3). The generated Gantt JavaScript is 271,158 bytes and CSS is 75,914 bytes, each below 500,000 bytes. The native Graph application store and graph-layout libraries are excluded. The single 11,413-byte review controller loads with the existing SME module and is included in the core offline cache; the two Gantt assets load only on demand. The manifest hashes 63 native/dependency inputs plus the consumer sources. The host stylesheet is compiled into the external local CSS asset so the existing enforced production CSP remains intact. No runtime dependency install is introduced. Existing protocol versions, 38 takeover fields, four tools and finance calculations retain their contracts. Review view uses nine columns and at most nine records within existing Base bounds.
+
+Local `npm run dev` identifies this preview as `local-unreleased`; configured-capability readiness intentionally reports checkout/fulfillment unavailable in the selected browser-only profile. This is not a failed review computation or evidence of production activation. The full local-first test command passed 237/237 tests and the full browser contract on final Commerce candidate `c8e0890a543a24bcbd006d1e8588970a2c68e793`, including the enforced production CSP and 44-pixel step controls. An earlier production-style run caught blocked inline host styles; compiling the host stylesheet into the external local CSS asset resolved that finding without changing the policy. The canonical checkout was then started with bare `npm run dev` and inspected live. `canonical-live-assets.json` binds its temporary local URL and exact served module/style hashes to merged source `563e0de5af8faaecace73787e03776211157fb39`; earlier preview servers were stopped. `verification-evidence.json`, source-closeout logs and the retained browser evidence bind the results to this enhancement. No paid resource, dependency install or production effect was selected for this enhancement.
+
 ## 6. Risks and mitigations
 
 | Risk | Mitigation |
@@ -319,6 +350,8 @@ The requested runtime release is complete within the declared MVP scope. Next pr
 |---|---|
 | Both plan contracts, shared modes, fields, models, evidence tasks, examples, and workflow columns | `public/local-first/sme-pack-business-plan.js` |
 | Protocol, tool schemas, validation, model, and exports | `public/local-first/sme-business-pack-core.js` |
+| Linked review records and optional dates | `public/local-first/sme-review-workflow.js` |
+| Native Gantt provenance and adapter | `config/graph-gantt-timeline.json`, `scripts/sme-review/build-timeline.mjs`, `scripts/sme-review/graph-gantt-adapter.tsx`; native Graph ruler/model |
 | E2E table, route, compare, and worksheet UI | `public/local-first/sme-business-pack.js` |
 | Protocol-driven input and evidence editor | `public/local-first/sme-workflow-editor.js` |
 | Live dictionary projection | `public/local-first/sme-pack-dictionary.js` |
