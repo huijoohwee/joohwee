@@ -1,8 +1,8 @@
 ---
 title: "SME Business Plan Workspace — E2E Pitch, Plan, and Financial Model"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "1.15.0"
-date: "2026-11-06"
+version: "1.16.0"
+date: "2026-11-07"
 lang: "en"
 owner: "Product Manager function"
 continuity_id: "sme-business-pack"
@@ -11,11 +11,11 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 lifecycle_status: "in-progress"
-prd_revision: "1.15.0"
-tad_revision: "1.15.0"
-adr_revision: "1.15.0"
-mvp_revision: "1.15.0"
-gtm_revision: "1.15.0"
+prd_revision: "1.16.0"
+tad_revision: "1.16.0"
+adr_revision: "1.16.0"
+mvp_revision: "1.16.0"
+gtm_revision: "1.16.0"
 load_policy: "on-demand"
 source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@1.2.0; business-plan-guidelines.md@1.1.0; financial-model-guidelines.md@1.1.0; prd-tad-adr-mvp-gtm-venture.md@2.1.3"
 ---
@@ -24,9 +24,9 @@ source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@
 
 ## Document control
 
-Join key: `sme-business-pack@1.15.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
+Join key: `sme-business-pack@1.16.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
 
-- **Status:** the §1.8 acquisition review is released and verified in production at its retained source in §5.6. The §1.9 shared-schema review and native Gantt enhancement is merged, synced and verified locally; its separate source integration evidence is recorded in §5.8. Section 5.16 records the shared row/toolbar geometry; section 5.15 retains the cross-surface scroll-owner verification; section 5.14 retains the earlier bounded-grid checkpoint; earlier source checkpoints are retained as history. No production activation or public-runtime readiness is claimed for §1.9. PRD, TAD, ADR, MVP, and GTM consume `sme-business-pack@1.15.0`.
+- **Status:** the §1.8 acquisition review is released and verified in production at its retained source in §5.6. The §1.9 shared-schema review and native Gantt enhancement is merged, synced and verified locally; its separate source integration evidence is recorded in §5.8. Section 5.17 records the shared body/KTV adoption; section 5.16 records the shared row/toolbar geometry; section 5.15 retains the cross-surface scroll-owner verification; section 5.14 retains the earlier bounded-grid checkpoint; earlier source checkpoints are retained as history. No production activation or public-runtime readiness is claimed for §1.9. PRD, TAD, ADR, MVP, and GTM consume `sme-business-pack@1.16.0`.
 - **Audience:** people preparing or reviewing an early business or venture plan, including founders, operators, and advisers.
 - **Scope:** organize user-entered information into a twelve-role pitch outline, business-plan prompts, single-period arithmetic, and a neutral acquisition review from opportunity context through questions and handover preparation. Extend the existing takeover contract in the same table; retain the general plan. This is a planning workspace, with no transaction execution or complete guideline-conformance claim.
 - **No external source dependency:** the product neither searches nor fetches planning, market, pricing, company, or business data.
@@ -240,6 +240,7 @@ The §1.9 workflow integration module is 564 lines; its protocol-generated proje
 - **ADR-021 — Share measured vertical scroll ownership across table surfaces:** extend the existing Base helper to observe the actual overflowing frame and outer panes through ordinary/shadow ancestors and intersect their visible top edges. Translate the original header only within its table boundary and reuse the same measured ancestor-path logic. A frame taller than its content does not imply that it owns vertical scrolling. Honor the same pane's native scroll-padding-top and observe style changes so surrounding sticky headings do not cover table controls. Passive scroll/resize observation and disposal restore original styles and listeners. Graph Viewer, Editor and Canvas plus Commerce consume one exact Base revision; Design System remains the token owner. No new renderer, schema, dependency, runtime module or service.
 
 - **ADR-022 — One responsive row/toolbar geometry:** Design System owns the shared UI height profile. Base consumes its exact offline projection for headers, records, hierarchy groups and pivot rows; its numeric helper uses the same computed metric with pinned metadata for headless use. Graph delegates table padding and virtualized/DOM row metrics to Base and aliases toolbar and legacy row tokens to the shared variable. Commerce consumes the exact Base artifact without a height override. Desktop rows use 38 CSS px; coarse pointers or viewports at most 768px use 54 CSS px, matching the existing compact toolbar. Legacy density inputs remain compatibility aliases. Bound previews without dropping full field values; preserve original menus, editing and sticky measurement. No parallel renderer, independent row metric or new dependency.
+- **ADR-023 — Shared body role and KTV owner:** Design System shared-ui v0.3.1 owns body typography (0.875rem/1.25rem; 14px/20px at the default root size), existing sans/mono stacks and responsive KTV tracks. Base owns table and floating-panel CSS consumption. Graph retains one KTV React renderer; legacy responsive controls and topology metrics adapt to it. Palette and renderer settings reuse the selected section spacing (12px inline, 8px block and inter-field gap). Headless font metadata is digest-tested against the pinned profile. Portable Graph panels use Base controls and one shared theme adapter. Commerce consumes exact Base/Graph artifacts. Keep semantic headings, code roles, optional timing and 38px/54px table geometry; no downloaded font, service, alternate renderer or consumer override.
 
 ## 3. MVP scope and acceptance criteria
 
@@ -290,6 +291,7 @@ MVP-01–15 retain their existing scope and evidence limits. MVP-16–21 have ca
 
 | MVP-30 / §1.9 / ADR-021 | Given a Viewer table inside a vertically scrolling pane, including a frame taller than its contents, the original header pins at the pane edge and releases at table end. Given bounded Editor/Canvas/Commerce tables, including an overflowing frame moving within an outer pane, the same owner retains header/ancestor alignment and original collapse controls. Verify that header hit-testing reaches the table beneath surrounding sticky headings, no cloned header/row, horizontal alignment, flat records without fabricated ancestors, disposal cleanup, shared 17-input pin joins, mobile containment and exact served assets. |
 | MVP-31 / §1.9 / ADR-022 | Given the named Graph Viewer/Editor/Canvas and Commerce/Base Multi-dimensional Table surfaces, headers, data rows, ancestor rows and pivot rows match the compact toolbar’s responsive metric. Verify 38 CSS px on desktop and 54 CSS px on narrow/touch layouts, exact profile and artifact pin joins, original collapse/selection/menu/editing behavior, sticky/horizontal alignment, offline reload and no independent consumer height. |
+| MVP-32 / §1.9 / ADR-023 | Default body text is 14px/20px across named table, toolbar and floating-panel fields; 200% root text scaling remains usable. Shared KTV key/type/value tracks and selected section spacing align renderer controls with palette fields at desktop/narrow widths. Verify exact profile/artifact joins, panel-tab coverage, canonical npm run dev, preserved tables and local/offline flows. Record bounded coverage and pre-existing audit failures explicitly. |
 
 ## 4. MVP boundary and operating requirements
 
@@ -472,6 +474,18 @@ Canonical Graph source-consistency preflight passes for `66bf9d695093dc433f43608
 Native Canvas verification observes one table/header with 105 data records plus the existing new-record action, all at 38 pixels with the 38-pixel toolbar. The original `index`, `legend` and `nodes` ancestor rows each measure 38. Each of 13 parent groups has exactly one expansion control. Collapsing `nodes` changes the total body-row count from 106 to 93; restoring returns 106. All twelve header/body column X differences are zero after horizontal scroll. Pivoted rows retain a 38-pixel header and eleven 38-pixel body rows; at 390px those rows/header and toolbar measure 54. Restored Canvas rows also measure 54 at 390px. The original Graph header menu opens and closes with Escape without changing row height; the inline Key editor opens and cancels with Escape while rows stay 38. Commerce’s header menu similarly opens fully at 296×396 pixels while its rows stay 38. Temporary viewport overrides are cleared. No record content is changed by these checks.
 
 The evidence directory retains exact owner/consumer joins, the installed Base readback, raw red/green checks, provider failures and final green results, native completion receipts, runtime identity, geometry JSON and screenshots. Both browser chunks remain below 500,000 bytes; edited authored modules remain below 600 lines except the pre-existing application stylesheet, whose line count is unchanged. No new runtime module, paid resource, alternate renderer, independent height inventory or consumer row-height override is introduced. The final source/local geometry supersedes earlier height measurements in §5.15; historical checkpoints remain evidence of their own revisions. Public runtime/production delivery remains separately gated.
+
+### 5.17 Shared body typography, KTV and selected spacing — 2026-11-07
+
+ADR-023/MVP-32 extends the existing shared-ui profile v0.3.1 (10 tokens, 124 unique registry keys). Immutable Design System source `c62a67978f4df85ae5f5681522ff7ae44d530f49`, registry candidate `5082cd5beaf29e8a5c7a027dd5359ed4074a4388`, projects the same CSS SHA-256 `d3436f0f11cf6b014733f7c2681902df5e12052076b0aafba91ccdaf5668a77e` into Base, Graph and Commerce. The body role is 0.875rem/1.25rem, yielding 14px/20px without defeating root text scaling. Existing sans/mono families, semantic headings, captions and code roles remain distinct. No font download or new paid service is introduced.
+
+The final immutable candidates pass their exact-head required checks: [Design System PR 11](https://github.com/huijoohwee/agentic-design-system/pull/11), run `42317006191`; [Base PR 35](https://github.com/huijoohwee/agentic-base/pull/35), source `21e04e35a2954025013fc9f23c9712fe5fc55366`, run `42318176260`; [Graph PR 1898](https://github.com/huijoohwee/agentic-graph/pull/1898), source `696f4ab6d4c5eada1bc7a71f668e8410a8464eb3`, run `42320444188` (docs-contract and Integration Gate); [Commerce PR 228](https://github.com/huijoohwee/agentic-commerce-os/pull/228), source `ae899b3bf510b9880f86cecd64b6a0c50dc49b5a`, run `42321488862`, job `128246846390`. Native completion receipts prove merge, sync and recoverable task cleanup. Canonical Graph is `b88c4ef3f44f94c4e50ab9b2c48d38b156adf298`; Commerce is `606e0927b5a4c0189c13e1e4150e501954d17f26`.
+
+Graph palette and legacy renderer controls now reuse one KTV React owner and the existing section-body spacing. Live Renderer readback measures 133 grid rows at 14px/20px; critical palette and Orbit speed have identical tracks, key/type/value X positions and row padding. Both use 8px block/12px inline section padding and the existing 8px field gap. At 390px the same body role and responsive tracks fit a 390px document. Eleven MainPanel tabs were exercised; tagged KTV rows use the shared body role. Floating-tab exploration did not reliably select every tab and is not proof of exhaustive tab parity.
+
+Canonical `npm run dev` verification observes Graph and Commerce original sticky table headers and 14px/20px body text, with 38px desktop and 54px narrow rows. Commerce uses bare `npm run dev`; Gantt replaces its workflow table (zero tables), then Review steps restores the same shared records. Local full browser checks cover mobile, offline, concurrent tabs, SME views, guide focus/close, 200% text and oversized glyphs; 239 unit tests pass. Base JS/CSS are 219205/19602 bytes; native Graph JS/CSS are 251906/73477 bytes, under the 500000-byte chunk cap. Exact source/input hashes and shared CSS joins are retained.
+
+Evidence is in `output/shared-body-ktv-20261107/`, including provider/native receipts, runtime identity, source joins, spacing/row JSON and screenshots. Fifteen pre-existing typography audit findings and the unchanged broad renderer-pipeline audit failure remain recorded; no new finding was introduced. This is bounded source/local readiness, not exhaustive visual parity or a new production activation. Graph/Commerce native delivery state remains separately pending. Roll back via the retained prior owner pins and rebuild the same artifacts; never add a consumer override or parallel renderer.
 
 ## 6. Risks and mitigations
 
