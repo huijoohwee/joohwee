@@ -1,7 +1,7 @@
 ---
 title: "SME Business Plan Workspace — E2E Pitch, Plan, and Financial Model"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "1.16.0"
+version: "1.17.0"
 date: "2026-11-07"
 lang: "en"
 owner: "Product Manager function"
@@ -11,11 +11,11 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 lifecycle_status: "in-progress"
-prd_revision: "1.16.0"
-tad_revision: "1.16.0"
-adr_revision: "1.16.0"
-mvp_revision: "1.16.0"
-gtm_revision: "1.16.0"
+prd_revision: "1.17.0"
+tad_revision: "1.17.0"
+adr_revision: "1.17.0"
+mvp_revision: "1.17.0"
+gtm_revision: "1.17.0"
 load_policy: "on-demand"
 source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@1.2.0; business-plan-guidelines.md@1.1.0; financial-model-guidelines.md@1.1.0; prd-tad-adr-mvp-gtm-venture.md@2.1.3"
 ---
@@ -24,9 +24,9 @@ source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@
 
 ## Document control
 
-Join key: `sme-business-pack@1.16.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
+Join key: `sme-business-pack@1.17.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
 
-- **Status:** the §1.8 acquisition review is released and verified in production at its retained source in §5.6. The §1.9 shared-schema review and native Gantt enhancement is merged, synced and verified locally; its separate source integration evidence is recorded in §5.8. Section 5.17 records the shared body/KTV adoption; section 5.16 records the shared row/toolbar geometry; section 5.15 retains the cross-surface scroll-owner verification; section 5.14 retains the earlier bounded-grid checkpoint; earlier source checkpoints are retained as history. No production activation or public-runtime readiness is claimed for §1.9. PRD, TAD, ADR, MVP, and GTM consume `sme-business-pack@1.16.0`.
+- **Status:** the §1.8 acquisition review is released and verified in production at its retained source in §5.6. The §1.9 shared-schema review and native Gantt enhancement is merged, synced and verified locally; its separate source integration evidence is recorded in §5.8. Section 5.18 records the shared opened-menu checkpoint; section 5.17 records the shared body/KTV adoption; section 5.16 records the shared row/toolbar geometry; section 5.15 retains the cross-surface scroll-owner verification; section 5.14 retains the earlier bounded-grid checkpoint; earlier source checkpoints are retained as history. No production activation or public-runtime readiness is claimed for §1.9. PRD, TAD, ADR, MVP, and GTM consume `sme-business-pack@1.17.0`.
 - **Audience:** people preparing or reviewing an early business or venture plan, including founders, operators, and advisers.
 - **Scope:** organize user-entered information into a twelve-role pitch outline, business-plan prompts, single-period arithmetic, and a neutral acquisition review from opportunity context through questions and handover preparation. Extend the existing takeover contract in the same table; retain the general plan. This is a planning workspace, with no transaction execution or complete guideline-conformance claim.
 - **No external source dependency:** the product neither searches nor fetches planning, market, pricing, company, or business data.
@@ -487,6 +487,16 @@ Canonical `npm run dev` verification observes Graph and Commerce original sticky
 
 Evidence is in `output/shared-body-ktv-20261107/`, including provider/native receipts, runtime identity, source joins, spacing/row JSON and screenshots. Fifteen pre-existing typography audit findings and the unchanged broad renderer-pipeline audit failure remain recorded; no new finding was introduced. This is bounded source/local readiness, not exhaustive visual parity or a new production activation. Graph/Commerce native delivery state remains separately pending. Roll back via the retained prior owner pins and rebuild the same artifacts; never add a consumer override or parallel renderer.
 
+### 5.18 Shared opened menus and inspection regressions (2026-11-07)
+
+The Design System remains the sole shared sizing/typography owner. Its shared-ui v0.6.0 profile is consumed through registry `754b9d79dbbb7e6e82a0acd9fd64877d187e150c`; the common CSS is 6502 bytes, SHA-256 `c5f812ba8ffe32927004bb4ed790e6382ac3d6ff77f7d378279eca7e854c2d8f`. Base owns one headless popup/keyboard/coordinator, native and React value adapters and shared SVG indicator geometry. Visible indicators are named SVG image targets; a native option renders a check only when selected, with no hidden decoration or generic div wrapper. The native form backing field remains nonvisual to avoid a duplicate accessible control. Graph retains only contract adapters and its host overlay geometry; Commerce initializes the standalone adapter once in its shell and standalone Program Pack. No second menu implementation, token inventory, workflow or persisted fact model is introduced.
+
+Base `66ffbfc70b74b7bf2763100f2e8e871e6678858c` restores centered SVG chevrons, pre-enhancement focus and observable menu events. Cancelled inspection gestures/clicks preserve the menu/value; normal outside gestures, Escape, keyboard/typeahead and selection retain their contracts. Central viewport bounds scroll long menus, and consumer layout rules preserve flex truncation of long labels. Graph integration `52a92e128be1243547bfed54aa4debc34613aa10` consumes the identical React owner at Base `f2eb1353d98f1ff041208a8c6c922c61fbb13cb2`; the native-only Base follow-up leaves that React module and table bundle byte-identical. Commerce integration `2f82ca059c21b3d23946bfffa62e5220dc650138` consumes the named native adapter and the exact clean Graph portable projection from `52a92e1`. Graph named toolbar icons are integrated at `a638ac791b9216bdbf3b31dad4e41a82c7702516` after [required gate 42368218260](https://github.com/huijoohwee/agentic-graph/actions/runs/42368218260); canonical WebMCP identity confirms that exact main revision. Commerce review `5caab0b92cd89cb02222ee03b945d1e99730b44a` removes conflicting action-button geometry and serves the same profile through the Program Pack static alias. [Required gate 42369073005](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/42369073005) is green; native END merges/syncs it as `1bde268147c147ab2903aba28695b6d62539796d` and retains recoverable cleanup receipts. Canonical bare npm run dev at `http://127.0.0.1:63194/agentic-commerce-os/#sme-workflow` serves exact source asset bytes and the same stylesheet/module under the Program Pack aliases.
+
+Graph final opened field/toolbar menus have no generic div wrappers or hidden decoration; named SVGs and choices pass hit-testing, and mobile toolbar options remain scrollable within the viewport. Commerce final canonical UI verifies all five visible dropdowns at 28px desktop and 48px mobile, 14px/20px body text, centered 12px SVGs and zero vertical offset. Its three Plan options pass hit-testing and selection; two options can be selected and restored to one without entering facts. A 390px viewport has 390px document width. Earlier exact source integrations retain their own green receipts. Base native checks and four Graph dropdown checks pass, including dynamic focus, SVG semantics, event observability and cancelled-gesture/value regressions. Commerce final review `5caab0b` has 239 passing local tests and fourteen passing browser checks across SME, Program Pack, Housing, drafts, offline reload, concurrency and privacy; SME journeys issue zero SME service calls. Base and Graph live indicators have zero vertical-center offset on 28px desktop and 48px mobile controls; final Graph/Commerce tabs report no console errors. The browser dropdown helper checks computed trigger geometry and typography against the central tokens on every exercised selection. The app's annotation picker is not exposed to permitted automation, so DOM targeting/regression checks do not claim an end-to-end annotation-app test.
+
+Evidence is retained in `output/shared-dropdown-menus-20261107/` with exact manifests, native/provider receipts, source joins, regression logs, geometry and screenshots. Base JS/menu/CSS are 228020/9316/23735 bytes; Graph JS/CSS/tokens are 261547/77240/7299 bytes. The increment stays within 78 tracked paths including this PRD, four new runtime modules, 8000-byte shared CSS and 500000-byte browser chunks. No new dependency, model/provider execution or production activation is selected. Preserve origin data and restore exact predecessor pins/assets together for rollback; earlier production and geometry checkpoints retain their own revision scope.
+
 ## 6. Risks and mitigations
 
 | Risk | Mitigation |
@@ -514,4 +524,5 @@ Evidence is in `output/shared-body-ktv-20261107/`, including provider/native rec
 | Live dictionary projection | `public/local-first/sme-pack-dictionary.js` |
 | Codebook and stable-key definitions | `docs/sme-business-pack-codebook-and-data-dictionary.md` |
 | Local/MCP/WebMCP adapter | `src/local-first/sme-business-pack.ts` and existing browser registration |
-| Grid and token reuse | Existing `agentic-base` adapter and generated Design System Commerce tokens |
+| Grid and token reuse | Existing `agentic-base` adapter and generated Design System Commerce/shared-ui tokens |
+| Opened menus, SVG indicators and inspection-event contracts | Base `packages/views-react/src/controls`; Graph contract adapters; native Commerce shell/Program Pack adoption |
