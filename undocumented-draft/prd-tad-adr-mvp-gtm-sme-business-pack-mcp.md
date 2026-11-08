@@ -1,7 +1,7 @@
 ---
 title: "SME Business Plan Workspace — E2E Pitch, Plan, and Financial Model"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "1.19.0"
+version: "1.20.0"
 date: "2026-11-08"
 lang: "en"
 owner: "Product Manager function"
@@ -11,11 +11,11 @@ delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: true
 lifecycle_status: "in-progress"
-prd_revision: "1.19.0"
-tad_revision: "1.19.0"
-adr_revision: "1.19.0"
-mvp_revision: "1.19.0"
-gtm_revision: "1.19.0"
+prd_revision: "1.20.0"
+tad_revision: "1.20.0"
+adr_revision: "1.20.0"
+mvp_revision: "1.20.0"
+gtm_revision: "1.20.0"
 load_policy: "on-demand"
 source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@1.2.0; business-plan-guidelines.md@1.1.0; financial-model-guidelines.md@1.1.0; prd-tad-adr-mvp-gtm-venture.md@2.1.3"
 ---
@@ -24,9 +24,9 @@ source_docs: "prd-tad-adr-mvp-gtm-guidelines.md@3.4.0; pitch-deck-guidelines.md@
 
 ## Document control
 
-Join key: `sme-business-pack@1.19.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
+Join key: `sme-business-pack@1.20.0`. This document is the sole current product, architecture, decision, MVP, and go-to-market contract for the SME planning workspace. It defines two selectable plan contracts inside one E2E workflow: a general business plan and an SME takeover checker. Both use one versioned protocol interface, tool registry, table, editor, evidence model, and worksheet flow; their declared fields and calculation models remain contract-owned. There are no duplicate workflow variants or parallel registries. Pitch, plan, and model requirements are consumed from the exact shared guideline revisions in `source_docs`; this PRD and the live schema link to those owners and report MVP support without copying their taxonomies or creating a second rules registry.
 
-- **Status:** the §1.8 acquisition review is released and verified in production at its retained source in §5.6. The §1.9 shared-schema review and native Gantt enhancement is merged, synced and verified locally; its separate source integration evidence is recorded in §5.8. Section 5.19 records central token ownership and its source/local verification; section 5.18 records the shared opened-menu checkpoint; section 5.17 records the shared body/KTV adoption; section 5.16 records the shared row/toolbar geometry; section 5.15 retains the cross-surface scroll-owner verification; section 5.14 retains the earlier bounded-grid checkpoint; earlier source checkpoints are retained as history. No production activation or public-runtime readiness is claimed for §1.9. PRD, TAD, ADR, MVP, and GTM consume `sme-business-pack@1.19.0`.
+- **Status:** the §1.8 acquisition review is released and verified in production at its retained source in §5.6. The §1.9 shared-schema review and native Gantt enhancement is merged, synced and verified locally; its separate source integration evidence is recorded in §5.8. Section 5.20 records central icon/KTV ownership and exact source/local verification; section 5.19 retains the preceding central token checkpoint; section 5.18 records the shared opened-menu checkpoint; section 5.17 records the shared body/KTV adoption; section 5.16 records the shared row/toolbar geometry; section 5.15 retains the cross-surface scroll-owner verification; section 5.14 retains the earlier bounded-grid checkpoint; earlier source checkpoints are retained as history. No production activation or public-runtime readiness is claimed for §1.9. PRD, TAD, ADR, MVP, and GTM consume `sme-business-pack@1.20.0`.
 - **Audience:** people preparing or reviewing an early business or venture plan, including founders, operators, and advisers.
 - **Scope:** organize user-entered information into a twelve-role pitch outline, business-plan prompts, single-period arithmetic, and a neutral acquisition review from opportunity context through questions and handover preparation. Extend the existing takeover contract in the same table; retain the general plan. This is a planning workspace, with no transaction execution or complete guideline-conformance claim.
 - **No external source dependency:** the product neither searches nor fetches planning, market, pricing, company, or business data.
@@ -515,6 +515,20 @@ Canonical bare `npm run dev` runs Design System at `http://127.0.0.1:4173/`, Bas
 
 Evidence is retained in `output/central-token-*`: exact source/profile/input/output hashes, provider/native receipts, budget/test logs and desktop/mobile observations. Native annotation-picker selection remains outside permitted automation; semantic DOM/hit-testing and intercepted event tests are bounded evidence only. No Production activation, paid service, external font, provider/model execution or data migration is selected. Roll back by restoring the predecessor owner pins and generated assets together, then rebuilding the same native surfaces; retain IndexedDB and user records. This checkpoint establishes the recorded source/local behavior, not exhaustive cross-repository parity or public-runtime readiness.
 
+### 5.20 Shared icon library and KTV row owner (2026-11-08)
+
+ADR-025/MVP-34 uses the approved existing `agentic-design-system` as the sole editable token and icon-artwork owner. Its shared-ui profile retains the same 23 token values and 205 unique registry keys; one generated KTV layout consumes the existing tracks, 8px gap, 4px block row spacing, responsive breakpoint and 14px/20px body role. The 61-glyph Lucide 0.562.0 library is validated as safe, unique SVG data with license/provenance and an exact digest. Base owns one semantic KTV renderer; Graph retains contract adapters and semantic icon aliases rather than a second grid, artwork inventory or numeric override. Named SVG Type cells remain visible and hit-testable. Palette, renderer selects/numbers/toggles, range controls and the existing Help Icon Library consume these owners.
+
+[Design System PR19](https://github.com/huijoohwee/agentic-design-system/pull/19), candidate `dcb183ea6f7f040bcf25cd31f2867acb97857de5`, integrates at `49c0016b2a7f1e3d67cd6ef6616b6e72a2b76aee`. Central icon JSON is 12805 bytes, SHA-256 `52ab0c590ab71329f16d101e493f8dc21c455c918d52431c790a1477fcb357a1`; the shared CSS is 7560 bytes, SHA-256 `eef7e110f89035a1aefac4a503eb994c830241e7eb57481ed50960af951c7044`. [Base PR47](https://github.com/huijoohwee/agentic-base/pull/47) adopts these exact projections. Its ESM correction [PR48](https://github.com/huijoohwee/agentic-base/pull/48), candidate `d6f520366ef6b825858c6217261ee87268f2fecb`, integrates at `cfe3f1c4ef0e80b8fad0d4e5b84cd16d7f79ba77`; explicit NodeNext extensions/JSON import attributes fix the actual Graph consumer build. Both Graph root and Canvas resolve one exact Base installation. Generated Base JS/menu/CSS remain byte-identical across the ESM correction: 240210/21008/24762 bytes; input count increases from 22 to 24 only for central icon data and its pin. Full Base checks, NodeNext consumption and semantic KTV rendering checks pass. Native completion receipts prove source merge/sync/recoverable closure for Design System and both Base increments.
+
+[Graph PR1910](https://github.com/huijoohwee/agentic-graph/pull/1910), exact candidate `32e3bda6ae19d5c13597ca6185e98add8aa23f80`, passes [protected gate 42430914436](https://github.com/huijoohwee/agentic-graph/actions/runs/42430914436), including docs-contract and Integration Gate, and integrates at `aa6d50213eacd543e3bb96e148f74d69fab65590`. The native successor retains PR1239/1240 history and recovery refs. Canvas TypeScript/runtime checks, five icon-profile checks, Pages build and unchanged chunk/hygiene guards pass. The focused legacy audit improves from one to two passing cases out of four; two pre-existing source-structure assertions remain failing, so exhaustive legacy parity is not claimed. Portable Graph JS/CSS/tokens are 278751/78862/8563 bytes with 115 inputs under the unchanged 128-input and 500000-byte portable chunk limits. No application chunk budget is raised and no new runtime JavaScript module is introduced.
+
+[Commerce PR235](https://github.com/huijoohwee/agentic-commerce-os/pull/235), exact candidate `e068bbe5af65965b40300eb1eb212830a5fd69fe`, consumes the clean Graph candidate and exact Base canonical source above. Its complete local suite passes 239 tests and fourteen browser journeys; [protected gate 42431487869](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/42431487869) passes and the source integrates at `4b5d29881081cb31b19114ee002a2c7fc3ec8aa6`. Native completion proves merge/sync/recoverable closure for both Graph and Commerce. Graph's previous checkout/registration are quarantined with bytes, branches, objects and recovery refs retained; the earlier historical missing-checkout marker is not evidence of recovered missing bytes. Both native delivery states remain separately pending because this increment selects source/local verification only.
+
+Canonical bare `npm run dev` serves Design System at `http://127.0.0.1:4173/`, Base at `http://127.0.0.1:4174/`, Graph at `http://127.0.0.1:5173/` and Commerce at `http://127.0.0.1:62360/agentic-commerce-os/#sme-workflow`. Graph's read-only runtime identity reports main at the exact merged revision above. JSON markdown mode, palette idea, Render Mode, Viewport Controls and Arrow Length all measure identical desktop tracks (176/32/154px), cell X positions (944/1128/1168), 8px gap, 4px/0 row padding and 14px/20px typography. Type cells contain named Text/Color/Number SVGs without aria-hidden; the range Type icon passes a visible hit-test while its value remains 8. At 390px the checked rows use 292/32px tracks and span Value across the next line. Graph/Commerce controls and menu options measure 28px desktop and 48px mobile, with zero chevron center offset, semantic menu/SVG hit targets and 390px document width. All seven served Commerce Base/Graph/menu/shared-CSS assets equal canonical bytes. The central catalog renders 61 semantic KTV/icon rows after normal reload. Base retains revision5/three records, 38px/54px rows and the same body/control roles. No Graph/Commerce console errors are observed in this session; viewport overrides are cleared.
+
+Evidence is retained in `output/shared-ktv-icons-*`: exact inputs/pins/output hashes, red/green checks, native/provider receipts, runtime identity, geometry JSON and screenshots. The native annotation picker remains outside permitted automation; named semantic SVG/menu hit-tests and the retained intercepted-event checks establish bounded tooling evidence. No paid service, Production activation, external font, provider/model execution, factual business input or data migration is selected. Restore predecessor owner pins and generated assets together for rollback, retaining IndexedDB/user records. This is verified source/local behavior for the named surfaces, not exhaustive cross-repository parity or public-runtime readiness.
+
 ## 6. Risks and mitigations
 
 | Risk | Mitigation |
@@ -544,3 +558,4 @@ Evidence is retained in `output/central-token-*`: exact source/profile/input/out
 | Local/MCP/WebMCP adapter | `src/local-first/sme-business-pack.ts` and existing browser registration |
 | Grid and token reuse | Existing `agentic-base` adapter and generated Design System Commerce/shared-ui tokens |
 | Opened menus, SVG indicators and inspection-event contracts | Base `packages/views-react/src/controls`; Graph contract adapters; native Commerce shell/Program Pack adoption |
+| Shared icon artwork and semantic KTV rows | Design System `site/icons.json` and generated shared-ui CSS; Base controls renderer; Graph contract adapters; exact Commerce artifacts |
