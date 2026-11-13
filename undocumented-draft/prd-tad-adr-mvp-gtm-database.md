@@ -1,13 +1,13 @@
 ---
 title: "Native Listing Entry Management — PRD, TAD, ADR, MVP, GTM"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.9.0"
-revision: "0.9.0"
-prd_revision: "0.9.0"
-tad_revision: "0.9.0"
-adr_revision: "0.9.0"
-mvp_revision: "0.9.0"
-gtm_revision: "0.9.0"
+version: "0.9.1"
+revision: "0.9.1"
+prd_revision: "0.9.1"
+tad_revision: "0.9.1"
+adr_revision: "0.9.1"
+mvp_revision: "0.9.1"
+gtm_revision: "0.9.1"
 date: "2026-11-14"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -24,7 +24,7 @@ lifecycle_status: "active"
 
 # Native listing entry management
 
-Join: **`listing-db-admin@0.9.0`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
+Join: **`listing-db-admin@0.9.1`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
 
 Revision 0.4.0 proposed a new file-backed admin without inspecting the native runtime. That proposal is superseded by the grounding below. Existing browser storage is the MVP master; a file is a portable export, never an independently writable replica. A reviewed file-backed or relational master remains a triggered later decision. No new CMS, store, registry, provider or UI variant is authorized by this document.
 
@@ -35,7 +35,7 @@ Revision 0.4.0 proposed a new file-backed admin without inspecting the native ru
 | Product owner | Existing Commerce offer workspace; parent `edge-commerce-agent-mvp` and its native workspace companion retain launch, checkout and deployment ownership |
 | Local readiness | `runtime-ready` for the eight current listing MVP criteria; exact source contract and browser evidence below. Future database/migration criteria remain deferred |
 | Delivery readiness | `production-verified` for the private listing MVP only: approved native live run `43469342102`, exact source/artifact/version and delivered browser checks. This does not promote the full Commerce platform |
-| Baseline | Current integrated Commerce `acaae50534077ec0890c6597ed2966c0b8257604`, observed 2026-11-13; listing PR #271, shared UI PR #272 and release-verification PR #273 are merged |
+| Baseline | Deployed listing source `acaae50534077ec0890c6597ed2966c0b8257604`; listing PR #271, shared UI PR #272 and verification PR #273 are merged. Later workflow/evidence-only source integration does not change this runtime identity |
 | Directive | User authorizes native CRUD enhancement, shared utility reuse, draft update and live UI verification; a new lane is explicitly authorized |
 | Execution | Document lane readmitted for this follow-through. Native `reap` proves original listing integration; both product PRs have successful required Integration Gate receipts. All three trial cohorts selected by the user; autonomous fictional filling is authorized |
 | Spend | USD 0; no packages, paid plans, addons, overages or external runtime dependency |
@@ -218,7 +218,7 @@ Local runtime uses already-installed FOSS/browser facilities and performs no mod
 | Local verification | Focused contracts, live UI with viewport/offline/revision/backup checks; record candidate and results | Verification candidate passes 261 local tests, sandbox browser suite and live fixture with the listing drill; required Integration Gate run `43451729752` succeeds. Earlier 21+1 Podman proof retains its own source subject. Terminal independent evidence remains blocked |
 | Protected source integration | Existing land/required-check/review path; exact green Integration Gate and authorized merge | Product PR #271 / run `43415437428`, PR #272 / run `43429811617`; planning PR #37 merged as `4e3d9a94aafc89bdd5e818a9a91a9bb6f1503821`, with successful check `43444394839` |
 | Delivery | Existing Commerce release controller, exact-candidate promotion instruction, cost proof and rollback disposition | Workers Free plan, headroom and fail-closed route observed. Approved live run `43466875649` refuses before deployment because the reader is not active. Separately approved reader run `43468250552` then deploys the listing source successfully. Final live run `43469342102` succeeds after its separate provider-recorded owner approval; new checkout sales are restored. Exact completion and live proof are retained below. Full-platform evaluation stays separate |
-| Cleanup/sync | Exact target/effect authority and independent receipts | Planning PR #37 synced and its lane quarantined by native receipts. Original listing lane also closed with recoverable quarantine; source refs and objects retained. Product delivery succeeds in run `43469342102`; bound ledger source closeout is tracked in the final handover below |
+| Cleanup/sync | Exact target/effect authority and independent receipts | Planning PR #37 synced and its lane quarantined by native receipts. Original listing lane also closed with recoverable quarantine; source refs and objects retained. Product delivery succeeds in run `43469342102`; native delivery status for both listing and verification lanes is now complete/deployed; final evidence-source closeout is recorded below |
 
 Rollback source via reviewed revert using the existing release owner. Preserve all browser records and a full export before downgrading; old clients may reject listing-aware records. Do not erase fields to make an old reader pass. A future schema downgrade needs a lossless tested conversion and its own authorization. Production rollback uses the existing Commerce deployment runbook and predecessor artifact; source rollback is separate.
 
@@ -397,4 +397,19 @@ Evidence: `.workspace/.artifacts/listing-cost-proof-20261114/final-live-native-r
 
 **Next bounded action.** Product operator conducts one consenting human usability trial with the existing fictional brief, recording actual time, help and confusing fields. Real owner/agent and broker tracks need each participant's name/channel and consented record before outreach; then capture willingness to pay, acceptance and actual payment separately. The prepared USD 1 invitations remain unsent. The existing SGD 8 live offer is unchanged and does not prove a USD 1 pilot sale. Independent full-platform evaluation/lifecycle migration stays with its evaluator/source owners, rechecked on actual supplied evidence; future shared-write work triggers its separate ADR and migration VCCs.
 
-Final follow-through bound: 20 active minutes plus required CI waits; ≤8 KiB draft delta, two Commerce evidence/control paths, zero runtime modules, packages, credentials, plan changes or always-load bytes. Reuse the exact 261-test and release receipts; only the previously missing four-way search acceptance is newly exercised. Model/token cost and human value remain unmeasured. Source merge, canonical sync and recoverable cleanup retain native receipts separately from production delivery.
+Final follow-through bound: 20 active minutes plus required CI waits; ≤8 KiB draft delta, three Commerce workflow/evidence/control paths after the bounded CI correction below, zero runtime modules, packages, credentials, plan changes or always-load bytes. Reuse the exact 261-test and release receipts; only the previously missing four-way search acceptance is newly exercised. Model/token cost and human value remain unmeasured. Source merge, canonical sync and recoverable cleanup retain native receipts separately from production delivery.
+
+
+## Source and coordination closeout 0.9.1 — 2026-11-14 SGT
+
+This revision changes evidence and CI closeout only. All eight current MVP criteria, native owners and deployed source/artifact remain identical to 0.9.0; its immutable report and runtime receipts retain that exact subject. PRD/TAD/ADR/MVP/GTM continue to join at `listing-db-admin@0.9.1`, inheriting the unchanged acceptance evidence explicitly rather than relabelling old receipts.
+
+Commerce [PR #274](https://github.com/huijoohwee/agentic-commerce-os/pull/274), final candidate `6153bee75e15db28c5ebbe8f67f9b1589ab4b27a`, merges as `e1b98d217d0748cba492373bfa393f3e8c73b373` after successful required [Integration Gate 43524463667](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/43524463667). Native merge, canonical sync and recoverable quarantine all complete. Native completion status now reports the original listing and verification lanes **complete / deployed**, with no delivery disposition error.
+
+The first evidence candidate had two CI failures after all functional checks, including 21 browser tests and one Dev paid-loop, passed. Ubuntu 26.04 rootless Podman failed network cleanup with permission denied. The [confirmed runner-image issue](https://github.com/actions/runner-images/issues/15182) matches the observed image/error. The existing Integration workflow is pinned to supported standard `ubuntu-24.04`; its complete check set and cleanup assertions then pass. Isolation, cleanup failures and required proof remain enforced. This is an authorized CI repair in the existing owner, not a product runtime change. Refresh bound: ten additional active minutes plus required CI waits, one existing workflow path, less than 2 KiB workflow/report correction and zero new runtime modules/packages/paid resources.
+
+The report's exact changed paths — `.github/workflows/ci.yml`, `.agentic-os-delivery-dispositions.json` and `docs/reports/listing-entry-production-20261114.json` — are excluded from the product artifact. [PR #275](https://github.com/huijoohwee/agentic-commerce-os/pull/275) records that source-only no-deploy disposition in the existing control ledger. Candidate `c09376843bed64f2a9ec25b4a2996dcbd51cfdb2` passes required [Integration Gate 43526004681](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/43526004681) and merges as `5a313772cebd42a3f7d2a14c5cd0f437120f57e5`. Native merge, canonical sync and recoverable cleanup complete. Final native status reports all four Commerce lanes complete: original listing and verifier deployed; evidence and control-only closeout no-deploy; all delivery disposition errors null and all cleanup checks true. The deployed Worker remains source `acaae50534077ec0890c6597ed2966c0b8257604`.
+
+**Remaining coordination blocker.** The required immutable shared-workspace TODO successor is prepared, but native admission to `github.com/huijoohwee/.workspace` refuses with `blocked-repository-trust-missing`: repository trust anchor is missing. No tracked workspace record or board projection is edited, and no trust is synthesized. Its existing trust operator must supply the operator-owned anchor through the provisioning owner; recheck native admission on that event, then apply the prepared Context and regenerate the board. Exact blocker and prepared payload: `.workspace/.artifacts/listing-cost-proof-20261114/workspace-handover-blocker.json` and `workspace-context-payload.md`. This remains an open administrative handover, separate from the verified listing runtime.
+
+The unrelated untracked `undocumented-draft/business-ratios.md` remains untouched. Planning canonical HEAD and origin/main match after sync; the repository-wide clean diagnostic remains false solely because that pre-existing untracked draft is preserved. No full-platform evaluator, real participant consent, human feedback, acceptance or payment is manufactured by source closeout. Next product action remains the consenting human trial described above; next coordination action is the existing workspace trust owner supplying its anchor.
