@@ -1,13 +1,13 @@
 ---
 title: "Native Listing Entry Management — PRD, TAD, ADR, MVP, GTM"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.5.0"
-revision: "0.5.0"
-prd_revision: "0.5.0"
-tad_revision: "0.5.0"
-adr_revision: "0.5.0"
-mvp_revision: "0.5.0"
-gtm_revision: "0.5.0"
+version: "0.6.0"
+revision: "0.6.0"
+prd_revision: "0.6.0"
+tad_revision: "0.6.0"
+adr_revision: "0.6.0"
+mvp_revision: "0.6.0"
+gtm_revision: "0.6.0"
 date: "2026-11-13"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -24,7 +24,7 @@ lifecycle_status: "proposed"
 
 # Native listing entry management
 
-Join: **`listing-db-admin@0.5.0`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
+Join: **`listing-db-admin@0.6.0`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
 
 Revision 0.4.0 proposed a new file-backed admin without inspecting the native runtime. That proposal is superseded by the grounding below. Existing browser storage is the MVP master; a file is a portable export, never an independently writable replica. A reviewed file-backed or relational master remains a triggered later decision. No new CMS, store, registry, provider or UI variant is authorized by this document.
 
@@ -35,9 +35,9 @@ Revision 0.4.0 proposed a new file-backed admin without inspecting the native ru
 | Product owner | Existing Commerce offer workspace; parent `edge-commerce-agent-mvp` and its native workspace companion retain launch, checkout and deployment ownership |
 | Local readiness | `dev-proven` for the bounded native listing slice; local browser/contract results are recorded below; future migration conditions remain deferred |
 | Delivery readiness | `undocumented`; source inspection and local preview do not establish delivery |
-| Baseline | Commerce `ac61bee799e223fcf24e0418305a09db693c1f6e`, inspected 2026-11-13; refresh changed paths at the admitted candidate |
+| Baseline | Current integrated Commerce `48c2729e8c8bde4d16259e20faa9d08026a2d8fc`, observed 2026-11-13; original listing candidate `42f118e` merged as PR #271, shared UI source followed as PR #272 |
 | Directive | User authorizes native CRUD enhancement, shared utility reuse, draft update and live UI verification; a new lane is explicitly authorized |
-| Execution | START admitted the document lane and the explicitly authorized new Commerce lane; four exact reservation-release receipts preserve the existing shared UI lane |
+| Execution | Document lane readmitted for this follow-through. Native `reap` proves original listing integration; both product PRs have successful required Integration Gate receipts. All three trial cohorts selected by the user; autonomous fictional filling is authorized |
 | Spend | USD 0; no packages, paid plans, addons, overages or external runtime dependency |
 | Provenance | External reading informs generic management behavior only; no reference code, assets, schema, prose, branding or dependency enters the product |
 
@@ -214,10 +214,10 @@ Local runtime uses already-installed FOSS/browser facilities and performs no mod
 
 | Effect | Required evidence and authority | Current state |
 |---|---|---|
-| Local source work | START reservation; exact files; preserved existing edits | New code lane admitted; clean local candidate `42f118e1192733e5bba6869350d08f3c2de47441`; no remote publication |
-| Local verification | Focused contracts, live UI with viewport/offline/revision/backup checks; record candidate and results | Browser drill and focused tests pass; final repository gate result below |
-| Protected source integration | Existing land/required-check/review path; exact green Integration Gate and authorized merge | Pending; local checks do not replace it |
-| Delivery | Existing Commerce release controller, exact-candidate promotion instruction, cost proof and rollback disposition | Closed; not implied by this enhancement request |
+| Local source work | START reservation; exact files; preserved existing edits | Listing PR #271 merged as `76cc38cf12ed965c2c2859f4ba1116677796f019`; current source includes shared UI PR #272 at `48c2729e8c8bde4d16259e20faa9d08026a2d8fc` |
+| Local verification | Focused contracts, live UI with viewport/offline/revision/backup checks; record candidate and results | Original 257 local tests pass; current integrated listing drill and actual Podman browser suite pass. Terminal independent evidence remains blocked |
+| Protected source integration | Existing land/required-check/review path; exact green Integration Gate and authorized merge | Verified for product source: PR #271 / run `43415437428`; PR #272 / run `43429811617`; document publication is a separate effect |
+| Delivery | Existing Commerce release controller, exact-candidate promotion instruction, cost proof and rollback disposition | Preparation recorded; production baseline returns 503 / fulfillment unavailable, independent evaluator missing, and exact profile/cost/approval/rollback prerequisites remain unbound |
 | Cleanup/sync | Exact target/effect authority and independent receipts | No inferred cleanup or canonical overwrite |
 
 Rollback source via reviewed revert using the existing release owner. Preserve all browser records and a full export before downgrading; old clients may reject listing-aware records. Do not erase fields to make an old reader pass. A future schema downgrade needs a lossless tested conversion and its own authorization. Production rollback uses the existing Commerce deployment runbook and predecessor artifact; source rollback is separate.
@@ -233,7 +233,7 @@ Rollback source via reviewed revert using the existing release owner. Preserve a
 | G-05 closed for source inspection | Native store/editor/table/shared contracts inspected; implementation and browser evidence remain distinct |
 | G-06 open | Independent evaluator verdict absent; no independent approval claim |
 | G-07 open | Legal/privacy reviewer for future published business data unassigned; no reference content imported or published |
-| G-08 closed for local admission | Four native exact-path releases, distinct listing lane and clean local candidate; committed peer merge preview has no conflicts. Pending shared UI dirty edits retain their original owner |
+| G-08 closed for product source | Exact handoffs preserved authored work; PR #271 and shared UI PR #272 are merged with green required checks. No duplicate UI or listing store was introduced |
 
 ### Planning record and handover
 
@@ -245,11 +245,11 @@ Rollback source via reviewed revert using the existing release owner. Preserve a
 | T-04 PRD-ADM-01/PUB-01 ↔ native invocation/launch owners ↔ ADR-005 | Shared read-only tools and review exist → prevent accidental publication → retain allowlists and exclude archived drafts | Commerce owner; privacy and launch refusal checks |
 | T-05 PRD-DBR-01/02/MIG-01 ↔ future adapter ↔ ADR-003 | No shared-writing need validated → defer new infrastructure → reopen only on named trigger | Product owner; new scoped plan and migration evidence |
 
-Revision 0.5.0 replaces the ungrounded greenfield/file-master proposal with inspected native owners, measurable local acceptance, a shared utility reuse map, explicit future-store boundaries and a first-dollar experiment. Historical v0.4.0 intent remains in the prior authored bytes; no previous implementation or evaluator receipt is invented. Next action: complete the existing required source/evidence gate, then request only the exact uncovered release effect; no publication or deployment is inferred from local proof. No parallel product document or variant is introduced.
+Revision 0.5.0 replaces the ungrounded greenfield/file-master proposal with inspected native owners, measurable local acceptance, a shared utility reuse map, explicit future-store boundaries and a first-dollar experiment. Historical v0.4.0 intent remains in the prior authored bytes; no previous implementation or evaluator receipt is invented. Next action: collect real participant/consent and acceptance evidence using the prepared three-track packet; obtain independent evaluator and production prerequisite receipts before any live promotion. No parallel product document or variant is introduced.
 
 ## Local implementation evidence — 2026-11-13
 
-Candidate: Commerce `42f118e1192733e5bba6869350d08f3c2de47441`, branch `agent/device-0232231d4a19/listing-entry-management`, worktree `.worktrees/agentic-commerce-os/device-0232231d4a19--listing-entry-management`. Prior shared UI work remains at `d4eb1ccb036d2af01b04c8e4d78a1fcc4bf551bb` with its dirty files untouched. Native scope-release receipts cover only `app.js`, `index.html`, `workspace.js` and `workspace-graph.js`. A read-only committed-peer merge preview passes with no conflict; it does not certify future dirty edits or grant integration authority.
+Candidate: Commerce `42f118e1192733e5bba6869350d08f3c2de47441`, branch `agent/device-0232231d4a19/listing-entry-management`, worktree `.worktrees/agentic-commerce-os/device-0232231d4a19--listing-entry-management`. At the original source cut, shared UI work was preserved at `d4eb1ccb036d2af01b04c8e4d78a1fcc4bf551bb` with its dirty files untouched; the later integrated source disposition is recorded below. Native scope-release receipts cover only `app.js`, `index.html`, `workspace.js` and `workspace-graph.js`. A read-only committed-peer merge preview passes with no conflict; it does not certify future dirty edits or grant integration authority.
 
 | Evidence reference | Observed result / subject | Limits |
 |---|---|---|
@@ -261,4 +261,59 @@ Candidate: Commerce `42f118e1192733e5bba6869350d08f3c2de47441`, branch `agent/de
 
 **ER-REPO-01 — exact candidate repository check.** `npm run check` ran against clean `42f118e1192733e5bba6869350d08f3c2de47441`. ADLC, evidence-contract and TypeScript pass. The named stage passes 52 admission tests, all 257 local tests, all existing local browser journeys (including offline, review, merchant export, imports, checkout fixture, program pack, Housing and durable listing), shared owner/bundle/line checks, source guards and task bounds. It then fails at the separate container browser preflight: `podman_workerd_override_required:see docs/container-runtime.md`. Podman is installed; `MINIFLARE_WORKERD_PATH` is unset and no matching verified binary receipt was selected. No bundled binary substitution, machine provisioning, threshold relaxation or external runtime execution was attempted. The terminal `check:evidence` stage was not reached. This is a blocked full gate, not green integration or production proof. Recheck condition: provide the documented matching-platform compatible binary with verified build/checksum evidence, then rerun the owning browser gate and terminal evidence gate for the same candidate.
 
-Protected integration, independent evaluator evidence, authority, deployment and cleanup remain pending. Local source work and this draft update are complete; no new approval is needed for the work already covered. Evidence root: `.workspace/.artifacts/listing-entry-management/42f118e/` relative to the shared GitHub workspace; contains exact candidate manifest, browser result, desktop/mobile images and gate output. Serving tokens are zero for this deterministic local slice; model usage, user value, operator time saving and first-dollar demand remain unmeasured. The local preview is stopped after verification. Keep the full v4 backup before downgrade; retain both existing lanes until their owners authorize source integration and cleanup.
+At that original cut, protected integration, independent evaluator evidence, authority, deployment and cleanup remained pending. The follow-through below supersedes that source-integration and runtime-blocker status only. Local source work and this draft update are complete; no new approval is needed for the work already covered. Evidence root: `.workspace/.artifacts/listing-entry-management/42f118e/` relative to the shared GitHub workspace; contains exact candidate manifest, browser result, desktop/mobile images and gate output. Serving tokens are zero for this deterministic local slice; model usage, user value, operator time saving and first-dollar demand remain unmeasured. The local preview is stopped after verification. Keep the full v4 backup before downgrade; retain both existing lanes until their owners authorize source integration and cleanup.
+
+
+## Follow-through 0.6.0 — selected three-track pilot
+
+User directive: IMPLEMENT recommendations; prepare **all three** tracks (self + fictional listing; known owner/agent + consented listing; broker + consented intake), then autonomously fill the exercise. This authorizes fictional local records and preparation. It does not supply a real participant identity, consent, delivered acceptance, payment receipt, independent issuer, or exact production approval. Those remain null until observed. No additional UI, database, package, payment integration or deployment controller is introduced.
+
+### Current source and runtime receipts
+
+| Reference | Exact observed result | Disposition / recheck |
+|---|---|---|
+| ER-FOLLOW-01 source | [PR #271](https://github.com/huijoohwee/agentic-commerce-os/pull/271) merged original candidate `42f118e` as `76cc38cf12ed965c2c2859f4ba1116677796f019`; required [run 43415437428](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/43415437428) succeeds. Native `npm run reap -- --ref=agent/device-0232231d4a19/listing-entry-management` proves historical full-tree match | Product source integration complete; cleanup retains its own authority and receipts |
+| ER-FOLLOW-02 shared source | [PR #272](https://github.com/huijoohwee/agentic-commerce-os/pull/272) merged shared UI source as current `48c2729e8c8bde4d16259e20faa9d08026a2d8fc`; required [run 43429811617](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/43429811617) succeeds. Current consumed Base pin is `cb192c70b8cd1249b117b26dc594aae196c84c07`; Graph pin is `feb64049be0f26ca653a9e3e35803868089c1c63` | Reuse current pinned owners; no inherited alternative code or repeat source PR |
+| ER-FOLLOW-03 compatible runtime | Existing Darwin arm64 binary reused. Release `podman-649aa72a91e4`, source `649aa72a91e4ba3590758ef5632c6486e271fb82`; archive SHA-256 `28c0ddc9c663680f14deedcedea2b5cc838c8e52bf38db55e8b937346a72991d`; executable SHA-256 `0d9f91f3eb904c8a857867bd114f3224006235f51490b8c83c5ba669a6529ec3`. Local archive and verification-receipt digests match the release asset metadata; embedded build receipt matches binary/source/platform | Local runtime selection is now verified. `MINIFLARE_WORKERD_PATH` is command-scoped; no package pin or global shell setting changed |
+| ER-FOLLOW-04 actual browser | On current integrated source, the existing rootless 2-CPU/4-GiB Podman machine and verified override run `npm run check:browser`: 21 mobile browser tests and one local Dev settlement/markup test pass; native sidecar cleanup and lock-release proofs pass. The owned machine is stopped afterward | Clears the former `podman_workerd_override_required` blocker for this observed run. Settlement is a local test mechanism, not collected revenue |
+| ER-FOLLOW-05 listing browser | Existing standalone listing drill exits 0 on clean current source at 1280/360 px: strict errors, reload, stale tab, search, archive/restore, offline editing, JSON roundtrip, atomic conflicts, duplicate-source race and storage-denied recovery; zero page errors | Reuses current integrated modules and native export/import |
+| ER-FOLLOW-06 terminal evidence | `npm run check:evidence` fails `evidence_runtime_context_incomplete`: dispatch trust anchor, trusted Git executable, Canvas root and isolated executor inputs missing; enrolled issuer count 0 | External-evaluator blocker. Recheck after independently enrolled issuer/anchor and the four named inputs exist; no self-issued verdict or invented key |
+| ER-FOLLOW-07 production readback | Public readiness returns HTTP 503, source `cb65b1d6e9715e6fb57b8a63bf9e6181ffa397e1`, Worker version `7cb557cb-a4b6-4c06-9de6-121bb9765962`, checkout `live`, fulfillment `unavailable`. Last observed successful release run is `43027350138` | Preserve the existing checkout profile. Native owner must restore/verify the fulfillment baseline; exact USD 0 effect proof, profile/webhook/reader selection, owner approval and rollback evidence are still required before promotion |
+
+Follow-through evidence root, relative to the shared GitHub workspace: `.workspace/.artifacts/listing-follow-through-20261113/`. Files: `runtime-verification.json`, `local-runtime-session.json`, `browser-current.log`, `terminal-evidence.log`, `pr-271.json`, `pr-272.json`, `release-plan.json`, and `listing-browser/result.json`. The release plan binds current source artifact digest `8dec22a4e43684abe6216a92bbbac7fcc0e8659ef370505f5a966fa90ac9e24f` for preparation only; it is not a deployable live-profile approval.
+
+### One operator workflow, three tracks
+
+All tracks consume the same existing editor, strict listing contract and v4 export. Country/category, asking amount and USD 1 service fee retain separate meanings. All demo records are explicitly fictional; no reference listing or real seller details are imported.
+
+| Track / selected participant class | Prepared input and handoff | Evidence still needed |
+|---|---|---|
+| SELF — user delegates fictional exercise to Codex | `fictional-listing-v4.json`; actual filled/restored result `autonomous-trial-v4.json` | Human ease-of-use and preference remain unobserved; an agent run cannot grade a human trial |
+| OWNER — known owner or agent | Fictional owner intake in `owner-broker-demo-v4.json`, complete USD 1 invitation and consent/acceptance fields in `operator-pilot-packet.json` | Named participant/channel, authority to share the chosen listing, allowed fields/recipient, delivery acceptance and real payment reference |
+| BROKER — business broker | Fictional broker intake in the same demo file; broker-specific invitation in the same packet | Named participant/channel and consented intake, acceptance, time saved, repeat-use interest and real payment reference |
+
+`all-three-tracks-v4.json` is the portable three-entry handoff. `operator-pilot-packet.json` is a preparation/observation input to the existing parent first-dollar owner, **not** a new registry, CRM, payment ledger or competing product variant. Human measurements and consent/payment fields remain null. Never turn fictional sample figures or a local settlement test into customer evidence.
+
+### Completed autonomous exercise and operator instructions
+
+Observed autonomous run on current source: **160 seconds**, 9 tasks completed — create, reject negative rent, edit, search by region, archive, find archived, restore, export and unchanged reimport. Same record ID and creation time survive restoration; saved revision becomes 4; unchanged import adds 0 records. Unknown revenue stays null, zero staff stays 0, and monthly profit/loss remains -SGD 500. Three stale browser-element/navigation retries are recorded as agent automation retries; they are not a measured human confusion score. `autonomous-trial-result.json` names performer `Codex`, `humanTrial: false`, buyer acceptance null and actual payment null. The five-minute target remains a human-trial hypothesis.
+
+For a real participant: (1) record permission and the permitted listing/fields/recipient; (2) start a timer when the brief is shown; (3) use the existing Offer editor and Listing facts, retaining unknowns; (4) correct one planted invalid rent, save/edit/search, archive/restore, then export/reimport; (5) record completion time, assistance, confusing fields, validation escapes and whether the resulting handoff is accepted. Keep the raw feedback. Supply independent human observations before assessing experience/maturity or claiming operator time savings.
+
+**Prepared USD 1 offer.** One private structured listing entry, a concise list of missing/inconsistent supplied facts, and a portable JSON handoff. Acceptance: recipient can reopen/find the entry and confirm agreed facts and unknowns were preserved. Scope is supplied-data preparation; no publication, seller verification, valuation, financial advice or introductions are promised. After acceptance, use an existing mutually agreed out-of-band payment method and record only amount/currency, acceptance note and receipt reference under the parent `ER-GTM-03`. Priced conversation and willingness to pay go to parent `ER-GTM-01/02`. No invitation has been sent, no customer accepted delivery, and no payment is claimed.
+
+**Owner/agent invitation, prepared:** “Would you try one private listing-preparation handoff using a listing you have permission to share? I will structure the supplied facts, flag missing information and provide a portable JSON file. If you accept the completed handoff, the experimental fee is USD 1. Please confirm what may be used and who may receive it before sharing data.”
+
+**Broker invitation, prepared:** “Would you test one consented business intake record in a private structured handoff? You will receive the entry, missing supplied-fact notes and a portable JSON file. The experimental fee is USD 1 if you accept the result. This does not publish the record or verify seller claims. Please confirm your authority to share the record and its intended recipient first.”
+
+### Effect and resource handoff
+
+| Work | Completed / blocked / next exact condition |
+|---|---|
+| Source release | Product code integration and required CI verified; document update follows its existing admitted lane |
+| Local verification | Current browser suites and autonomous fictional exercise complete; no new packages, modules, databases or always-load guidance |
+| Real trials and USD 1 offer | All three tracks prepared and fictional examples filled. Real owner/agent and broker identities, contact channels and listing consent are absent; no outreach or collection can be truthfully recorded |
+| Production | Preparation only. Recheck on independent evaluator input, healthy fulfillment baseline and exact native release/cost/approval/rollback receipts; no ETA for those external conditions |
+| Runtime cleanup | Test-owned sidecars removed, native lock released, owned Podman machine stopped. Source refs and old worktrees retained under their existing cleanup owner |
+
+Bound for this follow-through: 30 active minutes plus bounded native/external waits, ≤15 KB document delta, zero product runtime modules/packages, one packet shared across three tracks. Refresh on source or evidence drift. Pending source effects and delivery effects stay separate; no new endpoint, parallel form, paid service, quota exception or compliance claim is introduced.
