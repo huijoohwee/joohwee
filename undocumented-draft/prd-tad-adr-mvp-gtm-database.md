@@ -1,13 +1,13 @@
 ---
 title: "Native Listing Entry Management — PRD, TAD, ADR, MVP, GTM"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.6.0"
-revision: "0.6.0"
-prd_revision: "0.6.0"
-tad_revision: "0.6.0"
-adr_revision: "0.6.0"
-mvp_revision: "0.6.0"
-gtm_revision: "0.6.0"
+version: "0.7.0"
+revision: "0.7.0"
+prd_revision: "0.7.0"
+tad_revision: "0.7.0"
+adr_revision: "0.7.0"
+mvp_revision: "0.7.0"
+gtm_revision: "0.7.0"
 date: "2026-11-13"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -24,7 +24,7 @@ lifecycle_status: "proposed"
 
 # Native listing entry management
 
-Join: **`listing-db-admin@0.6.0`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
+Join: **`listing-db-admin@0.7.0`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
 
 Revision 0.4.0 proposed a new file-backed admin without inspecting the native runtime. That proposal is superseded by the grounding below. Existing browser storage is the MVP master; a file is a portable export, never an independently writable replica. A reviewed file-backed or relational master remains a triggered later decision. No new CMS, store, registry, provider or UI variant is authorized by this document.
 
@@ -35,7 +35,7 @@ Revision 0.4.0 proposed a new file-backed admin without inspecting the native ru
 | Product owner | Existing Commerce offer workspace; parent `edge-commerce-agent-mvp` and its native workspace companion retain launch, checkout and deployment ownership |
 | Local readiness | `dev-proven` for the bounded native listing slice; local browser/contract results are recorded below; future migration conditions remain deferred |
 | Delivery readiness | `undocumented`; source inspection and local preview do not establish delivery |
-| Baseline | Current integrated Commerce `48c2729e8c8bde4d16259e20faa9d08026a2d8fc`, observed 2026-11-13; original listing candidate `42f118e` merged as PR #271, shared UI source followed as PR #272 |
+| Baseline | Current integrated Commerce `acaae50534077ec0890c6597ed2966c0b8257604`, observed 2026-11-13; listing PR #271, shared UI PR #272 and release-verification PR #273 are merged |
 | Directive | User authorizes native CRUD enhancement, shared utility reuse, draft update and live UI verification; a new lane is explicitly authorized |
 | Execution | Document lane readmitted for this follow-through. Native `reap` proves original listing integration; both product PRs have successful required Integration Gate receipts. All three trial cohorts selected by the user; autonomous fictional filling is authorized |
 | Spend | USD 0; no packages, paid plans, addons, overages or external runtime dependency |
@@ -215,10 +215,10 @@ Local runtime uses already-installed FOSS/browser facilities and performs no mod
 | Effect | Required evidence and authority | Current state |
 |---|---|---|
 | Local source work | START reservation; exact files; preserved existing edits | Listing PR #271 merged as `76cc38cf12ed965c2c2859f4ba1116677796f019`; current source includes shared UI PR #272 at `48c2729e8c8bde4d16259e20faa9d08026a2d8fc` |
-| Local verification | Focused contracts, live UI with viewport/offline/revision/backup checks; record candidate and results | Original 257 local tests pass; current integrated listing drill and actual Podman browser suite pass. Terminal independent evidence remains blocked |
-| Protected source integration | Existing land/required-check/review path; exact green Integration Gate and authorized merge | Verified for product source: PR #271 / run `43415437428`; PR #272 / run `43429811617`; document publication is a separate effect |
+| Local verification | Focused contracts, live UI with viewport/offline/revision/backup checks; record candidate and results | Verification candidate passes 261 local tests, sandbox browser suite and live fixture with the listing drill; required Integration Gate run `43451729752` succeeds. Earlier 21+1 Podman proof retains its own source subject. Terminal independent evidence remains blocked |
+| Protected source integration | Existing land/required-check/review path; exact green Integration Gate and authorized merge | Product PR #271 / run `43415437428`, PR #272 / run `43429811617`; planning PR #37 merged as `4e3d9a94aafc89bdd5e818a9a91a9bb6f1503821`, with successful check `43444394839` |
 | Delivery | Existing Commerce release controller, exact-candidate promotion instruction, cost proof and rollback disposition | Preparation recorded; production baseline returns 503 / fulfillment unavailable, independent evaluator missing, and exact profile/cost/approval/rollback prerequisites remain unbound |
-| Cleanup/sync | Exact target/effect authority and independent receipts | No inferred cleanup or canonical overwrite |
+| Cleanup/sync | Exact target/effect authority and independent receipts | Planning PR #37 synced and its lane quarantined by native receipts. Original listing lane also closed with recoverable quarantine; source refs and objects retained. Product delivery remains pending |
 
 Rollback source via reviewed revert using the existing release owner. Preserve all browser records and a full export before downgrading; old clients may reject listing-aware records. Do not erase fields to make an old reader pass. A future schema downgrade needs a lossless tested conversion and its own authorization. Production rollback uses the existing Commerce deployment runbook and predecessor artifact; source rollback is separate.
 
@@ -310,10 +310,42 @@ For a real participant: (1) record permission and the permitted listing/fields/r
 
 | Work | Completed / blocked / next exact condition |
 |---|---|
-| Source release | Product code integration and required CI verified; document update follows its existing admitted lane |
+| Source release | Product PR #271/#272 and planning PR #37 merged; planning canonical sync and governed cleanup complete. Later verification work has its own candidate below |
 | Local verification | Current browser suites and autonomous fictional exercise complete; no new packages, modules, databases or always-load guidance |
 | Real trials and USD 1 offer | All three tracks prepared and fictional examples filled. Real owner/agent and broker identities, contact channels and listing consent are absent; no outreach or collection can be truthfully recorded |
 | Production | Preparation only. Recheck on independent evaluator input, healthy fulfillment baseline and exact native release/cost/approval/rollback receipts; no ETA for those external conditions |
-| Runtime cleanup | Test-owned sidecars removed, native lock released, owned Podman machine stopped. Source refs and old worktrees retained under their existing cleanup owner |
+| Runtime cleanup | Historical test-owned sidecars removed and lock released; original listing and planning lanes subsequently quarantined under native receipts. Device-session host recovery below explicitly restarts its existing runtime |
 
 Bound for this follow-through: 30 active minutes plus bounded native/external waits, ≤15 KB document delta, zero product runtime modules/packages, one packet shared across three tracks. Refresh on source or evidence drift. Pending source effects and delivery effects stay separate; no new endpoint, parallel form, paid service, quota exception or compliance claim is introduced.
+
+## Runtime completion follow-through 0.7.0 — 2026-11-13
+
+**Scope decision.** Complete the existing device-local listing MVP through the local-first release owner. The production runtime contract explicitly separates that profile from the deferred full Commerce platform's 100 independent task verdicts. Preserve those full-platform requirements; do not silently impose them on the bounded listing slice or weaken them to obtain green. Future database/shared-write conditions VCC-DBR-01/02 and VCC-MIG-01 remain deferred, not failed MVP criteria. `local_rung: dev-proven` remains scoped to the native slice; delivered readiness stays undocumented until an exact matching release and runtime receipt exists.
+
+### Existing-owner verification change
+
+Commerce [PR #273](https://github.com/huijoohwee/agentic-commerce-os/pull/273), candidate `498e0fbaa39f5a97be368699d122684a27353317`, merged as `acaae50534077ec0890c6597ed2966c0b8257604` after successful required [Integration Gate 43451729752](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/43451729752). It reuses the standalone listing browser drill as an exported function in the existing release checker. Sandbox, live-reader and live profiles require its completion in both local preparation and delivered-origin verification. The proof consumers reject a previously complete-looking proof if the listing check is omitted. No new UI, writable store, browser runner, dependency or product runtime module is added. Native merge, canonical sync and recoverable lane quarantine complete; its delivery state remains pending.
+
+The drill binds the served document's exact source header/profile, creates isolated browser storage, and exercises listing creation, negative-rent correction, edit/search/archive/restore, stale-save refusal, 360/1280 px layout, offline reload/edit, v4 roundtrip, atomic conflicts, duplicate-source races and storage-denied recovery. Routed requests reject non-GET/cross-origin traffic and the observed request set must contain only same-origin GETs. The pinned native service worker remains enabled. No job, checkout or payment is submitted by this drill. All contexts close on failure; the standalone CLI remains loopback-only. Preview evidence explicitly records `local-unreleased`; only the owning exact-candidate run may establish source-bound delivery proof.
+
+Focused proof/contract/target checks pass 17/17. The first aggregate attempt ran on dirty source: 260/261 passed, while the clean-source durable-host guard correctly refused the uncommitted candidate. It was not relaxed. On clean committed `498e0fbaa39f5a97be368699d122684a27353317`, all 261 local tests and the existing sandbox browser suite pass, including the newly required listing drill. The existing live checkout fixture also passes with the same listing drill and a complete live proof. Required CI and production retain their own exact source/result bindings.
+
+### Fulfillment baseline recovery
+
+The already-installed rootless Podman machine, exact model container, pinned listing host and existing tunnel connector were restarted. Configuration, credentials, persistent state, image, model and host bundle were retained. The model file hashes to `9465e63a22add5354d9bb4b99e90117043c7124007664907259bd16d043bb031`; the container's repository digest matches pinned image `adbc645ef5a186f4f3466a7d1eb77bd852fcd7eec5e366a277bc439cabe4238c`. Authenticated host readiness matches source `57418b3807a547de5083cdbd3254a19732f07c97` and bundle `8f7734144d8ae426fddf11b81ead8bab4c9284a849e8278504d53c338862dbdd`.
+
+Public `/readyz` recovered from HTTP 503 to **200 / fulfillment ready**, retaining checkout `live`, deployed source `cb65b1d6e9715e6fb57b8a63bf9e6181ffa397e1` and Worker version `7cb557cb-a4b6-4c06-9de6-121bb9765962`. This is existing-runtime recovery, not deployment of listing CRUD or proof of a completed job/customer payment. Device-session availability remains explicit; sleep, disconnection or stopped processes can make fulfillment unavailable again.
+
+### Exact remaining conditions
+
+| Owner / effect | Current blocker and recheck condition |
+|---|---|
+| Local-first production | Route readback proves `request_limit_fail_open: false`, but account subscription metadata returns HTTP 403 for the retained operator credential. Worker `usage_model: standard` is not provider-owned hard-$0 proof. Promotion remains blocked until the account owner supplies current readable plan/cost/headroom evidence plus exact native run approval and live profile/recovery receipts |
+| Full-platform evaluator | Four runtime inputs remain missing and issuer enrollment is zero. Current Canvas has no `worktree:lifecycle:check`; setting its root cannot satisfy task 1.1. Its protected task/evaluator binding needs an equivalent owner verifier of claim, lease, fence and runtime identity. No equivalent live verifier has been proved in this slice; no shallow doctor/ADLC command or fixture signer is substituted |
+| Full-platform verdicts | A real independently managed issuer must be enrolled through protected baseline review before its external anchor, trusted Git pin, isolated executor and attested evidence sink can validate signed artifacts and the 100 current task verdicts |
+| Human/customer experiments | Prepared packet and three fictional records remain reusable. Named real owner/agent and broker, delivery channels, permitted listing/fields/recipient, raw human feedback, acceptance and actual payment evidence are absent; no outreach or payment collection is fabricated |
+| Delivery closeout | Original listing and verification lane native source closeouts report delivery pending. Dispatch inputs bind current protected source `acaae50534077ec0890c6597ed2966c0b8257604`, retained reader run `43026421044` and the existing webhook receipt; input shape is validated, provider prerequisites remain unverified. The native release workflow must prepare its exact live-profile artifact before an artifact digest/approval exists. Record a deployed disposition only after exact candidate/source-release/deployment/runtime/recovery receipts exist; no false no-deploy disposition for browser runtime paths |
+
+Evidence root: `.workspace/.artifacts/listing-runtime-verification-20261113/` relative to the shared workspace. Retain redacted host/readiness observations, `provider-cost-preflight.json`, exact browser proofs, required CI reference, retained live-reader completion and prepared dispatch inputs. Artifact hashes are integrity observations, not independent authority. No cloud deployment, webhook/route change, human trial, customer acceptance or payment is claimed by this increment.
+
+Execution bound: 45 active minutes plus bounded required CI/external waits, eight existing authored paths, ≤25 KiB source additions, zero new runtime modules/packages/always-load bytes. Recheck provider/evaluator/participant conditions on their actual owner event; no external completion ETA is asserted.
