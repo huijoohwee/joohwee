@@ -1,14 +1,14 @@
 ---
 title: "Native Listing Entry Management — PRD, TAD, ADR, MVP, GTM"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.7.0"
-revision: "0.7.0"
-prd_revision: "0.7.0"
-tad_revision: "0.7.0"
-adr_revision: "0.7.0"
-mvp_revision: "0.7.0"
-gtm_revision: "0.7.0"
-date: "2026-11-13"
+version: "0.8.0"
+revision: "0.8.0"
+prd_revision: "0.8.0"
+tad_revision: "0.8.0"
+adr_revision: "0.8.0"
+mvp_revision: "0.8.0"
+gtm_revision: "0.8.0"
+date: "2026-11-14"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Commerce product architecture / Solo Founder"
@@ -24,7 +24,7 @@ lifecycle_status: "proposed"
 
 # Native listing entry management
 
-Join: **`listing-db-admin@0.7.0`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
+Join: **`listing-db-admin@0.8.0`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
 
 Revision 0.4.0 proposed a new file-backed admin without inspecting the native runtime. That proposal is superseded by the grounding below. Existing browser storage is the MVP master; a file is a portable export, never an independently writable replica. A reviewed file-backed or relational master remains a triggered later decision. No new CMS, store, registry, provider or UI variant is authorized by this document.
 
@@ -217,7 +217,7 @@ Local runtime uses already-installed FOSS/browser facilities and performs no mod
 | Local source work | START reservation; exact files; preserved existing edits | Listing PR #271 merged as `76cc38cf12ed965c2c2859f4ba1116677796f019`; current source includes shared UI PR #272 at `48c2729e8c8bde4d16259e20faa9d08026a2d8fc` |
 | Local verification | Focused contracts, live UI with viewport/offline/revision/backup checks; record candidate and results | Verification candidate passes 261 local tests, sandbox browser suite and live fixture with the listing drill; required Integration Gate run `43451729752` succeeds. Earlier 21+1 Podman proof retains its own source subject. Terminal independent evidence remains blocked |
 | Protected source integration | Existing land/required-check/review path; exact green Integration Gate and authorized merge | Product PR #271 / run `43415437428`, PR #272 / run `43429811617`; planning PR #37 merged as `4e3d9a94aafc89bdd5e818a9a91a9bb6f1503821`, with successful check `43444394839` |
-| Delivery | Existing Commerce release controller, exact-candidate promotion instruction, cost proof and rollback disposition | Preparation recorded; production baseline returns 503 / fulfillment unavailable, independent evaluator missing, and exact profile/cost/approval/rollback prerequisites remain unbound |
+| Delivery | Existing Commerce release controller, exact-candidate promotion instruction, cost proof and rollback disposition | Existing runtime healthy at HTTP 200; Workers Free plan, headroom and fail-closed route observed. Native run `43466875649` prepares exact live-profile artifact successfully and waits for production owner review; deployed candidate and runtime/recovery receipts remain pending. Full-platform evaluation stays separate |
 | Cleanup/sync | Exact target/effect authority and independent receipts | Planning PR #37 synced and its lane quarantined by native receipts. Original listing lane also closed with recoverable quarantine; source refs and objects retained. Product delivery remains pending |
 
 Rollback source via reviewed revert using the existing release owner. Preserve all browser records and a full export before downgrading; old clients may reject listing-aware records. Do not erase fields to make an old reader pass. A future schema downgrade needs a lossless tested conversion and its own authorization. Production rollback uses the existing Commerce deployment runbook and predecessor artifact; source rollback is separate.
@@ -349,3 +349,26 @@ Public `/readyz` recovered from HTTP 503 to **200 / fulfillment ready**, retaini
 Evidence root: `.workspace/.artifacts/listing-runtime-verification-20261113/` relative to the shared workspace. Retain redacted host/readiness observations, `provider-cost-preflight.json`, exact browser proofs, required CI reference, retained live-reader completion and prepared dispatch inputs. Artifact hashes are integrity observations, not independent authority. No cloud deployment, webhook/route change, human trial, customer acceptance or payment is claimed by this increment.
 
 Execution bound: 45 active minutes plus bounded required CI/external waits, eight existing authored paths, ≤25 KiB source additions, zero new runtime modules/packages/always-load bytes. Recheck provider/evaluator/participant conditions on their actual owner event; no external completion ETA is asserted.
+
+## Provider cost proof and native release preparation 0.8.0 — 2026-11-14 SGT
+
+The existing signed-in Cloudflare dashboard provides the account evidence that the retained deployment token could not read through the subscription API. Reuse that valid read grant: no billing token is created, no credential is copied into source and no permission is expanded. The earlier HTTP 403 remains a fact about that API credential, not a statement that the account lacks a free Workers plan.
+
+| Provider observation | Exact scope and result |
+|---|---|
+| Plan | Authenticated account `joohwee` shows **Workers Free / Active** under Billing → Subscriptions; its account ID matches the retained Commerce operator configuration |
+| Usage | Workers & Pages → Today explicitly uses the current UTC calendar day. On **2026-11-13 UTC**, requests are **1,084 / 100,000**, with observed headroom **98,916**; observability events are **48 / 200,000**. These are observations, not reserved capacity or an availability guarantee |
+| Quota behavior | Current authenticated route readback for `airvio.co/agentic-commerce-os*` proves `request_limit_fail_open: false`. The [provider limits contract](https://developers.cloudflare.com/workers/platform/limits/) specifies error 1027 at the Workers Free daily request limit |
+| Effect resources | Exact active Worker/version validation confirms the existing local-first live profile and its allowlisted bindings. There is no R2, D1, Cloudflare Container or service binding in this selected effect, and no new resource is provisioned |
+| Separate existing subscription | R2 Paid appears on the same account; it is outside this release's bindings and remains untouched. This proof does not claim that every account subscription is free or authorize unrelated billing changes |
+| Release CI | GitHub API confirms the repository is public. The native workflow uses standard `ubuntu-latest` runners; [GitHub's provider contract](https://docs.github.com/en/actions/concepts/billing-and-usage) identifies standard public-repository Actions usage as free. No larger runner or paid add-on is selected |
+
+The scoped Cloudflare cost prerequisite is satisfied by the combined provider plan, usage, quota-enforcement and exact resource observations. A quota snapshot alone would not satisfy it. Refresh provider state before the production effect, especially after the UTC-day boundary, source drift, plan changes or delayed review. No payment is submitted by this evidence collection.
+
+**Native preparation:** [Local-first Production Release run 43466875649](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/43466875649) runs from current protected source `acaae50534077ec0890c6597ed2966c0b8257604`, preserves checkout `live` and the retained reader/webhook selection, and passes its credentialless verification job. Prepared artifact digest: `7cb32f127e4d6819992dfcbaedbec77d65e52b183788dbc077d5619cdc7c56dc`. The downloaded native live-fixture browser proof validates against that source/profile; the listing proof records zero network writes and zero page errors. Preparation is not deployment or customer-payment proof.
+
+**Remaining release effect:** the existing `production` environment requires a run-bound review by owner `huijoohwee`. GitHub reports this exact run waiting for that review. No approval is synthesized from source CI, the cost observation or the chat implementation directive. After approval, the existing controller must verify retained provider prerequisites, deploy the exact prepared candidate, run its live listing/source/version checks and retain recovery/completion receipts. Delivered readiness stays undocumented until those outcomes pass. The existing deployed baseline still reports source `cb65b1d6e9715e6fb57b8a63bf9e6181ffa397e1`, version `7cb557cb-a4b6-4c06-9de6-121bb9765962`, HTTP 200 and fulfillment ready; it does not contain the listing CRUD increment.
+
+Evidence root: `.workspace/.artifacts/listing-cost-proof-20261114/` relative to the shared workspace. `cloudflare-cost-proof.json` contains the scoped provider observations and exact Worker readback; `release-cost-preflight.json` binds its hash and public CI profile; `native-preparation-status.json`, `native-preparation-readback.json` and `native-prepared/` retain the actual run/artifact/browser evidence. `handoff.json` names the current owner action. These are observation and integrity records, not independent deployment authority.
+
+The full-platform evaluator/lifecycle migration and real participant consent, feedback, acceptance and payment remain pending under their existing owners. They are not filled with synthetic evidence. Bound for this follow-through: 15 active minutes for read-only preflight, then five active minutes for this single existing document (≤8 KiB delta), plus bounded native CI/external review waits; zero runtime modules, packages, new credentials, plan changes or always-load guidance.
