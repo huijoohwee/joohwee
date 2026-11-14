@@ -1,13 +1,13 @@
 ---
 title: "Native Listing Entry Management — PRD, TAD, ADR, MVP, GTM"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.9.1"
-revision: "0.9.1"
-prd_revision: "0.9.1"
-tad_revision: "0.9.1"
-adr_revision: "0.9.1"
-mvp_revision: "0.9.1"
-gtm_revision: "0.9.1"
+version: "0.9.2"
+revision: "0.9.2"
+prd_revision: "0.9.2"
+tad_revision: "0.9.2"
+adr_revision: "0.9.2"
+mvp_revision: "0.9.2"
+gtm_revision: "0.9.2"
 date: "2026-11-14"
 lang: "en-US"
 frontmatter_contract: "required"
@@ -24,7 +24,7 @@ lifecycle_status: "active"
 
 # Native listing entry management
 
-Join: **`listing-db-admin@0.9.1`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
+Join: **`listing-db-admin@0.9.2`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
 
 Revision 0.4.0 proposed a new file-backed admin without inspecting the native runtime. That proposal is superseded by the grounding below. Existing browser storage is the MVP master; a file is a portable export, never an independently writable replica. A reviewed file-backed or relational master remains a triggered later decision. No new CMS, store, registry, provider or UI variant is authorized by this document.
 
@@ -410,6 +410,21 @@ The first evidence candidate had two CI failures after all functional checks, in
 
 The report's exact changed paths — `.github/workflows/ci.yml`, `.agentic-os-delivery-dispositions.json` and `docs/reports/listing-entry-production-20261114.json` — are excluded from the product artifact. [PR #275](https://github.com/huijoohwee/agentic-commerce-os/pull/275) records that source-only no-deploy disposition in the existing control ledger. Candidate `c09376843bed64f2a9ec25b4a2996dcbd51cfdb2` passes required [Integration Gate 43526004681](https://github.com/huijoohwee/agentic-commerce-os/actions/runs/43526004681) and merges as `5a313772cebd42a3f7d2a14c5cd0f437120f57e5`. Native merge, canonical sync and recoverable cleanup complete. Final native status reports all four Commerce lanes complete: original listing and verifier deployed; evidence and control-only closeout no-deploy; all delivery disposition errors null and all cleanup checks true. The deployed Worker remains source `acaae50534077ec0890c6597ed2966c0b8257604`.
 
-**Remaining coordination blocker.** The required immutable shared-workspace TODO successor is prepared, but native admission to `github.com/huijoohwee/.workspace` refuses with `blocked-repository-trust-missing`: repository trust anchor is missing. No tracked workspace record or board projection is edited, and no trust is synthesized. Its existing trust operator must supply the operator-owned anchor through the provisioning owner; recheck native admission on that event, then apply the prepared Context and regenerate the board. Exact blocker and prepared payload: `.workspace/.artifacts/listing-cost-proof-20261114/workspace-handover-blocker.json` and `workspace-context-payload.md`. This remains an open administrative handover, separate from the verified listing runtime.
+**Historical coordination refusal (superseded by the owner-workflow correction below).** The required immutable shared-workspace TODO successor was prepared, but native admission to `github.com/huijoohwee/.workspace` refuses with `blocked-repository-trust-missing`: repository trust anchor is missing. No tracked workspace record or board projection is edited, and no trust is synthesized. Its existing trust operator must supply the operator-owned anchor through the provisioning owner; recheck native admission on that event, then apply the prepared Context and regenerate the board. Exact blocker and prepared payload: `.workspace/.artifacts/listing-cost-proof-20261114/workspace-handover-blocker.json` and `workspace-context-payload.md`. This remains an open administrative handover, separate from the verified listing runtime.
 
-The unrelated untracked `undocumented-draft/business-ratios.md` remains untouched. Planning canonical HEAD and origin/main match after sync; the repository-wide clean diagnostic remains false solely because that pre-existing untracked draft is preserved. No full-platform evaluator, real participant consent, human feedback, acceptance or payment is manufactured by source closeout. Next product action remains the consenting human trial described above; next coordination action is the existing workspace trust owner supplying its anchor.
+The unrelated untracked `undocumented-draft/business-ratios.md` remains untouched. Planning canonical HEAD and origin/main match after sync; the repository-wide clean diagnostic remains false solely because that pre-existing untracked draft is preserved. No full-platform evaluator, real participant consent, human feedback, acceptance or payment is manufactured by source closeout. Next product action remains the consenting human trial described above; at the 0.9.1 cut, the recorded coordination action was the workspace trust owner supplying an anchor; the corrected source-owner workflow below supersedes that action.
+
+
+## Remaining-work follow-through 0.9.2 — 2026-11-14
+
+The earlier workspace trust-anchor refusal was caused by using a product-lane command against the shared-source repository, which has no product repository profile and uses its own publication workflow. Its existing README requires a scoped branch, pinned workspace/planning checks, reviewed source integration and recoverable worktree cleanup. No new repository trust, profile, security permission or billing setting is necessary. This supersedes the earlier administrative blocker; its original observation remains historical evidence.
+
+The immutable Context `.todo/todo/2026-11/listing-production-complete.md` and generated `.todo/docs/kanban.md` projection are integrated through [workspace PR #71](https://github.com/huijoohwee/.workspace/pull/71), candidate `adea87b8bff13b01483e2961288a67d3db57bf15`, base `80a955c059b58e635596ce6423bf4b6eb0e185ca`. Required Workspace CI run `43535331080` passes for that exact head; PR #71 merges as `f007fea5a6ef185df9a96c05a8389ed9e56cfa3c`. The original active workspace checkout remains on its unchanged branch/head; origin/main is fetched to the new merge. The Context retains the exact accepted `listing-db-admin@0.9.1` plan and prior release subjects. This 0.9.2 join changes the handover state only; its eight MVP criteria and production artifact remain unchanged. Pinned planning owner `363e72ada01b83291d1dc26c89e0ee8af8e70d77` passes with 33 preserved files, 90 records and seven legacy shards; exact workspace source check passes using its workflow's harness `a701b53b22eb2ed04e126bb249b54d005e56893b`. The existing primary workspace branch and unrelated edits remain untouched.
+
+Before private CI publication, the existing authenticated GitHub UI confirms GitHub Free, an account Actions budget of **USD 0** with **Usage blocked** for billable usage, USD 0 billable Actions usage, USD 0.04 / USD 12.00 included compute consumed and 0 / 0.5 GB included storage. Unused included allowance plus the hard budget denial covers the small standard-runner check; headroom is observed, not reserved. No credential scope, plan or budget changes are made. Evidence is local at `.workspace/.artifacts/listing-remaining-completion-20261114/workspace-ci-cost-proof.json`; the CLI billing endpoint's missing `user` scope is not bypassed or expanded.
+
+The full-platform diagnostic remains `evidence_runtime_context_incomplete`. It imports no executor and observes zero enrolled issuers. Missing independently managed inputs are the dispatch trust anchor, trusted Git executable and isolated executor module. The supplied Canvas root also lacks `worktree:lifecycle:check`; an equivalent source-owner verifier must preserve claim, lease, fence and runtime identity assertions through a protected task/evaluator migration. Ordinary source/browser tests, `doctor` and `check:adlc` are not substitutes for those 100 independently issued verdicts. No candidate signer, fixture authority or synthetic receipt is created.
+
+Real trial completion needs actual human completion time, help and confusing fields; the retained 160-second observation remains explicitly Codex-performed. Owner/agent and broker pilots need identities, channels and consented records before invitations; acceptance and USD 1 payment need actual references. Those inputs and the independent evaluator's provisioning references have been requested. Preparation and agent-generated examples do not constitute consent, human feedback or customer payment. Recheck only when the relevant owner supplies the missing input; no external completion ETA is asserted.
+
+Bound: 20 active minutes plus source CI waits, three metadata paths and less than 8 KiB added prose/projection, zero product runtime modules/packages/always-load bytes or paid resources. The existing live source and device-session availability contract remain unchanged.
