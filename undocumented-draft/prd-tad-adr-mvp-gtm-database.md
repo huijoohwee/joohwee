@@ -1,14 +1,14 @@
 ---
 title: "Native Listing Entry Management — PRD, TAD, ADR, MVP, GTM"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.9.2"
-revision: "0.9.2"
-prd_revision: "0.9.2"
-tad_revision: "0.9.2"
-adr_revision: "0.9.2"
-mvp_revision: "0.9.2"
-gtm_revision: "0.9.2"
-date: "2026-11-14"
+version: "0.10.0"
+revision: "0.10.0"
+prd_revision: "0.10.0"
+tad_revision: "0.10.0"
+adr_revision: "0.10.0"
+mvp_revision: "0.10.0"
+gtm_revision: "0.10.0"
+date: "2026-11-16"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Commerce product architecture / Solo Founder"
@@ -24,7 +24,7 @@ lifecycle_status: "active"
 
 # Native listing entry management
 
-Join: **`listing-db-admin@0.9.2`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
+Join: **`listing-db-admin@0.10.0`** across PRD, TAD, ADR, MVP and GTM. Enhance the existing private offer editor, library and review table with optional listing facts, safe changes, archive and restore. Keep one record owner, one editor, one writable store and one release path. The product is country, category, device and storage neutral; concrete source paths below identify this implementation.
 
 Revision 0.4.0 proposed a new file-backed admin without inspecting the native runtime. That proposal is superseded by the grounding below. Existing browser storage is the MVP master; a file is a portable export, never an independently writable replica. A reviewed file-backed or relational master remains a triggered later decision. No new CMS, store, registry, provider or UI variant is authorized by this document.
 
@@ -34,7 +34,7 @@ Revision 0.4.0 proposed a new file-backed admin without inspecting the native ru
 |---|---|
 | Product owner | Existing Commerce offer workspace; parent `edge-commerce-agent-mvp` and its native workspace companion retain launch, checkout and deployment ownership |
 | Local readiness | `runtime-ready` for the eight current listing MVP criteria; exact source contract and browser evidence below. Future database/migration criteria remain deferred |
-| Delivery readiness | `production-verified` for the private listing MVP only: approved native live run `43469342102`, exact source/artifact/version and delivered browser checks. This does not promote the full Commerce platform |
+| Delivery readiness | 0.10.0 remains local/unreleased. The 0.9.x baseline is `production-verified` for the private listing MVP only: approved native live run `43469342102`, exact source/artifact/version and delivered browser checks. This does not promote the full Commerce platform |
 | Baseline | Deployed listing source `acaae50534077ec0890c6597ed2966c0b8257604`; listing PR #271, shared UI PR #272 and verification PR #273 are merged. Later workflow/evidence-only source integration does not change this runtime identity |
 | Directive | User authorizes native CRUD enhancement, shared utility reuse, draft update and live UI verification; a new lane is explicitly authorized |
 | Execution | Document lane readmitted for this follow-through. Native `reap` proves original listing integration; both product PRs have successful required Integration Gate receipts. All three trial cohorts selected by the user; autonomous fictional filling is authorized |
@@ -93,10 +93,10 @@ All paths are relative to the named repository. These observations identify sour
 
 | Owner / source | Observed behavior | Reuse and delta |
 |---|---|---|
-| Commerce `public/local-first/drafts.js` | IndexedDB `agentic-commerce-local-drafts` / `drafts`; exact record keys; v1/v2/v3 import; revision CAS in readwrite transaction; atomic conflict refusal; 100 records / 8 MB transfer | Sole data owner; add an optional validated listing block and compatible next export version |
-| Commerce `public/local-first/app.js` | Existing create/edit form, dirty navigation guard, save errors, source revision review and JSON backup controls | Extend this form; render listing errors; archive/restore through the same revision-fenced save |
-| Commerce `public/local-first/workspace.js` | Native routes, paged vendor library, admin queue, local search and cross-tab refresh | Extend matching/filtering; keep archive state independent from commercial readiness |
-| Commerce `public/local-first/workspace-graph.js` | Commerce projects rows; lazy-loads portable Base table and Graph guide; shared CSS via shadow-root surfaces | Extend detail rows and actions; no table/form renderer fork |
+| Commerce `public/local-first/drafts.js` | IndexedDB `agentic-commerce-local-drafts` / `drafts`; exact record keys; v1/v2/v3 import; revision CAS in readwrite transaction; atomic conflict refusal; 100 records / 8 MB transfer | Sole data owner; optional listing schema v1 and v4 backup already implemented; preserve unchanged |
+| Commerce `public/local-first/app.js` | Existing create/edit form, dirty navigation guard, save errors, source revision review and JSON backup controls | Existing form already renders listing errors and revision-fenced archive/restore; preserve unchanged |
+| Commerce `public/local-first/workspace.js` | Native routes, paged vendor library, admin queue, local search and cross-tab refresh | Extend private management source-URL matching; keep archive state independent from commercial readiness |
+| Commerce `public/local-first/workspace-graph.js` | Commerce projects rows; lazy-loads portable Base table and Graph guide; shared CSS via shadow-root surfaces | Add listing summaries to existing cards and shared table cells; retain detail/action owners |
 | Commerce `public/local-first/launch.js`, `workspace-capabilities.js` | Integer money parser, exact reviewed launch terms; allowlisted workspace snapshots and read-only tools | Reuse money parsing; exclude listing facts and archive state from launch authority; reject archived review |
 | Commerce `public/local-first/sw.js`, `scripts/local-first-release/artifact.mjs`, `src/local-first/worker.ts` | Offline cache, exact asset inventory, release identity and serving route | Existing modules need no parallel route or launcher; add no undeclared asset |
 | Design System `site/tokens/shared-ui-profile.json`, `site/vendor/shared-ui-profile.css` → installed Commerce projections | Shared tokens, density and control styling; Commerce pins source/output digests | Reuse existing tokens, form layout classes and controls unchanged; no local token overrides |
@@ -105,7 +105,7 @@ All paths are relative to the named repository. These observations identify sour
 | Canvas `src/agentic-graph-mcp-contract-utils.js`, `scripts/invocation-resolve.mjs` | Contract-only re-exports and invocation parsing delegate to the portable OS owner | Reuse the existing shared contract path; no copied parser or cyclic Commerce → Canvas UI import |
 | Commerce `src/invocation/catalog.ts` | Imports `serializeInvocationCatalogForDigest` and `serializeInvocationRoutingForDigest` from `agentic-os/invocation`; consumes the Canvas docs routing contract | Keep the shared exports and existing `/`, `@`, `#` resolver; no competing listing registry |
 
-Inspected canonical source identities: Design System `94c61815db7a4c7ec067161386df6364aa7a8909`; Base `1a756dc933cafb2b9590bb5ed7c84042aaed61ed`; Canvas `f6d61d582ac1121151bf0ba9b20365588435bb43`. Source observations are distinct from consumed artifact pins; use the actual lane configuration before checks. The existing shared UI lane owns pending pin refreshes; this increment must preserve them and keep disjoint reservations.
+Historical 2026-11-13 canonical source identities: Design System `94c61815db7a4c7ec067161386df6364aa7a8909`; Base `1a756dc933cafb2b9590bb5ed7c84042aaed61ed`; Canvas `f6d61d582ac1121151bf0ba9b20365588435bb43`. Source observations are distinct from consumed artifact pins; use the actual lane configuration before checks. The existing shared UI lane owns pending pin refreshes; this increment must preserve them and keep disjoint reservations.
 
 ### Division of work and dependency order
 
@@ -208,7 +208,7 @@ Ranked path to the first dollar is a hypothesis: **one manually delivered listin
 
 EXP-01: compare a 20-edit planted-error drill against free text; proceed if structured input prevents at least one error without blocking valid editing. EXP-02: five operator conversations, only when outreach is separately authorized; two independently stated willingness-to-pay responses justify a pricing test. Failure leads to fewer fields or a validator-only slice, not more infrastructure. Market size, channel conversion, operator time saving and recurring revenue remain unmeasured.
 
-Local runtime uses already-installed FOSS/browser facilities and performs no model inference. Active minutes, model/token cost, CI usage and actual transfer bytes remain measured separately; they are not assumed zero. Remove the previous paid-tier alternative and unverified quota claims. Any later hosted effect requires current provider-owned hard USD 0/deny-at-quota evidence. Free allowance or an alert alone grants no authority.
+Local runtime uses already-installed FOSS/browser facilities and performs no model inference. Active minutes, model/token cost, CI usage and actual transfer bytes remain measured separately; they are not assumed zero. The earlier paid-tier alternative and unverified quota claims remain superseded. Any later hosted effect requires current provider-owned hard USD 0/deny-at-quota evidence. Free allowance or an alert alone grants no authority.
 
 ## Verification, release and rollback
 
@@ -428,3 +428,40 @@ The full-platform diagnostic remains `evidence_runtime_context_incomplete`. It i
 Real trial completion needs actual human completion time, help and confusing fields; the retained 160-second observation remains explicitly Codex-performed. Owner/agent and broker pilots need identities, channels and consented records before invitations; acceptance and USD 1 payment need actual references. Those inputs and the independent evaluator's provisioning references have been requested. Preparation and agent-generated examples do not constitute consent, human feedback or customer payment. Recheck only when the relevant owner supplies the missing input; no external completion ETA is asserted.
 
 Bound: 20 active minutes plus source CI waits, three metadata paths and less than 8 KiB added prose/projection, zero product runtime modules/packages/always-load bytes or paid resources. The existing live source and device-session availability contract remain unchanged.
+
+
+## Management overview increment 0.10.0 — 2026-11-16 SGT
+
+**PRD / scope.** `listing-db-admin@0.10.0` extends the same private management workflow. PP-04: an operator must reopen a record to see its category, location or acquisition asking price because cards and table rows emphasize merchant launch setup. PP-05: source uniqueness can reject a second record, yet the management search does not find the original by its source URL. These are observed source gaps; buyer demand and time savings remain unmeasured. The supplied business example was re-read on this date for field context; no text, image or financial values are imported.
+
+| Criterion | Implementation and acceptance | State |
+|---|---|---|
+| VCC-MGT-01 | Existing vendor cards and admin table project category/location and labelled supplied asking price; launch planned price remains distinct; unknown asking price stays unknown | Passed focused projection checks and local browser drill; Base table truncation retains existing select-to-detail behavior |
+| VCC-MGT-02 | Existing private vendor/admin search finds the same record by source URL; duplicate-source save is still refused; shopper search gains no private source field | Passed vendor/admin source and unmatched-source searches at 1280/360 px; duplicate-source regression passes |
+| VCC-MGT-03 | Existing create/edit, stale-save refusal, archive/restore, offline operation and atomic backup retain their identity/revision contracts at desktop and 360 px | Passed current local CRUD/offline/import/storage-denied drill; no network writes or page errors |
+
+**TAD / ownership.** Commerce base `71d92b305fe41a927a2b740ef38267e6e61be234`: modify `public/local-first/workspace-graph.js` (one product listing-summary projection, existing cards and responsive shared table) and `workspace.js` (private source-URL matching); remove the listing-only summary clamp in the existing product stylesheet `style.css`. Extend existing tests where necessary. The IndexedDB owner, listing schema, editor, money parser, export versions, lifecycle, public projections and service worker remain the existing mechanisms. No new runtime module, renderer, database, registry, schema, package or route is introduced.
+
+Consumed pins are Design System `9862a2f89b47be3496c72ed9ca28576c992873f4` (`config/shared-ui-profile.pin.json`), Base `67a31bdc121793408becbcd84427d5f7c0b651d0` (`config/agentic-base-data-view.json`) and Graph `675d0ad10eea5d57fe101c1fb5d4318a804a7ff5` (`config/graph-data-view.json`). Canonical source observations are Design System `7fae5884f7024c1ddd029ef058a3e7758614f73b`, Base `9170a1de4ae290ad3a077af976813e70b3a7552d`, Graph `675d0ad10eea5d57fe101c1fb5d4318a804a7ff5` and Canvas `f6d61d582ac1121151bf0ba9b20365588435bb43`; observed source is not a consumed pin. Current AOS `guides/DESIGN-SYSTEM-OWNERSHIP.md` assigns shared controls/adapters to Design System directly; retained Base adapter artifacts are migration residue, not a second owner. This product projection adds no shared behavior or visual override and preserves exact existing pins. Graph remains the lazy guide owner, Base the consumed table surface, and Canvas the existing docs-routing/contract consumer of `agentic-os/invocation`; no sibling source imports or copied utilities.
+
+**ADR-MGT-01.** Use one pure listing-summary projection within the existing Commerce projection owner and reuse it in cards and responsive table cells. Keep the existing table column contract, Base renderer, Design System styling and Graph guide. Extend only private management matching for source URLs; do not add source URLs to shopper results, workspace snapshots or launch packs. Preserve explicit archive/restore and current source uniqueness rather than creating another listing identity.
+
+**MVP / execution.** User's 2026-11-16 instruction authorizes implementation, document update and `npm run dev` live browser verification. Native START reserves exact paths. Initial active budget 30 minutes, at most two runtime modules edited, no new runtime modules or dependencies, source delta ≤12 KiB, plan delta ≤10 KiB, files <600 lines and chunks <500,000 bytes; always-load delta zero. Local fictional records belong to a fresh loopback origin. Required focused regressions and current desktop/mobile/offline UI evidence precede handoff. No new delivery receipt exists for this increment; the verified production baseline remains 0.9.x at its historical exact source. Rollback is a reviewed revert of the projection/search/product-stylesheet changes, retaining all draft bytes; any production promotion follows the native release controller with current effect proof.
+
+**GTM.** Rank the same manually delivered USD 1 listing preparation hypothesis first. The summary and source lookup aim to reduce reopening and duplicate entry attempts; no measured human time, consent, customer acceptance or payment is claimed. Existing three-cohort trial preparations remain reusable; autonomous fictional drills prove software behavior only. Full-platform evaluator provisioning and genuine customer evidence remain separate from this bounded enhancement.
+
+### Current local evidence and handoff
+
+Commerce candidate `25c7d262a6f42de0ffa6a2933bad8fb1aaa9f869` in native lane `agent/device-0232231d4a19/listing-management-overview` extends base `71d92b305fe41a927a2b740ef38267e6e61be234`. Its five reserved changed paths are the two runtime modules, product stylesheet and two existing regression files. Native readmission records workflow successor `6944b9ea106a4859e23a562eae1e01f5dc22d12b2351c295b87eb4daf02ee3fb`; document edits stay in the separate disjoint `listing-management-grounding` lane. The original canonical planning checkout's unrelated `business-ratios.md` is preserved.
+
+`npm run dev` runs the actual local-first Worker at `http://127.0.0.1:65329/agentic-commerce-os/`, with a fresh origin and `local-unreleased` identity. The existing listing browser drill passes at 1280 and 360 px: create, negative-rent correction, signed loss/unknown values, reload/edit, stale two-tab refusal, archive/restore, category/location and source search, unmatched-source search, offline reload/edit, lossless v4 backup/UI import, atomic conflicting import, duplicate-source race and storage-denied text retention. Its 309 observed requests are same-origin GETs; network writes and page errors are zero. This is agent-operated fictional software verification, not a consenting human trial or a deployed receipt. The 13 focused listing/projection/artifact/privacy tests pass.
+
+Screenshots were visually inspected. The existing two-line card clamp hid facts; its removal exposed an inherited fixed control height that overlapped the footer. The product-only listing-card rule now permits natural height and the browser drill asserts full summary height plus nonoverlapping footer at both widths. Native Base table cells retain their existing ellipsis and row selection; full fields remain in the existing detail surface. No shadow-root style or shared renderer is patched.
+
+Evidence root: `.workspace/.artifacts/listing-management-20261116/`; `candidate-observation.json` binds exact local source files and browser result bytes, `browser/result.json` records the fictional drill, and `browser/listing-management-{vendor,admin}-{1280,360}.png` retain the four views. Local identity/hash observations confer no source integration, deployment or independent-evaluation authority.
+
+Changed added-line payload is 5,528 bytes across five Commerce paths (two runtime modules, one product stylesheet, two regression files); the zero-context diff is 9,109 bytes. Runtime files are 599 and 260 lines; the product stylesheet is 418 lines. All consumed shared runtime chunks stay below 500,000 bytes. No new runtime module, package, provider resource or always-load instruction is added. Tool/model token cost and real operator time savings remain unmeasured. This increment retains local source commits for review; source publication/integration and production promotion require their own native checks and effect receipts.
+
+The final affected-owner `npm run check:integration -- --retry-failed` passes all four selected groups on this clean candidate: ADLC, evidence contract, TypeScript and named checks. Receipt: `source-validation.json` in the evidence root, SHA-256 `3e10f2020c5175efcd5165ab42cd20b504c600b1754a1c6809a9e6a82d99fb60`, 234,902 ms elapsed. The named group includes the full local-first test/browser chain, authored limits and task bounds, plus the broader container/browser and Dev flow. This is affected validation (four of eleven configured groups), not full-platform parity or independent evaluator evidence. Earlier dirty/stale candidate attempts remain invalidated; an initial final-candidate preflight refused a missing local workerd override and was corrected without relaxing any guard.
+
+For the existing container check only, the retained Darwin arm64 workerd archive and binary were rehashed against their retained build receipt: source `649aa72a91e4ba3590758ef5632c6486e271fb82`, binary SHA-256 `0d9f91f3eb904c8a857867bd114f3224006235f51490b8c83c5ba669a6529ec3`. The already-installed rootless `agentic-dev` machine retained its two CPU / 4 GiB configuration. The check proves owned container cleanup; zero running containers were observed before restoring that machine to its prior stopped state. Bare `npm run dev` remains running independently and returns HTTP 200. The environment correction adds ten active minutes to the initial bound; it adds no product files, dependencies, credentials, cloud resources or shared UI variants. Source publication/merge and production remain unperformed for 0.10.0.
