@@ -507,6 +507,6 @@ Release receipts are under `.workspace/.artifacts/trading-worksheets/2026-11-20T
 
 The 0.5.1 handbook landed in [PR #45](https://github.com/huijoohwee/joohwee/pull/45). E-27–29 retain its local evidence. E-30–32 identify the subsequent source releases and offline runtime checks.
 
-The 0.5.2 documentation update uses the admitted `trading-handbook-worksheet-evidence` successor in the named handbook worktree. The companion skills draft is `prd-tad-adr-mvp-gtm-agentic-trading-skills.md` (`AGENTIC-TRADING-SKILLS-001@0.1.2`) in the canonical checkout.
+The 0.5.2 documentation update uses the admitted `trading-handbook-worksheet-evidence` successor in this handbook worktree. The companion skills draft is `prd-tad-adr-mvp-gtm-agentic-trading-skills.md` (`AGENTIC-TRADING-SKILLS-001@0.1.2`) in the canonical checkout.
 
 Recheck on selection of a licensed upstream skill, a qualified workbook host or an eligible event account with verified scope and zero-cost evidence. Credentials, hosted sessions, dispatch and submission each require a separate grant.
