@@ -1,18 +1,18 @@
 ---
 title: "Reference implementation: Agentic Trading Platform"
 doc_type: "PRD-TAD-ADR-MVP-GTM"
-version: "0.5.1"
+version: "0.5.2"
 date: "2026-11-20"
 lang: "en-US"
 frontmatter_contract: "required"
 owner: "Product function"
 continuity_id: "AGENTIC-TRADING-HYBRID-001"
-prd_revision: "0.5.1"
-tad_revision: "0.5.1"
-adr_revision: "0.5.1"
-mvp_revision: "0.5.1"
-gtm_revision: "0.5.1"
-local_rung: "spec-complete"
+prd_revision: "0.5.2"
+tad_revision: "0.5.2"
+adr_revision: "0.5.2"
+mvp_revision: "0.5.2"
+gtm_revision: "0.5.2"
+local_rung: "dev-proven"
 delivered_rung: "undocumented"
 lane: "authoring"
 universal_scope: false
@@ -29,9 +29,9 @@ guideline_source: "https://github.com/huijoohwee/huijoohwee.github.io/blob/f07f1
 
 **First result for the owner.** On a phone or desktop, open a synthetic quote and a draft ticket, see why the freshness check passed or failed, close the page and reopen the same accepted revision offline. No broker account, cloud resource, model or installation of the Graph application is needed. Read-only broker ingestion and owner-released execution remain later, independently gated outcomes.
 
-**Decision record.** `AGENTIC-TRADING-HYBRID-001@0.5.1` retains the 0.5.0 handbook contract and records the device-local audit, schedule rehearsal and reproducible package. The dated event profile expires at closeout.
+**Decision record.** `AGENTIC-TRADING-HYBRID-001@0.5.2` adds the offline replay worksheets and their acceptance evidence to the 0.5.1 handbook. The dated event profile expires at closeout.
 
-**Evidence as of 20 November 2026.** The original ticket is dev-proven at Trading `2ae80e5` (E-22). E-27–29 cover the local implementation and archive. Eligibility, hosted runs, official fills, ranking, physical-phone use and submission need separate receipts.
+**Evidence as of 20 November 2026.** Trading canonical `main` and its repository-local `origin/main` match at `0d5a4dbc`. Desktop and 360 px touch browsers verified replay, audit, schedule receipts and worksheet exports offline (E-30–32). The local product is `dev-proven`. Hosted delivery remains `undocumented`. Eligibility, official account activity, physical-phone use, judging and paid demand require separate observations.
 
 ## Reference implementation — PRD
 
@@ -106,12 +106,12 @@ Each result names the boundary exercised. Connected and full-workbook qualificat
 | VCC-19 / 01/03 | At G7, read back one separately authorized capped order and reconcile its actual broker state. Request cancellation only with separate authority and only if still cancellable. | Live, Phase 4 only. Fills cannot be reversed. Pending. |
 | VCC-20 / 04 | Scan source, client payloads, logs, export, CI and ledger for credentials and account identifiers. Test encryption, grant isolation, revocation and redaction on the admitted adapter. | No secrets in ordinary data or output. Pending. |
 | VCC-21 / 01/02/05 | In a primed mobile browser at 360 CSS px and on desktop, disconnect, draft one synthetic ticket, observe the R01 reason, reload offline and read the same accepted revision and inputs. A competing stale edit fails without partial changes. Check an over-age quote, a future timestamp and a missing freshness class. | Desktop and 360 px touch Chrome passed offline (E-22/27). Physical iPhone and human timing open. |
-| VCC-22 / 02/06 | Inspect the resolved module graph, package pins and sealed assets. Each shared capability resolves to its declared owner once. Introduce an obsolete Base Sheets import or change a projected UI digest in a fixture and require rejection. | Sealed-build checks passed (E-22/27). Future pins require licence and integrity checks. |
+| VCC-22 / 02/06 | Inspect the resolved module graph, package pins and sealed assets. Each shared capability resolves to its declared owner once. Introduce an obsolete Base Sheets import or change a projected UI digest in a fixture and require rejection. | Owner pins, package integrity and offline projections passed for the released worksheets (E-30–32). Recheck notices and integrity when a pin changes. |
 | VCC-23 / 07 | Present eligibility, same-email entitlement, hard zero-cost proof, separate Desktop and Cloud readbacks and an alias cross-checked against the official competition account. Fixtures with a live, practice, missing or changed account, disallowed scope or exhausted quota stop before any effect. | Fixture refusals passed (E-28). Entrant and account open. |
 | VCC-24 / 07 | Replay the paper rule fixtures below, including exact limits, pending reservations, unknown inputs, fees, interest, exercise, forced liquidation and official settlement. Replaying fills/events twice leaves the same ledger, balances and decision reasons. | 59 fixture boundaries and A/B replay passed (E-28). Simulator open. |
 | VCC-25 / 07 | A pinned Qoder coordinator delegates research and independent risk review. The paper executor receives an allowed, bound intent only. Prove one rejection, one no-trade, one permitted practice path and one ambiguous response. A second trigger creates no second order. | Fixture paths passed (E-28). Hosted sessions open. |
-| VCC-26 / 07/08 | Verify the three offline timing cases in §6 below. For provider qualification, verify the selected skill archives, actual QCA upload/version, a completed bounded Forward Mode run via the §6 API contract (manual `/run`, `GET /schedule_runs/{id}`, `/pause`·`/unpause`, explicit API cron timezone, `session_mode`), delivery route, concurrency skip, resume from cursor and stop with an in-flight run. An optional Slack test returns a harmless reply only in its paired destination. | Local timing, ZIP, pins and schedule trace passed (E-25/28). Hosted usage and delivery open. |
-| VCC-27 / 04/07 | On desktop and 360 px, read positions, open orders, net P&L, equity, drawdown and decision log from one versioned snapshot. Trace an observation to a run, rejection or fill. Offline mode shows the last validated snapshot and its age. | Offline desktop and 360 px pass (E-27). Event panels need account readback. |
+| VCC-26 / 07/08 | Verify the three offline timing cases in §6 below. For provider qualification, verify the selected skill archives, actual QCA upload/version, a completed bounded Forward Mode run via the §6 API contract (manual `/run`, `GET /schedule_runs/{id}`, `/pause`·`/unpause`, explicit API cron timezone, `session_mode`), delivery route, concurrency skip, resume from cursor and stop with an in-flight run. An optional Slack test returns a harmless reply only in its paired destination. | Local timing and schedule trace passed (E-25/28). The audit and schedule headings accepted pointer and touch input, and the timeline showed 13 receipts (E-31). Hosted usage and delivery remain open. |
+| VCC-27 / 04/07 | On desktop and 360 px, read positions, open orders, net P&L, equity, drawdown and decision log from one versioned snapshot. Trace an observation to a run, rejection or fill. Offline mode shows the last validated snapshot and its age. | Desktop and 360 px touch browsers passed offline for source drill-down, chart changes, pivot controls, reload and numeric exports (E-30/31). Official account readback remains open. |
 | VCC-28 / 02/03/08 | Restore a decision under run A after run B replaces the landing view. Reproduce A’s policy, inputs and evaluator. Test working/closed partials, an individual off-limit fill masked by its average, aggregate-only evidence and unknown freshness. | Local archive and fill cases passed (E-27/28). Workbook open. |
 | VCC-29 / 07/08 | Reconcile daily net equity, risk and costs to SIMULATE readbacks. Separate practice from the scored period, weekly marks from the closing mark, and final-day after-hours fills from eligible results. Unknown metrics carry an explanation. | Organiser results take precedence. Pending. |
 | VCC-30 / 08 | In a clean environment, unpack the pinned package, replay its redacted fixture and reproduce its report. Verify the Qoder-generated deck link as a judge, complete all four rubric rows and obtain separate owner approval and a Luma submission receipt. | Clean ZIP replay passed (E-28). Deck, judge link and submission open. |
@@ -124,15 +124,15 @@ Each link identifies inspected source bytes. A repository revision identifies th
 
 | Canonical owner | Existing contract and evidence | Trading use and boundary |
 |---|---|---|
-| `agentic-design-system` | Public native and React exports, shared UI profile, FloatingPanel, inline editor, control geometry and icons. [Package exports](https://github.com/huijoohwee/agentic-design-system/blob/e57dd13f2f0deaaa4db5752e19cb656b17121867/package.json) | Consume exact owner assets and accessible controls for the ticket form. Trading supplies field names, reasons and callbacks. Resolve one compatible UI revision across the composition, verify digests and retain notices. |
-| `agentic-base` | `createBaseEngine`, `MemoryAdapter`, `IndexedDBAdapter` and `projectTable`. Writes carry an expected base revision and updates also carry the expected record revision. Base exposes bounded record views. [Headless API](https://github.com/huijoohwee/agentic-base/blob/30871e732e53f8f5963aaed46a7f6cbe3d1ddaca/src/index.mjs) · [Product and limits](https://github.com/huijoohwee/agentic-base/blob/30871e732e53f8f5963aaed46a7f6cbe3d1ddaca/src/schema.mjs) | Store the small synthetic ticket record in origin-local IndexedDB and project the ticket list with Base. Trading owns its schema and validation. Use UTC timestamp **text** for instants because Base’s date type is date-only. Browser policy is local and cannot secure live credentials. |
-| `agentic-sheets` | Dedicated `sheets/workbook/v1` owner. `executeWorkbook`, `calculate`, `encodeSnapshot` and `decodeSnapshot` expose one 32×16 sheet with ≤64 formulas, same-sheet arithmetic, references and rectangular SUM. [Public core](https://github.com/huijoohwee/agentic-sheets/blob/370b0698523b92ef569f27175a74c34a52c4a3f4/sheets/core.mjs) · [Limits](https://github.com/huijoohwee/agentic-sheets/blob/370b0698523b92ef569f27175a74c34a52c4a3f4/sheets/schema.mjs) | On demand, show a read-only calculation for a selected ticket. Map typed quantity to A1, limit price to B1 and `=A1*B1` to C1. Rebuild from the accepted ticket revision. No writeback or independent Sheets store. Full-tab export and oracle parity exceed this contract. |
+| `agentic-design-system` | Owns the shared dashboard layout, cards, keyboard-accessible tab list, range chart, typography and line heights. [Dashboard](https://github.com/huijoohwee/agentic-design-system/blob/83de261f8f3ddf66ed41e5370b6811f498788b40/site/dashboard.mjs) · [Tab list](https://github.com/huijoohwee/agentic-design-system/blob/83de261f8f3ddf66ed41e5370b6811f498788b40/site/floating-panel.js) | Trading supplies labels, evidence and callbacks. Ticket, audit and replay share the same label and value typography. |
+| `agentic-base` | Owns revisioned records, the matrix projector, browser tables and the line, area and column charts shared with Graph. [Record API](https://github.com/huijoohwee/agentic-base/blob/2f891a6193b2f937275bd04f6b28dd8e67a98454/src/index.mjs) · [Chart adapter](https://github.com/huijoohwee/agentic-base/blob/2f891a6193b2f937275bd04f6b28dd8e67a98454/packages/views-react/src/browser/DashboardChartBrowser.tsx) | Persist accepted tickets under expected revisions in local IndexedDB. Trading owns validation and uses UTC timestamp text for instants. Base projects evidence rows and pivot cells. |
+| `agentic-sheets` | Owns `sheets/workbook/v1`. A blank sheet starts at 32 × 16. With `fitToCells`, an export fits its occupied rows and columns within 512 rows, 128 columns, 4,096 grid cells, 512 populated cells and 64 formulas. [Core](https://github.com/huijoohwee/agentic-sheets/blob/349b43ccadbec4edf107cfef9f0c09fc1715f9f2/sheets/core.mjs) · [Bounds](https://github.com/huijoohwee/agentic-sheets/blob/349b43ccadbec4edf107cfef9f0c09fc1715f9f2/sheets/schema.mjs) | Calculate ticket notional on demand and export one typed sheet per replay projection. Sheets or Base can open an editable clone. Trading keeps the verified replay as the evidence record. |
 | `agentic-graph` | Already consumes Base and Design System. Owns code-source ingest, query and explained edges, plus a controller that verifies immutable Sheets artifact blobs. [Consumer pins](https://github.com/huijoohwee/agentic-graph/blob/9bfc5d2c08dbb026d41cba29ddb46255a84f1b16/package.json) · [Source-graph tools](https://github.com/huijoohwee/agentic-graph/blob/9bfc5d2c08dbb026d41cba29ddb46255a84f1b16/mcp/agent-graph-tool-contract.js) · [Sheets release controller](https://github.com/huijoohwee/agentic-graph/blob/9bfc5d2c08dbb026d41cba29ddb46255a84f1b16/scripts/production-sheets.mjs) | Optional source provenance for reviewing the implementation. Keep quotes, account data, individual tickets and credentials out of Graph. Its Sheets route belongs to Sheets. A future public demo needs its own admitted artifact, route and rollback receipt. |
 | `huijoohwee.github.io` | Owns the joined planning guideline, grounding companion, related Sheets specification and its own Pages deploy boundary. [Grounding procedure](https://github.com/huijoohwee/huijoohwee.github.io/blob/f07f1a3c27d6936f86233d750d8db7b7690d5fb4/guidelines/prd-tad-adr-mvp-gtm-codebase-grounding.md) · [Sheets decision](https://github.com/huijoohwee/huijoohwee.github.io/blob/f07f1a3c27d6936f86233d750d8db7b7690d5fb4/docs/documents/prd-tad-adr-mvp-gtm-agentic-sheets.md) · [Pages payload](https://github.com/huijoohwee/huijoohwee.github.io/blob/f07f1a3c27d6936f86233d750d8db7b7690d5fb4/docs/DEPLOY-WORKFLOW.md) | Link to the guideline and existing product contracts. Do not copy this plan there. The `joohwee` draft is outside that Pages payload. The separate `huijoohwee/huijoohwee` site mirror is generated output under its release controller. |
 | `agentic-os` | Owns START/RELEASE, invocation semantics and platform governance. The compatibility client in Canvas points back to OS. [START](https://github.com/huijoohwee/agentic-os/blob/d3430c8da71b0128b644040bfd1ef32d9f36c50e/docs/START-WORKFLOW.md) · [Invocation catalog](https://github.com/huijoohwee/agentic-os/blob/d3430c8da71b0128b644040bfd1ef32d9f36c50e/catalog/invocation.json) · [Canvas forwarding export](https://github.com/huijoohwee/agentic-canvas-os/blob/d3e0310d3f6abaff05abf791384b43648ab58a25/src/agentic-graph-mcp-client.js) | Reuse OS for admission, checks and release evidence. Reserve MCP/WebMCP or `/`, `@` and `#` bindings for an evidenced read-only job. Any admitted binding calls the same headless query. No trading command grammar, graph client or agent service in the first load. |
-| `agentic-commerce-os` | Its revenue ledger records settlements and markups. [Ledger source](https://github.com/huijoohwee/agentic-commerce-os/blob/aa4151f82816c0e18796549a2be0e861d0e772d7/src/core/revenue-ledger.ts) | Use as a related ownership boundary. Settlement entries cannot represent broker orders, fills or trading audit events. A future customer payment belongs to the commerce owner. |
+| `agentic-commerce-os` | Its revenue ledger records settlements and markups. [Ledger source](https://github.com/huijoohwee/agentic-commerce-os/blob/aa4151f82816c0e18796549a2be0e861d0e772d7/src/core/revenue-ledger.ts) | Trading’s loopback runner imports Commerce’s pinned local-first content security policies for browser annotations. The Commerce revenue ledger is separate from Trading audit events. A future customer payment belongs to the commerce owner. |
 
-**Resolved ownership.** The sealed Trading build consumes Base `1323ed2d`, Sheets `370b0698` and Design System `55af790e`. Graph `ee50ff10` uses that Design System through React. Trading uses its native DOM adapter for the same dashboard shell and cards. Competition panels provide data and actions through those slots. The dedicated Sheets owner supplies on-demand calculations. A Graph publication or a newer upstream checkout cannot establish the deployed Trading revision. [Shared renderer](https://github.com/huijoohwee/agentic-design-system/blob/55af790e365915fe1bde17ea8d4d887f80365f1a/site/dashboard.mjs) · [Graph Mission consumer](https://github.com/huijoohwee/agentic-graph/blob/ee50ff102d5c00a9e98aa194e4b7524999f7ecbf/canvas/src/features/agent-ready/AgentMissionDashboardView.tsx)
+**Resolved ownership.** Trading `0d5a4dbc` pins Base `2f891a61`, Sheets `349b43cc` and Design System `83de261f` in `scripts/build.mjs`. Its dev runner reads Commerce policy at `aa4151f8`. Graph’s Agent Mission and Trading use the shared dashboard layout. Worksheet settings and trading measures belong to Trading. All chart and table assets ship locally. [Graph Mission consumer](https://github.com/huijoohwee/agentic-graph/blob/ee50ff102d5c00a9e98aa194e4b7524999f7ecbf/canvas/src/features/agent-ready/AgentMissionDashboardView.tsx)
 
 ### Product contracts and dependency direction
 
@@ -145,7 +145,7 @@ Each link identifies inspected source bytes. A repository revision identifies th
 | Connected ledger, later | Validated run or guarded command → atomic append, updated head and readback | One private trading authority per account. The local demo remains synthetic and cannot sync or replay commands into the account. Starting real-account storage needs an admitted schema, export/restore test, distinct identity and $0 proof. |
 | Execution adapter, later | One owner-released, bound approval → one durable intent and broker readback or uncertain outcome | Exists only after G6. Single-flight per account serializes the budget and all releases. ADR-05 owns recovery. |
 
-The browser and future Worker depend on the trading core. The core has no dependency on those hosts or on Graph. The browser imports Base and Design System and lazy-loads Sheets only for a calculation. Shared owners never import Trading. If a public API is missing, propose a generic change to its single owner. Only a contract adapter may translate trading fields. Vendored engines, competing themes/renderers, Base’s legacy `./sheets` entry, private archives, copied Graph handlers and a second production ledger fail VCC-22.
+The browser and future Worker depend on the trading core. The core has no dependency on those hosts or on Graph. The browser imports Base and Design System and loads Sheets on demand for calculations and exports. Shared owners never import Trading. If a public API is missing, propose a generic change to its single owner. Only a contract adapter may translate trading fields. Vendored engines, competing themes/renderers, Base’s legacy `./sheets` entry, private archives, copied Graph handlers and a second production ledger fail VCC-22.
 
 ```mermaid
 flowchart LR
@@ -170,7 +170,7 @@ flowchart LR
 
 ### Full logical workbook and ledger contract
 
-The following 14 named logical tabs include two policy tabs. They preserve the 0.2.0 export vocabulary for the later connected product. Landing, inputs and events may be stored. Positions, Checks, Reconcile and Dashboard are derived projections. The row counts describe full export targets. Neither the single-sheet Sheets adapter nor Base’s 2,000-record total is qualified to host this complete layout. The local fixture uses a single ticket.
+The following 14 named logical tabs include two policy tabs. They preserve the 0.2.0 export vocabulary for the later connected product. Landing, inputs and events may be stored. Positions, Checks, Reconcile and Dashboard are derived projections. The row counts describe full export targets. Neither the single-sheet Sheets adapter nor Base’s 2,000-record total is qualified to host this complete layout. The ticket fixture uses one ticket. The replay worksheets project events and account equity from the selected synthetic run.
 
 | Tab | Role / writer | Row bound | Protection |
 |---|---|---|---|
@@ -239,7 +239,7 @@ For the event dashboard derive net return as (marked equity − initial virtual 
 
 ### Formula oracle and assurance
 
-The full workbook patterns require cross-sheet lookups, conditionals, functions such as `INDEX` and `COUNTIFS`, and ranges up to 2,000 rows. Preserve them as examples for independent evaluation in a separately qualified offline workbook host. Agentic Sheets supplies only the bounded arithmetic projection. Never silently truncate, approximate an unknown function or fork the Sheets parser to pass VCC-06. For the first slice, use independently authored expected R01 results, including the zero-age, threshold, future-time and missing-field cases.
+The full workbook patterns require cross-sheet lookups, conditionals, functions such as `INDEX` and `COUNTIFS`, and ranges up to 2,000 rows. Preserve them as examples for independent evaluation in a separately qualified offline workbook host. Agentic Sheets supplies bounded arithmetic and single-sheet evidence exports. Never silently truncate, approximate an unknown function or fork the Sheets parser to pass VCC-06. For the first slice, use independently authored expected R01 results, including the zero-age, threshold, future-time and missing-field cases.
 
 ```
 K2 : =IF(J2<>"OK","",DATE(VALUE(LEFT(G2,4)),VALUE(MID(G2,6,2)),VALUE(MID(G2,9,2)))+TIME(VALUE(MID(G2,12,2)),VALUE(MID(G2,15,2)),VALUE(MID(G2,18,2))))
@@ -292,7 +292,7 @@ The entrant versions an explicit strategy mandate covering thesis, eligible univ
 |---|---|
 | Browser / local runner | Offline fixture and revisioned local save. One code path for validation and evaluation. Cache only the public static shell and bundled synthetic fixtures. Portability uses an explicit versioned export, with no cross-device synchronization implied. |
 | Broker MCP | Private product read adapter under G5. The competition adapter follows ADR-08 and VCC-23/24. OQ-2 must establish specific tool IDs, schemas and scopes for each entity, especially order history. If history requires a write grant, keep it manual. |
-| WebMCP, slash command, `@` binding, `#` route | Optional later read-only presentation of a validated result using the OS catalog and the host’s supported capabilities. Unsupported surfaces have no handler. No presentation surface grants broker access. |
+| Skill discovery and load | OS resolves `/skill.discover` and `/skill.load` with `#read-only` and the `@skill:trading` selector. Metadata and verified Markdown are the respective outputs (E-29/32). MCP/WebMCP access to product data and broker effects have separate gates. |
 | Scheduled read / manual bridge | A separately admitted Worker or a local read connector may feed the same validated import contract. A failed hosted OAuth probe selects a single read adapter. There is no parallel bridge/server product. |
 | Real-account owner release / cancel | Broker app by default. G6 may admit one deterministic guard. A cancellation has its own instruction and readback. No AI route, webhook, schedule or spreadsheet can release or cancel an order. |
 
@@ -349,8 +349,9 @@ Existing MCPs, local databases, research, document knowledge bases and Moomoo AI
 | ADR-06 · Hosting, rights and budget | Local device first. GitHub and Cloudflare Free are the private product’s hosted candidates. Qoder Cloud Agents is an external event requirement scoped by ADR-08 and subject to the same cost policy. Verify MIT/Apache-2.0 rights for shipped code, notices and lockfile. Each effect needs fresh proof of both $0 enforcement and available headroom. | Exclude paid tiers, add-ons, overages, Vercel, Supabase, AWS, GCP, Google Sheets API and Apps Script. A free allowance or an application alarm cannot enforce a provider billing cap. Without proof for R2, export to an owner-controlled local file. |
 | ADR-07 · Credentials | In the private real-account profile a later read connector holds only its own grant. A later execution guard holds only its own independently revocable grant, encrypted at rest and isolated from UI, CI, Graph, Sheets and AI clients. | Reject a combined grant as a substitute for isolation and reject stored trade passwords. If the broker cannot support the separation, retain manual order entry. Revoke each grant and verify that exports remain readable. |
 | ADR-08 · Competition paper account | Reuse one headless policy, journal, guarded intent path and Design System dashboard. Bind the provider, environment, event, authorised alias and runtime template version on every competition run. Optional paper capabilities are policy inputs in this profile. | Reject a second trading engine, generic brokerage credentials, any live account or fallback account, public account data and duplicate scheduled writers. When evidence or authority expires, stop new effects, retain the journal and continue fixture replay. |
+| ADR-09 · Replay worksheets | Trading projects verified events into worksheet views. Design System owns the tabs, layout and typography. Base owns the matrix and chart/table renderers. Sheets owns the editable export format. | Independent clones preserve source evidence. Change reusable renderers in their owner and test the Trading pin offline. The external showcase supplied interaction references only. |
 
-**Repository choice.** The existing dedicated Trading source owner at `2ae80e5` owns the event profile. Store future versioned templates, fixtures and package recipes there. Generate the submission from an exact revision. The shared repositories retain their current owners and the checked-in profile expires independently of their releases.
+**Repository choice.** Trading owns the event profile and its versioned fixtures (E-22/30). Store future versioned templates, fixtures and package recipes there. Generate the submission from an exact revision. The shared repositories retain their current owners and the checked-in profile expires independently of their releases.
 
 **Reference execution sequence.** Acquire the account-wide serialization boundary first. Recheck session, mode, halt, unknown outcomes, ticket/policy/snapshot revisions and expiry inside it. Recompute R01–R09, validate instrument precision, reserve the per-order and daily caps and persist the unique `idem_key` and `RELEASING` together. Only then send once. Persist broker ID and readback, or lock on uncertainty. A restarted guard treats an unresolved intent as uncertain. It never infers a negative broker result from an empty read. Changing the intent requires new owner approval and authoritative resolution of the old intent.
 
@@ -406,9 +407,21 @@ flowchart LR
 
 **TEST fixture for the first run.** Use a synthetic `TEST.DEMO` quote stamped `09:00:00Z` on 2026-11-19 with a test-only five-minute threshold. At `09:05:00Z` a realtime quote passes R01. At `09:05:01Z` it fails, even if its displayed age rounds to 5.0 minutes. A missing freshness class cannot pass. A source instant later than the evaluation instant yields UNKNOWN. Reopen the saved revision at its recorded evaluation time before testing a new instant.
 
-**Implementation budgets.** The first ticket targeted three product modules. The current build has four, including the 29-line adapter that delegates dashboard rendering to Design System. Each event increment below has a 90-active-minute re-estimation point, ≤3 new product modules, files under 600 lines and sealed chunks below 500 kB. The offline ticket gains zero always-loaded Qoder, trading-provider or cloud modules. Record the measured byte delta before admitting an increment.
+**Implementation budgets.** Re-estimate each increment after 90 active minutes. Keep each authored module below 600 lines and each sealed chunk below 500 kB. Replay views and Sheets exports load on demand. The largest shipped chunk in the verified package was the 335,678-byte Base browser adapter (E-32).
 
-**Delivery and rollback.** A primed offline shell serves bundled assets. Validate keyboard and touch flow, 360 px layout and a genuinely disconnected reload. Development HTML may exercise a report-only CSP. Enforce CSP before any production promotion. Source restoration uses the exact previous pin and asset digest. Preserve IndexedDB on source rollback and verify the old reader against the saved schema. A schema mismatch stops writes until an independently verified backup/restore or forward recovery is available. No trading route, service, deployment or product repository is created by adopting this plan.
+**Delivery and rollback.** A primed offline shell serves bundled assets. Validate keyboard and touch flow, 360 px layout and a genuinely disconnected reload. The loopback dev document permits the annotation overlay. The sealed offline package enforces its strict stylesheet policy (E-32). Source restoration uses the exact previous pin and asset digest. Preserve IndexedDB on source rollback and verify the old reader against the saved schema. A schema mismatch stops writes until an independently verified backup/restore or forward recovery is available. No trading route, service, deployment or product repository is created by adopting this plan.
+
+### Replay worksheets on a primed device
+
+Start `PORT=4182 npm run dev` from the canonical Trading checkout. Open [the replay dashboard](http://127.0.0.1:4182/#replay-dashboard), wait for **Offline ready**, disconnect, select **Run B · competition** and choose **Replay run**.
+
+| Worksheet or control | What to verify |
+|---|---|
+| Source records | Open the same 26-event decision log used by the evidence panel. Select a row to inspect its timestamp, decision and equity. |
+| Daily equity | Select one of six observed UTC dates to read opening, high, low and closing equity. **Inspect source events** filters the log to that date. |
+| Event activity or Daily equity → Chart | In **Setup**, choose a line, area or column chart, a category (UTC date, event type or decision) and a measure. Daily equity also offers the equity-range chart. **Customize** changes the supported series color, gridlines and value readout. |
+| Pivot table | In **Fields**, choose row and optional column dimensions, event count or an equity measure, and an event-type filter. **Options** controls descending rows and the grand total. Opening and closing equity follow replay sequence. An empty intersection has count zero and no observed equity. |
+| Export to Sheets | The current chart or pivot exports native numbers and leaves missing equity blank. Import the JSON and choose **Replace with imported clone** in Sheets or Base. Settings persist per run and worksheet in the same browser tab. |
 
 ## Reference implementation — GTM
 
@@ -416,7 +429,7 @@ The first user is the owner. The alternative today is to keep a manual record an
 
 | Experiment | Observation | Decision |
 |---|---|---|
-| Local first value | In one ≤10-minute session, can the owner explain a failed freshness check and reopen the same synthetic decision? Compare active minutes and corrections with one manual reconstruction. | Fix the first observed failure. If the owner sees no advantage after two sessions, stop before connecting an account. |
+| Local first value | In one ≤10-minute session, can the owner explain a failed freshness check and reopen the same synthetic decision? Trace one chart or pivot value to the recorded event and compare active minutes and corrections with a manual reconstruction. Human timing remains open. | Fix the first observed failure. If the owner sees no advantage after two sessions, stop before connecting an account. |
 | First-dollar hypothesis | If the owner requests reuse, ask a potential second user whether they would pay $1 once for an offline ticket-reconciliation walkthrough using synthetic records. Record the verbatim response and whether a second session is requested. | A stated yes is willingness to pay. Actual paid demand requires a separately authorized offer, rights review and a settled receipt. No hosted payment or external outreach is part of this increment. |
 | EXP-01 · Two-week owner shadow run | After G5, count validated imports, manual fallbacks, unexplained orphan orders, rule failures, headroom and authority incidents. Record time spent, including reconciliation. Orders stay in the broker app. | Continue only with zero authority incidents, zero unexplained orphans, proven cost controls and passing checks for the admitted scope. Stop on scope drift, billing uncertainty or a material evidence gap. |
 
@@ -442,17 +455,17 @@ Generate one submission archive from the pinned Trading source, with a README, t
 | C01 Purpose and pain | Owner need specified, frequency unvalidated | Timed reconstruction and owner explanation |
 | C02 Market and timing | Deferred | Dated demand evidence before expansion |
 | C03 Offer and alternatives | Private fixture specified | First-dollar interview |
-| C04 Product experience | Local VCC-21 passed (E-22) | Physical iPhone walkthrough and competition dashboard readback |
-| C05 Architecture and data | Local VCC-22 passed (E-22) | Bound event import and historical restore |
+| C04 Product experience | Local VCC-21 and worksheet walkthrough passed (E-22/31) | Physical iPhone walkthrough and competition dashboard readback |
+| C05 Architecture and data | Local VCC-22, adaptive exports and independent clone reopen passed (E-22/31) | Official account import and full workbook qualification |
 | C06 Quality, security and AI | Criteria specified | Independent fixtures, authority and recovery drills |
-| C07 Decisions | ADR-01–08 supersede earlier competing choices | Revisit if a named contract fails |
+| C07 Decisions | ADR-01–09 record the product and shared-owner decisions | Revisit if a named contract fails |
 | C08 Smallest slice | Offline fixture verified on two viewport sizes | Timed owner explanation and reopen |
 | C09 Acquisition and retention | Deferred | Repeat session and separately authorized outreach |
 | C10 Operations | Lock, revoke, preserve and reconcile specified | Staging incident drill |
 | C11 Organization and rights | Deferred | Assign a reviewer before G5, G6 or distribution |
 | C12 Financial viability | Competition credits, awards and paper returns tracked separately from revenue | Provider cost enforcement and independently verified demand |
 | C13 Capital | Outside the private increment | Revisit on a funding decision |
-| C14 ADLC | Trading main and private backup at E-22, event profile specified | Candidate-specific checks, owner authority and receipts for each event effect |
+| C14 ADLC | Trading main synced to its local origin at E-30. The earlier backup receipt is scoped to E-22 | Candidate-specific checks, owner authority and receipts for each event effect |
 | C15 Audience projections | Competition judges receive the pinned deck and package. Private product outreach stays deferred. | VCC-30 review and submission receipt |
 | C16 Learning | Local experiment and EXP-01 specified | Actual outcomes and decision to continue or stop |
 
@@ -473,6 +486,11 @@ The owner links in the TAD address the exact revisions reviewed on 2026-11-19. T
 | E-27 | Trading local candidate on `c9e419222e768e4acfc27bc167784eb8835ed0bf`, Git tree `cd611ace8d11c3d5cf1ce481683d96dec0f71919`. All 29 headless tests passed. Desktop and 360 px Chrome disconnected with the loopback server stopped. Both saved A, refused conflicting bytes, reopened halted B, rejected the wrong witness and restored A. Always-loaded journal sources grew 2,594 B. Audit and schedule code loads on demand. On loopback Chrome the E-22 build edited the saved ticket. Reinstalling the candidate recovered revision 2 and the separate audit run. |
 | E-28 | Sealed build `2bf033f934439a5e5c2f68b7037b7b6c611abed251ed416087348281e2cf0cce` has 38 files, largest 27,415 B. Replay ZIP SHA-256 `08cce8810608b99b13c4ed7eb7697008c381c877b521c99d6d0e702a364a4638`, 97,630 B. A clean extraction verified 48 checksums, ran 22 tests with network denied and reproduced both 59-example runs. Six optional local skill-ZIP cases passed. Provider credits, downstream rights and submission remain unverified. |
 | E-29 | Companion `AGENTIC-TRADING-SKILLS-001`: local OS tree `a0dbb6956eb9025b6e4c270ece3d88f795f9ba23`. Discovery finds the trading descriptor. Load verifies the 3,346 B skill against SHA-256 `3c623704643a1c309916e3c964d8f83640947f0eaa93199448fc6c3f826b93a4`. Twelve portable-package and invocation tests passed with network denied. OS validation passed all 258 suites (2,443 cases), reusing 203 checks. Receipt SHA-256 `a577f6dcdbc42badc2c09da838b407b2ae5fad2a439a7736b632f339f9ef4951`. S2/S3 await adoption. |
+| E-30 | Trading `0d5a4dbc545de786a51e748c9ec463cf3179ed44` matched canonical `main` and its local bare origin. Design System #93 and Base #96/#97 integrated the shared tab and chart changes. The main checks passed on both owner pins. Graph’s Agent Mission rendered the shared layout. [Design change](https://github.com/huijoohwee/agentic-design-system/pull/93) · [Base chart adapter](https://github.com/huijoohwee/agentic-base/pull/96) · [Base chart axes](https://github.com/huijoohwee/agentic-base/pull/97) |
+| E-31 | All 29 Trading headless tests passed. Desktop (1,152 px) and touch emulation (360 px) verified 26 synthetic events on six dates across 14 event types offline on port 4182. Both reported zero browser errors and zero external requests. The 8 × 15 pivot reopened in both Sheets and Base. The browser suite also verified a 60 × 4 export for all 59 rule boundaries. The audit reported `PASS · PRICE_OUT_OF_LIMIT` and the schedule showed 13 receipts. The regression entrypoints are `test/browser.mjs` and `test/worksheets-browser.mjs` at E-30. |
+| E-32 | Replay ZIP SHA-256 `44ed41807a2164cbea2cb107f381c8812d277bbe0e81c3da4c02d07d92da7941`, 243,096 B. All 65 listed checksums and the ZIP integrity check passed. The sealed worksheet run reported zero CSP violations. OS PR #708 integrated the read-only skill at `11c8fde490e1af2622d465ff2b98e7e1930095c3`. The canonical route readback matched the E-29 digest. [Skill release](https://github.com/huijoohwee/agentic-os/pull/708) |
+
+Release receipts are under `.workspace/.artifacts/trading-worksheets/2026-11-20T07-09-12-367Z/` in the shared workspace. Use `trading-sync.json` for source identity, `canonical-proof.json` for the live worksheets, `audit-schedule.json` for the marked targets, and `package-proof.json` and `strict-package.json` for the distributable.
 
 ### Product risk and recovery
 
@@ -487,8 +505,8 @@ The owner links in the TAD address the exact revisions reviewed on 2026-11-19. T
 
 ### Git handoff
 
-E-01–21 link to their prior bytes. E-27–29 record local verification.
+The 0.5.1 handbook landed in [PR #45](https://github.com/huijoohwee/joohwee/pull/45). E-27–29 retain its local evidence. E-30–32 identify the subsequent source releases and offline runtime checks.
 
-For publication, reuse this branch and verify the exact candidate, authority, required check and protected merge before sync. Preserve any colliding untracked draft, unrelated bytes and worktrees.
+The 0.5.2 documentation update uses the admitted `trading-handbook-worksheet-evidence` successor in the named handbook worktree. The companion skills draft is `prd-tad-adr-mvp-gtm-agentic-trading-skills.md` (`AGENTIC-TRADING-SKILLS-001@0.1.2`) in the canonical checkout.
 
 Recheck on selection of a licensed upstream skill, a qualified workbook host or an eligible event account with verified scope and zero-cost evidence. Credentials, hosted sessions, dispatch and submission each require a separate grant.
