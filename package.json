@@ -9,7 +9,11 @@
   "scripts": {
     "setup": "agentic-os setup",
     "doctor": "agentic-os doctor",
+    "lane": "agentic-os start",
+    "land": "agentic-os land",
+    "successor": "agentic-os successor",
     "release:common": "agentic-os release-common",
+    "sync:canonical": "agentic-os canonical-sync",
     "status": "agentic-os status"
   },
   "devDependencies": {
